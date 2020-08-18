@@ -25,7 +25,7 @@ public class AsyncLoadingScreen : ModuleRules
 		PublicDependencyModuleNames.AddRange(
 			new string[]
 			{
-				"Core",
+				"Core"
 				// ... add other public dependencies that you statically link with here ...
 			}
 			);
@@ -38,6 +38,7 @@ public class AsyncLoadingScreen : ModuleRules
 				"Engine",
 				"Slate",
 				"SlateCore",
+				"MoviePlayer"
 				// ... add private dependencies that you statically link with here ...	
 			}
 			);

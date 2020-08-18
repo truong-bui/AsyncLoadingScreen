@@ -8,21 +8,30 @@
 
 #pragma once
 
-#include "LoadingScreenInterface.h"
+//#include "LoadingScreenInterface.h"
+#include "Modules/ModuleManager.h"
 
-class FAsyncLoadingScreenModule : public ILoadingScreenInterface
+class FAsyncLoadingScreenModule : public IModuleInterface
 {
 public:
 
 	/** IModuleInterface implementation */
+
+	/**
+	 * Called right after the module DLL has been loaded and the module object has been created
+	 */
 	virtual void StartupModule() override;
+	
+	/**
+	 * Called before the module is unloaded, right before the module object is destroyed.
+	 */
 	virtual void ShutdownModule() override;
 
 
 	/** ILoadingScreenInterface implementation */
-	virtual void AddModuleListeners() override;
+	//virtual void AddModuleListeners() override;
 
-	/*
+	/**
 	 * Returns true if this module hosts gameplay code 
 	 * 
 	 * @return True for "gameplay modules", or false for engine code modules, plugins, etc.
@@ -40,7 +49,7 @@ public:
 		return FModuleManager::LoadModuleChecked<FAsyncLoadingScreenModule>("AsyncLoadingScreen");
 	}
 
-	/*
+	/**
 	 * Checks to see if this module is loaded and ready. It is only valid to call Get() if IsAvailable() returns true.
 	 *
 	 * @return True if the module is loaded and ready to use
@@ -49,4 +58,9 @@ public:
 	{
 		return FModuleManager::Get().IsModuleLoaded("AsyncLoadingScreen");
 	}
+
+private:
+	void HandlePrepareLoadingScreen();
+
+	void BeginLoadingScreen();
 };
