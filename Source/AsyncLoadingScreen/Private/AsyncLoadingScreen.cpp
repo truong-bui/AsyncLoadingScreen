@@ -1,6 +1,7 @@
 #include "AsyncLoadingScreen.h"
 #include "MoviePlayer.h"
 #include "ClassicLoadingTheme.h"
+#include "LoadingScreenSettings.h"
 
 #define LOCTEXT_NAMESPACE "FAsyncLoadingScreenModule"
 
@@ -12,6 +13,28 @@ void FAsyncLoadingScreenModule::StartupModule()
 
 	if (!IsRunningDedicatedServer() && FSlateApplication::IsInitialized())
 	{
+		// Load for cooker reference
+		const ULoadingScreenSettings* Settings = GetDefault<ULoadingScreenSettings>();
+		for (const FSoftObjectPath& Ref : Settings->StartupScreen.Images)
+		{
+			Ref.TryLoad();
+		}
+
+		for (const FSoftObjectPath& Ref : Settings->DefaultScreen.Images)
+		{
+			Ref.TryLoad();
+		}
+
+		for (const FSoftObjectPath& Ref : Settings->StartupScreen.IconImages)
+		{
+			Ref.TryLoad();
+		}
+
+		for (const FSoftObjectPath& Ref : Settings->DefaultScreen.IconImages)
+		{
+			Ref.TryLoad();
+		}
+
 		if (IsMoviePlayerEnabled())
 		{
 			GetMoviePlayer()->OnPrepareLoadingScreen().AddRaw(this, &FAsyncLoadingScreenModule::HandlePrepareLoadingScreen);
@@ -19,7 +42,7 @@ void FAsyncLoadingScreenModule::StartupModule()
 
 		// Prepare the startup screen, the PrepareLoadingScreen callback won't be called
 		// if we've already explicitly setup the loading screen
-		BeginLoadingScreen();
+		BeginLoadingScreen(Settings->StartupScreen);
 	}
 	
 }
@@ -53,19 +76,25 @@ bool FAsyncLoadingScreenModule::IsGameModule() const
 
 void FAsyncLoadingScreenModule::HandlePrepareLoadingScreen()
 {
-	BeginLoadingScreen();
+	const ULoadingScreenSettings* Settings = GetDefault<ULoadingScreenSettings>();
+	BeginLoadingScreen(Settings->DefaultScreen);
 }
 
-void FAsyncLoadingScreenModule::BeginLoadingScreen()
+void FAsyncLoadingScreenModule::BeginLoadingScreen(const FLoadingScreenDescription& ScreenDescription)
 {
 	FLoadingScreenAttributes LoadingScreen;
-	LoadingScreen.MinimumLoadingScreenDisplayTime = 10.0f;
-	LoadingScreen.bAutoCompleteWhenLoadingCompletes = false;
-	LoadingScreen.bMoviesAreSkippable = false;
-	LoadingScreen.bWaitForManualStop = false;	
-	LoadingScreen.PlaybackType = EMoviePlaybackType::MT_Normal;
+	LoadingScreen.MinimumLoadingScreenDisplayTime = ScreenDescription.MinimumLoadingScreenDisplayTime;
+	LoadingScreen.bAutoCompleteWhenLoadingCompletes = ScreenDescription.bAutoCompleteWhenLoadingCompletes;
+	LoadingScreen.bMoviesAreSkippable = ScreenDescription.bMoviesAreSkippable;
+	LoadingScreen.bWaitForManualStop = ScreenDescription.bWaitForManualStop;
+	LoadingScreen.MoviePaths = ScreenDescription.MoviePaths;
+	LoadingScreen.PlaybackType = ScreenDescription.PlaybackType;	
 
-	LoadingScreen.WidgetLoadingScreen = SNew(SClassicLoadingTheme);
+	if (ScreenDescription.bShowUIOverlay)
+	{
+		LoadingScreen.WidgetLoadingScreen = SNew(SClassicLoadingTheme, ScreenDescription);
+	}
+	
 
 	GetMoviePlayer()->SetupLoadingScreen(LoadingScreen);
 }

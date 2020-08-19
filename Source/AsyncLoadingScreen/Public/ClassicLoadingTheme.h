@@ -9,7 +9,7 @@
 #pragma once
 
 #include "Widgets/SCompoundWidget.h"
-
+#include "LoadingScreenSettings.h"
 class FDeferredCleanupSlateBrush;
 
 /**
@@ -23,11 +23,24 @@ public:
 
 	SLATE_END_ARGS()
 
-	void Construct(const FArguments& InArgs);
+	void Construct(const FArguments& InArgs, const FLoadingScreenDescription& ScreenDescription);
 
+	static float PointSizeToSlateUnits(float PointSize)
+	{
+		const float SlateFreeTypeHorizontalResolutionDPI = 96.0f;
+		const float FreeTypeNativeDPI = 72.0;
+		const float PixelSize = PointSize * (SlateFreeTypeHorizontalResolutionDPI / FreeTypeNativeDPI);
+		return PixelSize;
+	}
+
+	void Tick(const FGeometry& AllottedGeometry, const double InCurrentTime, const float InDeltaTime) override;
 private:
 	float GetDPIScale() const;
 
 private:
-	TSharedPtr<FDeferredCleanupSlateBrush> LoadingThemeBrush;
+	TSharedPtr<FDeferredCleanupSlateBrush> LoadingThemeBrush;	
+	float CurrentDeltaTime = 0.0f;
+	TSharedPtr<SImage> IconImage;
+	FLoadingScreenDescription InScreenDescription;
+	int32 IconIndex;
 };

@@ -11,6 +11,8 @@
 //#include "LoadingScreenInterface.h"
 #include "Modules/ModuleManager.h"
 
+struct FLoadingScreenDescription;
+
 class FAsyncLoadingScreenModule : public IModuleInterface
 {
 public:
@@ -62,5 +64,5 @@ public:
 private:
 	void HandlePrepareLoadingScreen();
 
-	void BeginLoadingScreen();
+	void BeginLoadingScreen(const FLoadingScreenDescription& ScreenDescription);
 };
