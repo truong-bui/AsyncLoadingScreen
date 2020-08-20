@@ -6,26 +6,26 @@
 #include "Widgets/Layout/SSpacer.h"
 #include "Widgets/Images/SImage.h"
 #include "Slate/DeferredCleanupSlateBrush.h"
-
+#include "Styling/SlateBrush.h"
 
 #define LOCTEXT_NAMESPACE "ClassicLoadingTheme"
 
-void SClassicLoadingTheme::Construct(const FArguments& InArgs, const FLoadingScreenDescription& ScreenDescription)
+void SClassicLoadingTheme::Construct(const FArguments& InArgs, const FALoadingScreenSettings& ScreenDescription)
 {	
 	InScreenDescription = ScreenDescription;
-	const ULoadingScreenSettings* Settings = GetDefault<ULoadingScreenSettings>();
+	//const ULoadingScreenSettings* Settings = GetDefault<ULoadingScreenSettings>();
 
-	const FSlateFontInfo& TipFont = Settings->TipFont;
-	const FSlateFontInfo& LoadingFont = Settings->LoadingFont;	
+	const FSlateFontInfo& TipFont = ScreenDescription.Tips.Font;
+	const FSlateFontInfo& LoadingFont = ScreenDescription.LoadingWidget.Font;
 
 	// Root widget
 	TSharedRef<SOverlay> Root = SNew(SOverlay);	
 	
 	// If there's an image defined
-	if (ScreenDescription.Images.Num() > 0)
+	if (ScreenDescription.Background.Images.Num() > 0)
 	{
-		const int32 ImageIndex = FMath::RandRange(0, ScreenDescription.Images.Num() - 1);
-		const FSoftObjectPath& ImageAsset = ScreenDescription.Images[ImageIndex];
+		const int32 ImageIndex = FMath::RandRange(0, ScreenDescription.Background.Images.Num() - 1);
+		const FSoftObjectPath& ImageAsset = ScreenDescription.Background.Images[ImageIndex];
 		UObject* ImageObject = ImageAsset.TryLoad();
 		if (UTexture2D* LoadingImage = Cast<UTexture2D>(ImageObject))
 		{
@@ -38,11 +38,11 @@ void SClassicLoadingTheme::Construct(const FArguments& InArgs, const FLoadingScr
 				SNew(SBorder)
 				.HAlign(HAlign_Fill)
 				.VAlign(VAlign_Fill)
-				.BorderBackgroundColor(ScreenDescription.BackgroundColor)
+				.BorderBackgroundColor(ScreenDescription.Background.BackgroundColor)
 				.BorderImage(FCoreStyle::Get().GetBrush("WhiteBrush"))
 				[
 					SNew(SScaleBox)
-					.Stretch(ScreenDescription.ImageStretch)
+					.Stretch(ScreenDescription.Background.ImageStretch)
 					[
 						SNew(SImage)
 						.Image(LoadingThemeBrush.IsValid() ? LoadingThemeBrush->GetSlateBrush() : nullptr)
@@ -52,10 +52,10 @@ void SClassicLoadingTheme::Construct(const FArguments& InArgs, const FLoadingScr
 		}
 	}
 
-	if (ScreenDescription.IconImages.Num() > 0)
+	if (ScreenDescription.LoadingWidget.Images.Num() > 0)
 	{
 		IconIndex = 0;
-		const FSoftObjectPath& ImageAsset = ScreenDescription.IconImages[IconIndex];
+		const FSoftObjectPath& ImageAsset = ScreenDescription.LoadingWidget.Images[IconIndex];
 		UObject* ImageObject = ImageAsset.TryLoad();
 		if (UTexture2D* LoadingImage = Cast<UTexture2D>(ImageObject))
 		{
@@ -102,14 +102,14 @@ UE_LOG(LogTemp, Warning, TEXT("SClassicLoadingTheme::Construct"));
 
 	// Placeholder widget
 	TSharedRef<SWidget> TipWidget = SNullWidget::NullWidget;
-	if (Settings->Tips.Num() > 0)
+	if (ScreenDescription.Tips.TipsText.Num() > 0)
 	{
-		const int32 TipIndex = FMath::RandRange(0, Settings->Tips.Num() - 1);
+		const int32 TipIndex = FMath::RandRange(0, ScreenDescription.Tips.TipsText.Num() - 1);
 
 		TipWidget = SNew(STextBlock)
-			.WrapTextAt(Settings->TipWrapAt)
+			.WrapTextAt(ScreenDescription.Tips.TipWrapAt)
 			.Font(TipFont)
-			.Text(Settings->Tips[TipIndex]);
+			.Text(ScreenDescription.Tips.TipsText[TipIndex]);
 	}
 	else
 	{
@@ -127,7 +127,7 @@ UE_LOG(LogTemp, Warning, TEXT("SClassicLoadingTheme::Construct"));
 		SNew(SBorder)
 		.HAlign(HAlign_Fill)
 		.VAlign(VAlign_Fill)
-		.BorderBackgroundColor(ScreenDescription.TipBackgroundColor)
+		.BorderBackgroundColor(FColor::Black)
 		.BorderImage(FCoreStyle::Get().GetBrush("WhiteBrush"))
 		[
 			SNew(SSafeZone)
@@ -157,7 +157,7 @@ UE_LOG(LogTemp, Warning, TEXT("SClassicLoadingTheme::Construct"));
 					.VAlign(VAlign_Center)
 					[
 						SNew(STextBlock)
-						.Text(ScreenDescription.LoadingText)
+						.Text(ScreenDescription.LoadingWidget.LoadingText)
 						.Font(LoadingFont)
 						
 					]
@@ -189,27 +189,27 @@ UE_LOG(LogTemp, Warning, TEXT("SClassicLoadingTheme::Construct"));
 	[
 		Root
 	];	
+
 }
 
 void SClassicLoadingTheme::Tick(const FGeometry& AllottedGeometry, const double InCurrentTime, const float InDeltaTime)
 {
-	UE_LOG(LogTemp, Warning, TEXT("Current Time: %lf, DeltaTime: %f"), InCurrentTime, InDeltaTime);
+	//UE_LOG(LogTemp, Warning, TEXT("Current Time: %lf, DeltaTime: %f"), InCurrentTime, InDeltaTime);
 
 	CurrentDeltaTime += InDeltaTime;
 	if (CurrentDeltaTime >= 0.05f)
 	{
 		IconIndex++;
-		if (IconIndex >= InScreenDescription.IconImages.Num())
+		if (IconIndex >= InScreenDescription.LoadingWidget.Images.Num())
 		{
 			IconIndex = 0;
 		}
 
-		const FSoftObjectPath& ImageAsset = InScreenDescription.IconImages[IconIndex];
+		const FSoftObjectPath& ImageAsset = InScreenDescription.LoadingWidget.Images[IconIndex];
 		UObject* ImageObject = ImageAsset.TryLoad();
 		if (UTexture2D* LoadingImage = Cast<UTexture2D>(ImageObject))
 		{
 			LoadingThemeBrush = FDeferredCleanupSlateBrush::CreateBrush(LoadingImage);
-
 			IconImage.Get()->SetImage(LoadingThemeBrush->GetSlateBrush());
 		}
 		CurrentDeltaTime = 0;

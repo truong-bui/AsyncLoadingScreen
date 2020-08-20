@@ -15,22 +15,22 @@ void FAsyncLoadingScreenModule::StartupModule()
 	{
 		// Load for cooker reference
 		const ULoadingScreenSettings* Settings = GetDefault<ULoadingScreenSettings>();
-		for (const FSoftObjectPath& Ref : Settings->StartupScreen.Images)
+		for (const FSoftObjectPath& Ref : Settings->StartupLoadingScreen.Background.Images)
 		{
 			Ref.TryLoad();
 		}
 
-		for (const FSoftObjectPath& Ref : Settings->DefaultScreen.Images)
+		for (const FSoftObjectPath& Ref : Settings->DefaultLoadingScreen.Background.Images)
 		{
 			Ref.TryLoad();
 		}
 
-		for (const FSoftObjectPath& Ref : Settings->StartupScreen.IconImages)
+		for (const FSoftObjectPath& Ref : Settings->StartupLoadingScreen.LoadingWidget.Images)
 		{
 			Ref.TryLoad();
 		}
 
-		for (const FSoftObjectPath& Ref : Settings->DefaultScreen.IconImages)
+		for (const FSoftObjectPath& Ref : Settings->DefaultLoadingScreen.LoadingWidget.Images)
 		{
 			Ref.TryLoad();
 		}
@@ -42,7 +42,7 @@ void FAsyncLoadingScreenModule::StartupModule()
 
 		// Prepare the startup screen, the PrepareLoadingScreen callback won't be called
 		// if we've already explicitly setup the loading screen
-		BeginLoadingScreen(Settings->StartupScreen);
+		BeginLoadingScreen(Settings->StartupLoadingScreen);
 	}
 	
 }
@@ -77,10 +77,10 @@ bool FAsyncLoadingScreenModule::IsGameModule() const
 void FAsyncLoadingScreenModule::HandlePrepareLoadingScreen()
 {
 	const ULoadingScreenSettings* Settings = GetDefault<ULoadingScreenSettings>();
-	BeginLoadingScreen(Settings->DefaultScreen);
+	BeginLoadingScreen(Settings->DefaultLoadingScreen);
 }
 
-void FAsyncLoadingScreenModule::BeginLoadingScreen(const FLoadingScreenDescription& ScreenDescription)
+void FAsyncLoadingScreenModule::BeginLoadingScreen(const FALoadingScreenSettings& ScreenDescription)
 {
 	FLoadingScreenAttributes LoadingScreen;
 	LoadingScreen.MinimumLoadingScreenDisplayTime = ScreenDescription.MinimumLoadingScreenDisplayTime;
@@ -90,13 +90,13 @@ void FAsyncLoadingScreenModule::BeginLoadingScreen(const FLoadingScreenDescripti
 	LoadingScreen.MoviePaths = ScreenDescription.MoviePaths;
 	LoadingScreen.PlaybackType = ScreenDescription.PlaybackType;	
 
-	if (ScreenDescription.bShowUIOverlay)
+	if (ScreenDescription.bShowWidgetOverlay)
 	{
 		LoadingScreen.WidgetLoadingScreen = SNew(SClassicLoadingTheme, ScreenDescription);
 	}
 	
 
-	GetMoviePlayer()->SetupLoadingScreen(LoadingScreen);
+	GetMoviePlayer()->SetupLoadingScreen(LoadingScreen);	
 }
 
 #undef LOCTEXT_NAMESPACE

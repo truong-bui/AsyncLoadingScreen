@@ -1,7 +1,7 @@
 /********************************************************************************** 
  * 
  * Copyright (C) 2020 Truong Bui. 
- * Website:	https://github.com/truongbui1689/AsyncLoadingScreen 
+ * Website:	https://github.com/truong-bui/AsyncLoadingScreen 
  * Licensed under the MIT License. See 'LICENSE' file for full license information. 
  *  
  **********************************************************************************/
@@ -23,7 +23,7 @@ public:
 
 	SLATE_END_ARGS()
 
-	void Construct(const FArguments& InArgs, const FLoadingScreenDescription& ScreenDescription);
+	void Construct(const FArguments& InArgs, const FALoadingScreenSettings& ScreenDescription);
 
 	static float PointSizeToSlateUnits(float PointSize)
 	{
@@ -41,6 +41,6 @@ private:
 	TSharedPtr<FDeferredCleanupSlateBrush> LoadingThemeBrush;	
 	float CurrentDeltaTime = 0.0f;
 	TSharedPtr<SImage> IconImage;
-	FLoadingScreenDescription InScreenDescription;
+	FALoadingScreenSettings InScreenDescription;
 	int32 IconIndex;
 };

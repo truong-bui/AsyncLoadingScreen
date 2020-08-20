@@ -4,7 +4,7 @@
 	"VersionName": "1.0",
 	"FriendlyName": "Async Loading Screen",
 	"Description": "Allows you to configure a Loading Screen system in the engine and make it easier to add a loading screen in your game.",
-	"Category": "Loading",
+	"Category": "Loading Screen",
 	"CreatedBy": "Truong Bui",
 	"CreatedByURL": "https://github.com/truong-bui/AsyncLoadingScreen",
 	"DocsURL": "",

@@ -4,18 +4,21 @@
 
 #define LOCTEXT_NAMESPACE "AsyncLoadingScreen"
 
-FLoadingScreenDescription::FLoadingScreenDescription() : LoadingText(LOCTEXT("Loading", "LOADING")) {}
+FLoadingWidgetSettings::FLoadingWidgetSettings() : LoadingText(LOCTEXT("Loading", "LOADING")) {}
 
 ULoadingScreenSettings::ULoadingScreenSettings(const FObjectInitializer& Initializer) : Super(Initializer)
 {
-	TipWrapAt = 1000.0f;
-
+	StartupLoadingScreen.Tips.TipWrapAt = 1000.0f;
+	StartupLoadingScreen.bShowWidgetOverlay = false;
+	DefaultLoadingScreen.Tips.TipWrapAt = 1000.0f;
 	// Set default font
 	if (!IsRunningDedicatedServer())
 	{
 		static ConstructorHelpers::FObjectFinder<UFont> RobotoFontObj(TEXT("/Engine/EngineFonts/Roboto"));
-		TipFont = FSlateFontInfo(RobotoFontObj.Object, 20, FName("Normal"));
-		LoadingFont = FSlateFontInfo(RobotoFontObj.Object, 32, FName("Bold"));
+		StartupLoadingScreen.Tips.Font = FSlateFontInfo(RobotoFontObj.Object, 20, FName("Normal"));
+		DefaultLoadingScreen.Tips.Font = FSlateFontInfo(RobotoFontObj.Object, 20, FName("Normal"));
+		StartupLoadingScreen.LoadingWidget.Font = FSlateFontInfo(RobotoFontObj.Object, 32, FName("Bold"));
+		DefaultLoadingScreen.LoadingWidget.Font = FSlateFontInfo(RobotoFontObj.Object, 32, FName("Bold"));
 	}
 }
 
