@@ -38,15 +38,15 @@ struct ASYNCLOADINGSCREEN_API FBackgroundSettings
 
 	// The images display while in the loading screen on top of the movie.
 	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "Images", meta = (AllowedClasses = "Texture2D"))
-		TArray<FSoftObjectPath> Images;
+	TArray<FSoftObjectPath> Images;
 
 	// The scaling type to apply to images.
 	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "Images")
-		TEnumAsByte<EStretch::Type> ImageStretch = EStretch::ScaleToFit;
+	TEnumAsByte<EStretch::Type> ImageStretch = EStretch::ScaleToFit;
 
 	// The background color to use
 	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "Images")
-		FLinearColor BackgroundColor = FLinearColor::Black;
+	FLinearColor BackgroundColor = FLinearColor::Black;
 
 };
 
@@ -66,19 +66,19 @@ struct ASYNCLOADINGSCREEN_API FLoadingWidgetSettings
 
 	// Text displayed beside the animated icon
 	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "Loading Widget Setting")
-		FText LoadingText;
+	FText LoadingText;
 
 	/** A sequence of images to animate the loading icon, don't use the sprite sheet here. Ignore this if you don't choose the 'Image Sequence' widget type*/
 	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "Loading Widget Setting", meta = (AllowedClasses = "Texture2D"))
-		TArray<FSoftObjectPath> Images;
+	TArray<FSoftObjectPath> Images;
 
 	/** Time in second to change the images, the smaller numbers the faster of the animation. Ignore this if you don't choose the 'Image Sequence' widget type */
 	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "Loading Widget Setting", meta = (UIMax = 1.00, UIMin = 0.00))
-		float Interval = 0.1f;
+	float Interval = 0.1f;
 
 	// The font of the loading text
 	UPROPERTY(BlueprintReadWrite, Config, EditAnywhere, Category = "Loading Screen")
-		FSlateFontInfo Font;
+	FSlateFontInfo Font;
 };
 
 
@@ -93,7 +93,7 @@ struct ASYNCLOADINGSCREEN_API FTipSettings
 	//	FTipSettings();
 	// The tips to display on the load screen.
 	UPROPERTY(BlueprintReadWrite, Config, EditAnywhere, Category = "Tip Settings", meta = (MultiLine = true))
-		TArray<FText> TipsText;
+	TArray<FText> TipsText;
 
 	// The background color to use for the tips
 	//UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "Tip Settings")
@@ -101,11 +101,11 @@ struct ASYNCLOADINGSCREEN_API FTipSettings
 
 	// The font of Tip text.
 	UPROPERTY(BlueprintReadWrite, Config, EditAnywhere, Category = "Tip Settings")
-		FSlateFontInfo Font;
+	FSlateFontInfo Font;
 
 	// The size of the tip before it's wrapped to the next line
 	UPROPERTY(BlueprintReadWrite, Config, EditAnywhere, Category = "Tip Settings")
-		float TipWrapAt;
+	float TipWrapAt;
 };
 
 USTRUCT(BlueprintType)

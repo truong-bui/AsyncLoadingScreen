@@ -13,7 +13,7 @@ void FAsyncLoadingScreenModule::StartupModule()
 
 	if (!IsRunningDedicatedServer() && FSlateApplication::IsInitialized())
 	{
-		// Load for cooker reference
+		// Load for cooked reference
 		const ULoadingScreenSettings* Settings = GetDefault<ULoadingScreenSettings>();
 		for (const FSoftObjectPath& Ref : Settings->StartupLoadingScreen.Background.Images)
 		{
@@ -37,12 +37,12 @@ void FAsyncLoadingScreenModule::StartupModule()
 
 		if (IsMoviePlayerEnabled())
 		{
-			GetMoviePlayer()->OnPrepareLoadingScreen().AddRaw(this, &FAsyncLoadingScreenModule::HandlePrepareLoadingScreen);
+			GetMoviePlayer()->OnPrepareLoadingScreen().AddRaw(this, &FAsyncLoadingScreenModule::PreSetupLoadingScreen);
 		}
 
-		// Prepare the startup screen, the PrepareLoadingScreen callback won't be called
+		// Prepare the startup screen, the PreSetupLoadingScreen callback won't be called
 		// if we've already explicitly setup the loading screen
-		BeginLoadingScreen(Settings->StartupLoadingScreen);
+		SetupLoadingScreen(Settings->StartupLoadingScreen);
 	}
 	
 }
@@ -74,25 +74,25 @@ bool FAsyncLoadingScreenModule::IsGameModule() const
 	return true;
 }
 
-void FAsyncLoadingScreenModule::HandlePrepareLoadingScreen()
+void FAsyncLoadingScreenModule::PreSetupLoadingScreen()
 {
 	const ULoadingScreenSettings* Settings = GetDefault<ULoadingScreenSettings>();
-	BeginLoadingScreen(Settings->DefaultLoadingScreen);
+	SetupLoadingScreen(Settings->DefaultLoadingScreen);
 }
 
-void FAsyncLoadingScreenModule::BeginLoadingScreen(const FALoadingScreenSettings& ScreenDescription)
+void FAsyncLoadingScreenModule::SetupLoadingScreen(const FALoadingScreenSettings& LoadingScreenSettings)
 {
 	FLoadingScreenAttributes LoadingScreen;
-	LoadingScreen.MinimumLoadingScreenDisplayTime = ScreenDescription.MinimumLoadingScreenDisplayTime;
-	LoadingScreen.bAutoCompleteWhenLoadingCompletes = ScreenDescription.bAutoCompleteWhenLoadingCompletes;
-	LoadingScreen.bMoviesAreSkippable = ScreenDescription.bMoviesAreSkippable;
-	LoadingScreen.bWaitForManualStop = ScreenDescription.bWaitForManualStop;
-	LoadingScreen.MoviePaths = ScreenDescription.MoviePaths;
-	LoadingScreen.PlaybackType = ScreenDescription.PlaybackType;	
+	LoadingScreen.MinimumLoadingScreenDisplayTime = LoadingScreenSettings.MinimumLoadingScreenDisplayTime;
+	LoadingScreen.bAutoCompleteWhenLoadingCompletes = LoadingScreenSettings.bAutoCompleteWhenLoadingCompletes;
+	LoadingScreen.bMoviesAreSkippable = LoadingScreenSettings.bMoviesAreSkippable;
+	LoadingScreen.bWaitForManualStop = LoadingScreenSettings.bWaitForManualStop;
+	LoadingScreen.MoviePaths = LoadingScreenSettings.MoviePaths;
+	LoadingScreen.PlaybackType = LoadingScreenSettings.PlaybackType;
 
-	if (ScreenDescription.bShowWidgetOverlay)
+	if (LoadingScreenSettings.bShowWidgetOverlay)
 	{
-		LoadingScreen.WidgetLoadingScreen = SNew(SClassicLoadingTheme, ScreenDescription);
+		LoadingScreen.WidgetLoadingScreen = SNew(SClassicLoadingTheme, LoadingScreenSettings);
 	}
 	
 

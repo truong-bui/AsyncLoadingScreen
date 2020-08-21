@@ -62,7 +62,13 @@ public:
 	}
 
 private:
-	void HandlePrepareLoadingScreen();
+	/**
+	 * Loading screen callback, it won't be called if we've already explicitly setup the loading screen
+	 */
+	void PreSetupLoadingScreen();
 
-	void BeginLoadingScreen(const FALoadingScreenSettings& ScreenDescription);
+	/**
+	 * Setup loading screen settings 
+	 */
+	void SetupLoadingScreen(const FALoadingScreenSettings& LoadingScreenSettings);
 };
