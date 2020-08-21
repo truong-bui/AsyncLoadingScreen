@@ -18,9 +18,8 @@ ULoadingScreenSettings::ULoadingScreenSettings(const FObjectInitializer& Initial
 		StartupLoadingScreen.Tips.Font = FSlateFontInfo(RobotoFontObj.Object, 20, FName("Normal"));
 		DefaultLoadingScreen.Tips.Font = FSlateFontInfo(RobotoFontObj.Object, 20, FName("Normal"));
 		StartupLoadingScreen.LoadingWidget.Font = FSlateFontInfo(RobotoFontObj.Object, 32, FName("Bold"));
-		DefaultLoadingScreen.LoadingWidget.Font = FSlateFontInfo(RobotoFontObj.Object, 32, FName("Bold"));
+		DefaultLoadingScreen.LoadingWidget.Font = FSlateFontInfo(RobotoFontObj.Object, 32, FName("Bold"));		
 	}
 }
-
 
 #undef LOCTEXT_NAMESPACE

@@ -11,7 +11,8 @@
 #define LOCTEXT_NAMESPACE "ClassicLoadingTheme"
 
 void SClassicLoadingTheme::Construct(const FArguments& InArgs, const FALoadingScreenSettings& ScreenDescription)
-{	
+{		
+
 	InScreenDescription = ScreenDescription;
 	//const ULoadingScreenSettings* Settings = GetDefault<ULoadingScreenSettings>();
 

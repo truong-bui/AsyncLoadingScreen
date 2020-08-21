@@ -33,11 +33,14 @@ public:
 		return PixelSize;
 	}
 
+	EActiveTimerReturnType Foo(double InCurrentTime, float InDeltaTime);
+
 	void Tick(const FGeometry& AllottedGeometry, const double InCurrentTime, const float InDeltaTime) override;
 private:
 	float GetDPIScale() const;
 
 private:
+	bool bIsActiveTimerRegistered;
 	TSharedPtr<FDeferredCleanupSlateBrush> LoadingThemeBrush;	
 	float CurrentDeltaTime = 0.0f;
 	TSharedPtr<SImage> IconImage;
