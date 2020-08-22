@@ -21,11 +21,8 @@ public:
 	SLATE_BEGIN_ARGS(SLoadingWidget) {}
 	SLATE_END_ARGS()
 
-	void Construct(const FArguments& InArgs, const FLoadingWidgetSettings& Settings);
-	
-
-private:
-	EActiveTimerReturnType AnimatingImageSequence(double InCurrentTime, float InDeltaTime);
+protected:
+	EActiveTimerReturnType AnimatingImageSequence(double InCurrentTime, float InDeltaTime);	
 
 private:
 	bool bIsActiveTimerRegistered;

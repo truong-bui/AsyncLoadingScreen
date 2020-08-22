@@ -95,8 +95,7 @@ void FAsyncLoadingScreenModule::SetupLoadingScreen(const FALoadingScreenSettings
 		LoadingScreen.WidgetLoadingScreen = SNew(SClassicLoadingTheme, LoadingScreenSettings);
 	}
 	
-
-	GetMoviePlayer()->SetupLoadingScreen(LoadingScreen);	
+	GetMoviePlayer()->SetupLoadingScreen(LoadingScreen);
 }
 
 #undef LOCTEXT_NAMESPACE

@@ -15,30 +15,26 @@
 #include "Styling/SlateBrush.h"
 #include "LoadingScreenSettings.generated.h"
 
-/** Loading Widget Type*/
+/** Loading Icon Type*/
 UENUM(BlueprintType)
-enum class ELoadingWidgetType : uint8
+enum class ELoadingIconType : uint8
 {		
 	/** SThrobber widget */
-	LWT_Throbber UMETA(DisplayName = "Throbber"),
+	LIT_Throbber UMETA(DisplayName = "Throbber"),
 	/** SCircularThrobber widget */
-	LWT_CircularThrobber UMETA(DisplayName = "Circular Throbber"),
+	LIT_CircularThrobber UMETA(DisplayName = "Circular Throbber"),
 	/** Animated images */
-	LWT_ImageSequence UMETA(DisplayName = "Image Sequence")
+	LIT_ImageSequence UMETA(DisplayName = "Image Sequence")
 };
 
 /** Loading Text Position */
 UENUM(BlueprintType)
-enum class EWidgetAlignmentPosition : uint8
+enum class ELoadingWidgetAlignment : uint8
 {
-	/** On top of the loading icon */
-	WAP_Top UMETA(DisplayName = "Top"),
-	/** Bottom of the loading icon */
-	WAP_Bottom UMETA(DisplayName = "Bottom"),
-	/** Left of the loading icon */
-	WAP_Left UMETA(DisplayName = "Left"),
-	/** Right of the loading icon */
-	WAP_Right UMETA(DisplayName = "Right")
+	/** Horizontal alignment */
+	LWA_Horizontal UMETA(DisplayName = "Horizontal"),
+	/** Vertical alignment */
+	LWA_Vertical UMETA(DisplayName = "Vertical"),
 };
 
 USTRUCT(BlueprintType)
@@ -126,19 +122,35 @@ struct ASYNCLOADINGSCREEN_API FLoadingWidgetSettings
 
 	/** Loading icon type*/
 	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "Loading Widget Setting")
-	ELoadingWidgetType LoadingWidgetType;
+	ELoadingIconType LoadingIconType = ELoadingIconType::LIT_CircularThrobber;
 	
-	/** Render transform scale of the loading icon, this value will multiply with the icon size, a negative value will flip the icon.*/
+	/** Loading Widget alignment type*/
+	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "Loading Widget Setting")
+	ELoadingWidgetAlignment LoadingWidgetAlignment = ELoadingWidgetAlignment::LWA_Horizontal;
+
+	/** Render transform translation of the loading icon.*/
+	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "Loading Widget Setting")
+	FVector2D TransformTranslation = FVector2D(0.0f, 0.0f);
+
+	/** Render transform scale of the loading icon, a negative value will flip the icon.*/
 	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "Loading Widget Setting")
 	FVector2D TransformScale = FVector2D(1.0f, 1.0f);
+
+	/** Render transform pivot of this widget (in normalized local space).*/
+	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "Loading Widget Setting")
+	FVector2D TransformPivot = FVector2D(0.5f, 0.5f);
 
 	// Text displayed beside the animated icon
 	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "Loading Widget Setting")
 	FText LoadingText;
 
-	/** Loading text position */
+	/** Is Loading Text on the right of the loading icon? Ignore this if you don't choose Alignment = Horizontal.*/
 	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "Loading Widget Setting")
-	EWidgetAlignmentPosition LoadingTextPosition = EWidgetAlignmentPosition::WAP_Right;
+	bool bLoadingTextRightPosition = true;
+
+	/** Is Loading Text on the top of the loading icon? Ignore this if you don't choose Alignment = Vertical.*/
+	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "Loading Widget Setting")
+	bool bLoadingTextTopPosition = true;
 
 	// The font of the loading text
 	UPROPERTY(BlueprintReadWrite, Config, EditAnywhere, Category = "Loading Widget Setting")
@@ -157,25 +169,25 @@ struct ASYNCLOADINGSCREEN_API FLoadingWidgetSettings
 	TArray<FSoftObjectPath> Images;	
 
 	/** 
-	 * Time in second to change the images, the smaller numbers the faster of the animation. Interval = 0 means that images will be changed every frame. 
+	 * Time in second to change the images, the smaller value the faster of the animation. Interval = 0 means that images will be changed every frame. 
 	 * Ignore this if you don't choose the 'Image Sequence' widget type.
 	 */
-	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "Loading Widget Setting", meta = (UIMax = 1.00, UIMin = 0.00))
-	float Interval = 0.1f;
+	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "Loading Widget Setting", meta = (UIMax = 1.00, UIMin = 0.00, ClampMin = "0", ClampMax = "1"))
+	float Interval = 0.05f;
 	
-	/** The alignment of the loading text horizontally. Ignore this if you choose Loading Text Position = Top/Bottom */
+	/** The horizontal alignment of the loading text.*/
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Loading Widget Setting")
 	TEnumAsByte<EHorizontalAlignment> TextHorizontalAlignment = EHorizontalAlignment::HAlign_Center;
 
-	/** The alignment of the loading text vertically. Ignore this if you choose Loading Text Position = Left/Right*/
+	/** The vertical alignment of the loading text.*/
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Loading Widget Setting")
 	TEnumAsByte<EVerticalAlignment> TextVerticalAlignment = EVerticalAlignment::VAlign_Center;
 
-	/** The alignment of the loading icon horizontally. Ignore this if you choose Loading Text Position = Top/Bottom*/
+	/** The horizontal alignment of the loading icon. */
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Loading Widget Setting")
 	TEnumAsByte<EHorizontalAlignment> LoadingIconHorizontalAlignment = EHorizontalAlignment::HAlign_Center;
 
-	/** The alignment of the loading icon vertically. Ignore this if you choose Loading Text Position = Left/Right*/
+	/** The vertical alignment of the loading icon*/
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Loading Widget Setting")
 	TEnumAsByte<EVerticalAlignment> LoadingIconTextVerticalAlignment = EVerticalAlignment::VAlign_Center;
 

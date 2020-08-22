@@ -7,6 +7,7 @@
 #include "Widgets/Images/SImage.h"
 #include "Slate/DeferredCleanupSlateBrush.h"
 #include "Styling/SlateBrush.h"
+#include "SHorizontalLoadingWidget.h"
 
 #define LOCTEXT_NAMESPACE "ClassicLoadingTheme"
 
@@ -52,7 +53,7 @@ void SClassicLoadingTheme::Construct(const FArguments& InArgs, const FALoadingSc
 			];
 		}
 	}
-
+	/*
 	if (ScreenDescription.LoadingWidget.Images.Num() > 0)
 	{
 		IconIndex = 0;
@@ -72,6 +73,8 @@ void SClassicLoadingTheme::Construct(const FArguments& InArgs, const FALoadingSc
 			];
 		}
 	}
+	*/
+
 /*
 UE_LOG(LogTemp, Warning, TEXT("SClassicLoadingTheme::Construct"));
 	if (ScreenDescription.IconMaterial.IsValid())
@@ -140,13 +143,17 @@ UE_LOG(LogTemp, Warning, TEXT("SClassicLoadingTheme::Construct"));
 				SNew(SDPIScaler)
 				.DPIScale(this, &SClassicLoadingTheme::GetDPIScale)
 				[
+					
 					SNew(SHorizontalBox)
 
 					// Loading bar
 					+ SHorizontalBox::Slot()
-					.Padding(FMargin(25, 0, 0, 0))
 					.VAlign(VAlign_Center)
 					.AutoWidth()
+					[
+						SNew(SHorizontalLoadingWidget, ScreenDescription.LoadingWidget)
+					]
+					/*
 					[						
 						SNew(SCircularThrobber)
 						.Radius(PointSizeToSlateUnits(LoadingFont.Size) / 2.0f)						
@@ -163,6 +170,8 @@ UE_LOG(LogTemp, Warning, TEXT("SClassicLoadingTheme::Construct"));
 						.Font(LoadingFont)
 						
 					]
+					*/
+					
 
 					+ SHorizontalBox::Slot()
 					.FillWidth(1)
@@ -200,7 +209,7 @@ UE_LOG(LogTemp, Warning, TEXT("SClassicLoadingTheme::Construct"));
 void SClassicLoadingTheme::Tick(const FGeometry& AllottedGeometry, const double InCurrentTime, const float InDeltaTime)
 {
 	//UE_LOG(LogTemp, Warning, TEXT("Current Time: %lf, DeltaTime: %f"), InCurrentTime, InDeltaTime);
-
+	/**
 	CurrentDeltaTime += InDeltaTime;
 	if (CurrentDeltaTime >= 0.05f)
 	{
@@ -215,10 +224,13 @@ void SClassicLoadingTheme::Tick(const FGeometry& AllottedGeometry, const double 
 		if (UTexture2D* LoadingImage = Cast<UTexture2D>(ImageObject))
 		{
 			LoadingThemeBrush = FDeferredCleanupSlateBrush::CreateBrush(LoadingImage);
-			IconImage.Get()->SetImage(LoadingThemeBrush->GetSlateBrush());			
+			IconImage.Get()->SetImage(LoadingThemeBrush->GetSlateBrush());
 		}
 		CurrentDeltaTime = 0;
 	}
+	
+	*/
+	
 	
 }
 
