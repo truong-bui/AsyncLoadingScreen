@@ -68,6 +68,7 @@ void SClassicLoadingTheme::Construct(const FArguments& InArgs, const FALoadingSc
 			[
 				SAssignNew(IconImage, SImage)
 				.Image(LoadingThemeBrush->GetSlateBrush())
+				.RenderTransformPivot(FVector2D(0.5f, 0.5f))
 			];
 		}
 	}
@@ -191,6 +192,9 @@ UE_LOG(LogTemp, Warning, TEXT("SClassicLoadingTheme::Construct"));
 		Root
 	];	
 
+	//IconImage.Get()->SetRenderTransformPivot(FVector2D(0.5f, 0.5f));
+	//IconImage.Get()->SetRenderTransform(FSlateRenderTransform(FScale2D(-1.0f, 1.0f), FVector2D(0.0f, 0.0f)));
+	
 }
 
 void SClassicLoadingTheme::Tick(const FGeometry& AllottedGeometry, const double InCurrentTime, const float InDeltaTime)
@@ -211,7 +215,7 @@ void SClassicLoadingTheme::Tick(const FGeometry& AllottedGeometry, const double 
 		if (UTexture2D* LoadingImage = Cast<UTexture2D>(ImageObject))
 		{
 			LoadingThemeBrush = FDeferredCleanupSlateBrush::CreateBrush(LoadingImage);
-			IconImage.Get()->SetImage(LoadingThemeBrush->GetSlateBrush());
+			IconImage.Get()->SetImage(LoadingThemeBrush->GetSlateBrush());			
 		}
 		CurrentDeltaTime = 0;
 	}

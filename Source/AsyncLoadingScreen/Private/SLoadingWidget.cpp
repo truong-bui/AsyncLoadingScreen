@@ -9,3 +9,4 @@ EActiveTimerReturnType SLoadingWidget::AnimatingImageSequence(double InCurrentTi
 {
 	return EActiveTimerReturnType::Continue;
 }
+	

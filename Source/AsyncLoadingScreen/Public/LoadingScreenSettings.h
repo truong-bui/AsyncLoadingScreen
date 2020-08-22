@@ -29,16 +29,16 @@ enum class ELoadingWidgetType : uint8
 
 /** Loading Text Position */
 UENUM(BlueprintType)
-enum class ELoadingTextPosition : uint8
+enum class EWidgetAlignmentPosition : uint8
 {
 	/** On top of the loading icon */
-	LTP_Top UMETA(DisplayName = "Top"),
+	WAP_Top UMETA(DisplayName = "Top"),
 	/** Bottom of the loading icon */
-	LTP_Bottom UMETA(DisplayName = "Bottom"),
+	WAP_Bottom UMETA(DisplayName = "Bottom"),
 	/** Left of the loading icon */
-	LTP_Left UMETA(DisplayName = "Left"),
+	WAP_Left UMETA(DisplayName = "Left"),
 	/** Right of the loading icon */
-	LTP_Right UMETA(DisplayName = "Right")
+	WAP_Right UMETA(DisplayName = "Right")
 };
 
 USTRUCT(BlueprintType)
@@ -128,13 +128,17 @@ struct ASYNCLOADINGSCREEN_API FLoadingWidgetSettings
 	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "Loading Widget Setting")
 	ELoadingWidgetType LoadingWidgetType;
 	
+	/** Render transform scale of the loading icon, this value will multiply with the icon size, a negative value will flip the icon.*/
+	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "Loading Widget Setting")
+	FVector2D TransformScale = FVector2D(1.0f, 1.0f);
+
 	// Text displayed beside the animated icon
 	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "Loading Widget Setting")
 	FText LoadingText;
 
 	/** Loading text position */
 	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "Loading Widget Setting")
-	ELoadingTextPosition LoadingTextPosition = ELoadingTextPosition:: LTP_Right;
+	EWidgetAlignmentPosition LoadingTextPosition = EWidgetAlignmentPosition::WAP_Right;
 
 	// The font of the loading text
 	UPROPERTY(BlueprintReadWrite, Config, EditAnywhere, Category = "Loading Widget Setting")
@@ -150,7 +154,7 @@ struct ASYNCLOADINGSCREEN_API FLoadingWidgetSettings
 
 	/** A sequence of images to animate the loading icon. Ignore this if you don't choose the 'Image Sequence' widget type*/
 	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "Loading Widget Setting", meta = (AllowedClasses = "Texture2D"))
-	TArray<FSoftObjectPath> Images;
+	TArray<FSoftObjectPath> Images;	
 
 	/** 
 	 * Time in second to change the images, the smaller numbers the faster of the animation. Interval = 0 means that images will be changed every frame. 
