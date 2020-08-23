@@ -2,20 +2,22 @@
 #include "LoadingScreenSettings.h"
 #include "Widgets/Layout/SSpacer.h"
 #include "Widgets/Images/SImage.h"
-#include "Widgets/Images/SThrobber.h"
 #include "Slate/DeferredCleanupSlateBrush.h"
 
 void SHorizontalLoadingWidget::Construct(const FArguments& InArgs, const FLoadingWidgetSettings& Settings)
 {
+	bIsActiveTimerRegistered = false;
 
 	// Root is a Horizontal Box of course
 	TSharedRef<SHorizontalBox> Root = SNew(SHorizontalBox);		
 	
-	// Construct Loading Icon widget
+	// Construct Loading Icon Widget
 	if (Settings.LoadingIconType == ELoadingIconType::LIT_ImageSequence)
-	{		
+	{	
+		// Loading Widget is image sequence
 		if (Settings.Images.Num() > 0)
-		{		
+		{	
+			CleanupBrushList.Empty();
 			ImageIndex = 0;
 			
 			for (auto ImageAsset : Settings.Images)
@@ -31,7 +33,7 @@ void SHorizontalLoadingWidget::Construct(const FArguments& InArgs, const FLoadin
 			LoadingIcon = SNew(SImage)
 				.Image(CleanupBrushList[ImageIndex]->GetSlateBrush());
 
-			// Register animated image sequence active timer
+			// Register animated image sequence active timer event
 			if (!bIsActiveTimerRegistered)
 			{
 				bIsActiveTimerRegistered = true;
@@ -47,6 +49,7 @@ void SHorizontalLoadingWidget::Construct(const FArguments& InArgs, const FLoadin
 	}
 	else if (Settings.LoadingIconType == ELoadingIconType::LIT_CircularThrobber)
 	{
+		// Loading Widget is SCircularThrobber
 		LoadingIcon = SNew(SCircularThrobber)
 			.NumPieces(Settings.CircularThrobberSettings.NumberOfPieces)
 			.Period(Settings.CircularThrobberSettings.Period)
@@ -55,13 +58,14 @@ void SHorizontalLoadingWidget::Construct(const FArguments& InArgs, const FLoadin
 	}
 	else
 	{
+		// Loading Widget is SThrobber
 		LoadingIcon = SNew(SThrobber)
 			.NumPieces(Settings.ThrobberSettings.NumberOfPieces)
 			.Animate(GetThrobberAnimation(Settings.ThrobberSettings))
 			.PieceImage(&Settings.ThrobberSettings.Image);
 	}
 
-	// Set render transform scale	
+	// Set Loading Icon render transform
 	LoadingIcon.Get().SetRenderTransform(FSlateRenderTransform(FScale2D(Settings.TransformScale), Settings.TransformTranslation));
 	LoadingIcon.Get().SetRenderTransformPivot(Settings.TransformPivot);
 
@@ -98,6 +102,8 @@ void SHorizontalLoadingWidget::Construct(const FArguments& InArgs, const FLoadin
 				.Font(Settings.Font)
 			];
 	}
+
+	// If loading text is on the left
 	else
 	{
 		// Add Loading Text on the left first
@@ -137,37 +143,4 @@ void SHorizontalLoadingWidget::Construct(const FArguments& InArgs, const FLoadin
 	[
 		Root
 	];	
-}
-
-
-EActiveTimerReturnType SHorizontalLoadingWidget::AnimatingImageSequence(double InCurrentTime, float InDeltaTime)
-{
-
-	if (CleanupBrushList.Num() > 1)
-	{
-		ImageIndex++;
-		if (ImageIndex >= CleanupBrushList.Num())
-		{
-			ImageIndex = 0;
-		}
-
-		StaticCastSharedRef<SImage>(LoadingIcon)->SetImage(CleanupBrushList[ImageIndex]->GetSlateBrush());
-
-		return EActiveTimerReturnType::Continue;
-	}
-	else
-	{
-		bIsActiveTimerRegistered = false;
-		return EActiveTimerReturnType::Stop;
-	}
-	
-}
-
-SThrobber::EAnimation SHorizontalLoadingWidget::GetThrobberAnimation(FThrobberSettings ThrobberSettings) const
-{
-	const int32 AnimationParams = (ThrobberSettings.bAnimateVertically ? SThrobber::Vertical : 0) |
-		(ThrobberSettings.bAnimateHorizontally ? SThrobber::Horizontal : 0) |
-		(ThrobberSettings.bAnimateOpacity ? SThrobber::Opacity : 0);
-
-	return static_cast<SThrobber::EAnimation>(AnimationParams);
 }

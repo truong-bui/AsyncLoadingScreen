@@ -15,6 +15,7 @@ void FAsyncLoadingScreenModule::StartupModule()
 	{
 		// Load for cooked reference
 		const ULoadingScreenSettings* Settings = GetDefault<ULoadingScreenSettings>();
+		/**
 		for (const FSoftObjectPath& Ref : Settings->StartupLoadingScreen.Background.Images)
 		{
 			Ref.TryLoad();
@@ -34,6 +35,8 @@ void FAsyncLoadingScreenModule::StartupModule()
 		{
 			Ref.TryLoad();
 		}
+		*/
+		
 
 		if (IsMoviePlayerEnabled())
 		{

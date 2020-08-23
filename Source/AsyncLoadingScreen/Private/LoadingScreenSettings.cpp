@@ -5,6 +5,10 @@
 #define LOCTEXT_NAMESPACE "AsyncLoadingScreen"
 
 FLoadingWidgetSettings::FLoadingWidgetSettings() : LoadingText(LOCTEXT("Loading", "LOADING")) {}
+FCircularThrobberSettings::FCircularThrobberSettings()
+{
+	Image.SetImageSize(FVector2D(8.0f, 8.0f));
+}
 
 ULoadingScreenSettings::ULoadingScreenSettings(const FObjectInitializer& Initializer) : Super(Initializer)
 {
@@ -18,8 +22,10 @@ ULoadingScreenSettings::ULoadingScreenSettings(const FObjectInitializer& Initial
 		StartupLoadingScreen.Tips.Font = FSlateFontInfo(RobotoFontObj.Object, 20, FName("Normal"));
 		DefaultLoadingScreen.Tips.Font = FSlateFontInfo(RobotoFontObj.Object, 20, FName("Normal"));
 		StartupLoadingScreen.LoadingWidget.Font = FSlateFontInfo(RobotoFontObj.Object, 32, FName("Bold"));
-		DefaultLoadingScreen.LoadingWidget.Font = FSlateFontInfo(RobotoFontObj.Object, 32, FName("Bold"));		
+		DefaultLoadingScreen.LoadingWidget.Font = FSlateFontInfo(RobotoFontObj.Object, 32, FName("Bold"));	
 	}
 }
 
 #undef LOCTEXT_NAMESPACE
+
+

@@ -206,34 +206,6 @@ UE_LOG(LogTemp, Warning, TEXT("SClassicLoadingTheme::Construct"));
 	
 }
 
-void SClassicLoadingTheme::Tick(const FGeometry& AllottedGeometry, const double InCurrentTime, const float InDeltaTime)
-{
-	//UE_LOG(LogTemp, Warning, TEXT("Current Time: %lf, DeltaTime: %f"), InCurrentTime, InDeltaTime);
-	/**
-	CurrentDeltaTime += InDeltaTime;
-	if (CurrentDeltaTime >= 0.05f)
-	{
-		IconIndex++;
-		if (IconIndex >= InScreenDescription.LoadingWidget.Images.Num())
-		{
-			IconIndex = 0;
-		}
-
-		const FSoftObjectPath& ImageAsset = InScreenDescription.LoadingWidget.Images[IconIndex];
-		UObject* ImageObject = ImageAsset.TryLoad();
-		if (UTexture2D* LoadingImage = Cast<UTexture2D>(ImageObject))
-		{
-			LoadingThemeBrush = FDeferredCleanupSlateBrush::CreateBrush(LoadingImage);
-			IconImage.Get()->SetImage(LoadingThemeBrush->GetSlateBrush());
-		}
-		CurrentDeltaTime = 0;
-	}
-	
-	*/
-	
-	
-}
-
 float SClassicLoadingTheme::GetDPIScale() const
 {
 	const FVector2D& DrawSize = GetTickSpaceGeometry().ToPaintGeometry().GetLocalSize();

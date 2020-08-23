@@ -8,7 +8,6 @@
 
 #pragma once
 
-//#include "LoadingScreenInterface.h"
 #include "Modules/ModuleManager.h"
 
 struct FALoadingScreenSettings;
@@ -28,10 +27,6 @@ public:
 	 * Called before the module is unloaded, right before the module object is destroyed.
 	 */
 	virtual void ShutdownModule() override;
-
-
-	/** ILoadingScreenInterface implementation */
-	//virtual void AddModuleListeners() override;
 
 	/**
 	 * Returns true if this module hosts gameplay code 

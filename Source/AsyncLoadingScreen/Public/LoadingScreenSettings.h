@@ -68,6 +68,8 @@ struct FCircularThrobberSettings
 {
 	GENERATED_BODY()
 
+	FCircularThrobberSettings();
+
 	/** How many pieces there are */
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Appearance, meta = (ClampMin = "1", ClampMax = "25", UIMin = "1", UIMax = "25"))
 	int32 NumberOfPieces = 6; 
@@ -77,12 +79,12 @@ struct FCircularThrobberSettings
 	float Period = 0.75f;
 
 	/** The radius of the circle. If the throbber is a child of Canvas Panel, the 'Size to Content' option must be enabled in order to set Radius. */
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Appearance, meta = (EditCondition = "bEnableRadius"))
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Appearance)
 	float Radius = 16.0f;
 
 	/** Image to use for each segment of the throbber */
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Appearance)
-	FSlateBrush Image;	
+	FSlateBrush Image;
 };
 
 

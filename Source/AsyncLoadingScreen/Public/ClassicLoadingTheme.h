@@ -33,9 +33,7 @@ public:
 		return PixelSize;
 	}
 
-	EActiveTimerReturnType Foo(double InCurrentTime, float InDeltaTime);
-
-	void Tick(const FGeometry& AllottedGeometry, const double InCurrentTime, const float InDeltaTime) override;
+	//void Tick(const FGeometry& AllottedGeometry, const double InCurrentTime, const float InDeltaTime) override;
 private:
 	float GetDPIScale() const;
 

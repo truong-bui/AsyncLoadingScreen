@@ -10,21 +10,27 @@
 
 #include "Widgets/SCompoundWidget.h"
 
-struct FLoadingWidgetSettings;
+class FDeferredCleanupSlateBrush;
 
 /**
- * Loading Widget
+ * Loading Widget base class
  */
 class SLoadingWidget : public SCompoundWidget
 {
 public:
-	SLATE_BEGIN_ARGS(SLoadingWidget) {}
-	SLATE_END_ARGS()
+	/** Active timer event for animating the image sequence */
+	EActiveTimerReturnType AnimatingImageSequence(double InCurrentTime, float InDeltaTime);
+
+	/** Gets the combined value of the animation properties as a single SThrobber::EAnimation value. */
+	SThrobber::EAnimation GetThrobberAnimation(FThrobberSettings ThrobberSettings) const;
 
 protected:
-	EActiveTimerReturnType AnimatingImageSequence(double InCurrentTime, float InDeltaTime);	
+	// Placeholder widgets
+	TSharedRef<SWidget> LoadingIcon = SNullWidget::NullWidget;
+	// Image slate brush list
+	TArray<TSharedPtr<FDeferredCleanupSlateBrush>> CleanupBrushList;
+	// Current image sequence index
+	int32 ImageIndex = 0;
 
-private:
-	bool bIsActiveTimerRegistered;
-
+	bool bIsActiveTimerRegistered = false;
 };
