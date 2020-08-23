@@ -26,7 +26,7 @@ public:
 	SThrobber::EAnimation GetThrobberAnimation(FThrobberSettings ThrobberSettings) const;
 
 	/** Construct loading icon*/
-	void ConstructLoadingIcon(FLoadingWidgetSettings Settings);
+	void ConstructLoadingIcon(const FLoadingWidgetSettings& Settings);
 
 protected:
 	// Placeholder widgets

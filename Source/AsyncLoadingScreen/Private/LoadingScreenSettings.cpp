@@ -5,10 +5,6 @@
 #define LOCTEXT_NAMESPACE "AsyncLoadingScreen"
 
 FLoadingWidgetSettings::FLoadingWidgetSettings() : LoadingText(LOCTEXT("Loading", "LOADING")) {}
-FCircularThrobberSettings::FCircularThrobberSettings()
-{
-	Image.SetImageSize(FVector2D(8.0f, 8.0f));
-}
 
 ULoadingScreenSettings::ULoadingScreenSettings(const FObjectInitializer& Initializer) : Super(Initializer)
 {

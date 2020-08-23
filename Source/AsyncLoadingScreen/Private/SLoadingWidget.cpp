@@ -35,7 +35,7 @@ SThrobber::EAnimation SLoadingWidget::GetThrobberAnimation(FThrobberSettings Thr
 	return static_cast<SThrobber::EAnimation>(AnimationParams);
 }
 
-void SLoadingWidget::ConstructLoadingIcon(FLoadingWidgetSettings Settings)
+void SLoadingWidget::ConstructLoadingIcon(const FLoadingWidgetSettings& Settings)
 {
 	if (Settings.LoadingIconType == ELoadingIconType::LIT_ImageSequence)
 	{

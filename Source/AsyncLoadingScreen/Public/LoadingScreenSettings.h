@@ -68,8 +68,6 @@ struct FCircularThrobberSettings
 {
 	GENERATED_BODY()
 
-	FCircularThrobberSettings();
-
 	/** How many pieces there are */
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Appearance, meta = (ClampMin = "1", ClampMax = "25", UIMin = "1", UIMax = "25"))
 	int32 NumberOfPieces = 6; 
@@ -80,7 +78,7 @@ struct FCircularThrobberSettings
 
 	/** The radius of the circle. If the throbber is a child of Canvas Panel, the 'Size to Content' option must be enabled in order to set Radius. */
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Appearance)
-	float Radius = 16.0f;
+	float Radius = 64.0f;
 
 	/** Image to use for each segment of the throbber */
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Appearance)
@@ -138,7 +136,7 @@ struct ASYNCLOADINGSCREEN_API FLoadingWidgetSettings
 	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "Loading Widget Setting")
 	FVector2D TransformScale = FVector2D(1.0f, 1.0f);
 
-	/** Render transform pivot of this widget (in normalized local space).*/
+	/** Render transform pivot of the loading icon (in normalized local space).*/
 	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "Loading Widget Setting")
 	FVector2D TransformPivot = FVector2D(0.5f, 0.5f);
 
