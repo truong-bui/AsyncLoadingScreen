@@ -8,6 +8,7 @@
 #include "Slate/DeferredCleanupSlateBrush.h"
 #include "Styling/SlateBrush.h"
 #include "SHorizontalLoadingWidget.h"
+#include "SVerticalLoadingWidget.h"
 
 #define LOCTEXT_NAMESPACE "ClassicLoadingTheme"
 
@@ -107,6 +108,18 @@ UE_LOG(LogTemp, Warning, TEXT("SClassicLoadingTheme::Construct"));
 
 	// Placeholder widget
 	TSharedRef<SWidget> TipWidget = SNullWidget::NullWidget;
+	TSharedRef<SWidget> LoadingWidget = SNullWidget::NullWidget;
+
+	if (ScreenDescription.LoadingWidget.LoadingWidgetAlignment == ELoadingWidgetAlignment::LWA_Horizontal)
+	{
+		LoadingWidget = SNew(SHorizontalLoadingWidget, ScreenDescription.LoadingWidget);
+	}
+	else
+	{
+		LoadingWidget = SNew(SVerticalLoadingWidget, ScreenDescription.LoadingWidget);
+	}
+
+
 	if (ScreenDescription.Tips.TipsText.Num() > 0)
 	{
 		const int32 TipIndex = FMath::RandRange(0, ScreenDescription.Tips.TipsText.Num() - 1);
@@ -122,7 +135,7 @@ UE_LOG(LogTemp, Warning, TEXT("SClassicLoadingTheme::Construct"));
 		// lead to shared ptr crashes.
 		TipWidget = SNew(SSpacer);
 	}
-
+	
 
 	// Creating loading theme
 	Root->AddSlot()
@@ -149,9 +162,10 @@ UE_LOG(LogTemp, Warning, TEXT("SClassicLoadingTheme::Construct"));
 					// Loading bar
 					+ SHorizontalBox::Slot()
 					.VAlign(VAlign_Center)
+					.HAlign(HAlign_Center)
 					.AutoWidth()
 					[
-						SNew(SHorizontalLoadingWidget, ScreenDescription.LoadingWidget)
+						LoadingWidget
 					]
 					/*
 					[						

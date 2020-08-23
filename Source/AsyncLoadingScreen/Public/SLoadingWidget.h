@@ -11,6 +11,7 @@
 #include "Widgets/SCompoundWidget.h"
 
 class FDeferredCleanupSlateBrush;
+struct FLoadingWidgetSettings;
 
 /**
  * Loading Widget base class
@@ -23,6 +24,9 @@ public:
 
 	/** Gets the combined value of the animation properties as a single SThrobber::EAnimation value. */
 	SThrobber::EAnimation GetThrobberAnimation(FThrobberSettings ThrobberSettings) const;
+
+	/** Construct loading icon*/
+	void ConstructLoadingIcon(FLoadingWidgetSettings Settings);
 
 protected:
 	// Placeholder widgets
