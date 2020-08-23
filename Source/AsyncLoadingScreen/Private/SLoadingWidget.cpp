@@ -24,8 +24,6 @@ EActiveTimerReturnType SLoadingWidget::AnimatingImageSequence(double InCurrentTi
 		bIsActiveTimerRegistered = false;
 		return EActiveTimerReturnType::Stop;
 	}
-
-
 }
 
 SThrobber::EAnimation SLoadingWidget::GetThrobberAnimation(FThrobberSettings ThrobberSettings) const
@@ -64,7 +62,7 @@ void SLoadingWidget::ConstructLoadingIcon(FLoadingWidgetSettings Settings)
 			if (!bIsActiveTimerRegistered)
 			{
 				bIsActiveTimerRegistered = true;
-				RegisterActiveTimer(Settings.Interval, FWidgetActiveTimerDelegate::CreateSP(this, &SHorizontalLoadingWidget::AnimatingImageSequence));
+				RegisterActiveTimer(Settings.Interval, FWidgetActiveTimerDelegate::CreateSP(this, &SLoadingWidget::AnimatingImageSequence));
 			}
 		}
 		else
