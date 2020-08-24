@@ -9,6 +9,7 @@
 #include "Styling/SlateBrush.h"
 #include "SHorizontalLoadingWidget.h"
 #include "SVerticalLoadingWidget.h"
+#include "SBackgroundWidget.h"
 
 #define LOCTEXT_NAMESPACE "ClassicLoadingTheme"
 
@@ -22,9 +23,17 @@ void SClassicLoadingTheme::Construct(const FArguments& InArgs, const FALoadingSc
 	const FSlateFontInfo& LoadingFont = ScreenDescription.LoadingWidget.Font;
 
 	// Root widget
-	TSharedRef<SOverlay> Root = SNew(SOverlay);	
-	
+	TSharedRef<SOverlay> Root = SNew(SOverlay);
+
+	// Add Background image
+	Root->AddSlot()
+		[
+			SNew(SBackgroundWidget, ScreenDescription.Background)
+		];
+
+
 	// If there's an image defined
+	/*
 	if (ScreenDescription.Background.Images.Num() > 0)
 	{
 		const int32 ImageIndex = FMath::RandRange(0, ScreenDescription.Background.Images.Num() - 1);
@@ -54,6 +63,8 @@ void SClassicLoadingTheme::Construct(const FArguments& InArgs, const FALoadingSc
 			];
 		}
 	}
+	*/
+
 	/*
 	if (ScreenDescription.LoadingWidget.Images.Num() > 0)
 	{

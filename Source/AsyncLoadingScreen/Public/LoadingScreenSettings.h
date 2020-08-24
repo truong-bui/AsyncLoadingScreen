@@ -27,7 +27,7 @@ enum class ELoadingIconType : uint8
 	LIT_ImageSequence UMETA(DisplayName = "Image Sequence")
 };
 
-/** Loading Text Position */
+/** Loading Widget Alignment */
 UENUM(BlueprintType)
 enum class ELoadingWidgetAlignment : uint8
 {
@@ -94,18 +94,20 @@ struct ASYNCLOADINGSCREEN_API FBackgroundSettings
 {
 	GENERATED_BODY()
 
-	//FBackgroundSettings();
-
 	// The images display while in the loading screen on top of the movie.
-	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "Images", meta = (AllowedClasses = "Texture2D"))
+	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "Background", meta = (AllowedClasses = "Texture2D"))
 	TArray<FSoftObjectPath> Images;
 
 	// The scaling type to apply to images.
-	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "Images")
+	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "Background")
 	TEnumAsByte<EStretch::Type> ImageStretch = EStretch::ScaleToFit;
 
+	/** The padding area between the slot and the content it contains.*/
+	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "Background")
+	FMargin Padding;
+
 	// The background color to use
-	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "Images")
+	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "Background")
 	FLinearColor BackgroundColor = FLinearColor::Black;
 
 };
@@ -222,6 +224,9 @@ struct ASYNCLOADINGSCREEN_API FTipSettings
 	float TipWrapAt;
 };
 
+/**
+ * Loading Screen Settings
+ */
 USTRUCT(BlueprintType)
 struct ASYNCLOADINGSCREEN_API FALoadingScreenSettings
 {
@@ -272,8 +277,6 @@ struct ASYNCLOADINGSCREEN_API FALoadingScreenSettings
 	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "UI Settings")
 	FTipSettings Tips;
 };
-
-
 
 /**
  * Async Loading Screen Settings 

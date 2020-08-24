@@ -11,6 +11,7 @@
 #include "Widgets/SCompoundWidget.h"
 
 struct FBackgroundSettings;
+class FDeferredCleanupSlateBrush;
 
 /**
  * 
@@ -23,4 +24,7 @@ public:
 	SLATE_END_ARGS()
 
 	void Construct(const FArguments& InArgs, const FBackgroundSettings& Settings);
+
+private:
+	TSharedPtr<FDeferredCleanupSlateBrush> ImageBrush;
 };

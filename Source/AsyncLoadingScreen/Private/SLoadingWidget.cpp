@@ -15,7 +15,7 @@ EActiveTimerReturnType SLoadingWidget::AnimatingImageSequence(double InCurrentTi
 			ImageIndex = 0;
 		}
 
-		StaticCastSharedRef<SImage>(LoadingIcon)->SetImage(CleanupBrushList[ImageIndex]->GetSlateBrush());
+		StaticCastSharedRef<SImage>(LoadingIcon)->SetImage(CleanupBrushList[ImageIndex].IsValid() ? CleanupBrushList[ImageIndex]->GetSlateBrush() : nullptr);
 
 		return EActiveTimerReturnType::Continue;
 	}	
