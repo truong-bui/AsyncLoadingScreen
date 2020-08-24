@@ -10,21 +10,17 @@
 
 #include "Widgets/SCompoundWidget.h"
 
-struct FBackgroundSettings;
-class FDeferredCleanupSlateBrush;
+struct FTipSettings;
 
 /**
- * Background widget
+ * Tip widget
  */
-class SBackgroundWidget : public SCompoundWidget
+class STipWidget : public SCompoundWidget
 {
 public:
 	SLATE_BEGIN_ARGS(SClassicLoadingTheme) {}
 
 	SLATE_END_ARGS()
 
-	void Construct(const FArguments& InArgs, const FBackgroundSettings& Settings);
-
-private:
-	TSharedPtr<FDeferredCleanupSlateBrush> ImageBrush;
+	void Construct(const FArguments& InArgs, const FTipSettings& Settings);
 };

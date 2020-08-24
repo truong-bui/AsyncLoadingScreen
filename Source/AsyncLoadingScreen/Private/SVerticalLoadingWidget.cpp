@@ -1,3 +1,11 @@
+/**********************************************************************************
+ *
+ * Copyright (C) 2020 Truong Bui.
+ * Website:	https://github.com/truong-bui/AsyncLoadingScreen
+ * Licensed under the MIT License. See 'LICENSE' file for full license information.
+ *
+ **********************************************************************************/
+
 #include "SVerticalLoadingWidget.h"
 #include "LoadingScreenSettings.h"
 #include "Widgets/Layout/SSpacer.h"
@@ -24,10 +32,13 @@ void SVerticalLoadingWidget::Construct(const FArguments& InArgs, const FLoadingW
 			.AutoHeight()
 			[
 				SNew(STextBlock)
+				.ColorAndOpacity(Settings.Appearance.ColorAndOpacity)
+				.Font(Settings.Appearance.Font)
+				.ShadowOffset(Settings.Appearance.ShadowOffset)
+				.ShadowColorAndOpacity(Settings.Appearance.ShadowColorAndOpacity)
+				.Justification(Settings.Appearance.Justification)
 				.Text(Settings.LoadingText)
-				.Font(Settings.Font)
 			];
-
 
 		// Add a Spacer in middle
 		Root.Get().AddSlot()
@@ -78,8 +89,12 @@ void SVerticalLoadingWidget::Construct(const FArguments& InArgs, const FLoadingW
 			.AutoHeight()
 			[
 				SNew(STextBlock)
+				.ColorAndOpacity(Settings.Appearance.ColorAndOpacity)
+				.Font(Settings.Appearance.Font)
+				.ShadowOffset(Settings.Appearance.ShadowOffset)
+				.ShadowColorAndOpacity(Settings.Appearance.ShadowColorAndOpacity)
+				.Justification(Settings.Appearance.Justification)
 				.Text(Settings.LoadingText)
-				.Font(Settings.Font)
 			];
 	}
 

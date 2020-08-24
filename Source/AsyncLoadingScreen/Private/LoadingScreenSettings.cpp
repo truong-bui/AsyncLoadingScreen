@@ -1,3 +1,11 @@
+/**********************************************************************************
+ *
+ * Copyright (C) 2020 Truong Bui.
+ * Website:	https://github.com/truong-bui/AsyncLoadingScreen
+ * Licensed under the MIT License. See 'LICENSE' file for full license information.
+ *
+ **********************************************************************************/
+
 #include "LoadingScreenSettings.h"
 #include "UObject/ConstructorHelpers.h"
 #include "Engine/Font.h"
@@ -8,17 +16,17 @@ FLoadingWidgetSettings::FLoadingWidgetSettings() : LoadingText(LOCTEXT("Loading"
 
 ULoadingScreenSettings::ULoadingScreenSettings(const FObjectInitializer& Initializer) : Super(Initializer)
 {
-	StartupLoadingScreen.Tips.TipWrapAt = 1000.0f;
+	StartupLoadingScreen.Tip.TipWrapAt = 1000.0f;
 	StartupLoadingScreen.bShowWidgetOverlay = false;
-	DefaultLoadingScreen.Tips.TipWrapAt = 1000.0f;
+	DefaultLoadingScreen.Tip.TipWrapAt = 1000.0f;
 	// Set default font
 	if (!IsRunningDedicatedServer())
 	{
 		static ConstructorHelpers::FObjectFinder<UFont> RobotoFontObj(TEXT("/Engine/EngineFonts/Roboto"));
-		StartupLoadingScreen.Tips.Font = FSlateFontInfo(RobotoFontObj.Object, 20, FName("Normal"));
-		DefaultLoadingScreen.Tips.Font = FSlateFontInfo(RobotoFontObj.Object, 20, FName("Normal"));
-		StartupLoadingScreen.LoadingWidget.Font = FSlateFontInfo(RobotoFontObj.Object, 32, FName("Bold"));
-		DefaultLoadingScreen.LoadingWidget.Font = FSlateFontInfo(RobotoFontObj.Object, 32, FName("Bold"));	
+		StartupLoadingScreen.Tip.Appearance.Font = FSlateFontInfo(RobotoFontObj.Object, 20, FName("Normal"));
+		DefaultLoadingScreen.Tip.Appearance.Font = FSlateFontInfo(RobotoFontObj.Object, 20, FName("Normal"));
+		StartupLoadingScreen.LoadingWidget.Appearance.Font = FSlateFontInfo(RobotoFontObj.Object, 32, FName("Bold"));
+		DefaultLoadingScreen.LoadingWidget.Appearance.Font = FSlateFontInfo(RobotoFontObj.Object, 32, FName("Bold"));
 	}
 }
 

@@ -1,3 +1,11 @@
+/**********************************************************************************
+ *
+ * Copyright (C) 2020 Truong Bui.
+ * Website:	https://github.com/truong-bui/AsyncLoadingScreen
+ * Licensed under the MIT License. See 'LICENSE' file for full license information.
+ *
+ **********************************************************************************/
+
 #include "ClassicLoadingTheme.h"
 #include "Engine/UserInterfaceSettings.h"
 #include "Widgets/Layout/SSafeZone.h"
@@ -10,6 +18,7 @@
 #include "SHorizontalLoadingWidget.h"
 #include "SVerticalLoadingWidget.h"
 #include "SBackgroundWidget.h"
+#include "STipWidget.h"
 
 #define LOCTEXT_NAMESPACE "ClassicLoadingTheme"
 
@@ -17,10 +26,6 @@ void SClassicLoadingTheme::Construct(const FArguments& InArgs, const FALoadingSc
 {		
 
 	InScreenDescription = ScreenDescription;
-	//const ULoadingScreenSettings* Settings = GetDefault<ULoadingScreenSettings>();
-
-	const FSlateFontInfo& TipFont = ScreenDescription.Tips.Font;
-	const FSlateFontInfo& LoadingFont = ScreenDescription.LoadingWidget.Font;
 
 	// Root widget
 	TSharedRef<SOverlay> Root = SNew(SOverlay);
@@ -115,7 +120,6 @@ UE_LOG(LogTemp, Warning, TEXT("SClassicLoadingTheme::Construct"));
 	}
 */
 	// Placeholder widget
-	TSharedRef<SWidget> TipWidget = SNullWidget::NullWidget;
 	TSharedRef<SWidget> LoadingWidget = SNullWidget::NullWidget;
 
 	if (ScreenDescription.LoadingWidget.LoadingWidgetAlignment == ELoadingWidgetAlignment::LWA_Horizontal)
@@ -125,23 +129,6 @@ UE_LOG(LogTemp, Warning, TEXT("SClassicLoadingTheme::Construct"));
 	else
 	{
 		LoadingWidget = SNew(SVerticalLoadingWidget, ScreenDescription.LoadingWidget);
-	}
-
-
-	if (ScreenDescription.Tips.TipsText.Num() > 0)
-	{
-		const int32 TipIndex = FMath::RandRange(0, ScreenDescription.Tips.TipsText.Num() - 1);
-
-		TipWidget = SNew(STextBlock)
-			.WrapTextAt(ScreenDescription.Tips.TipWrapAt)
-			.Font(TipFont)
-			.Text(ScreenDescription.Tips.TipsText[TipIndex]);
-	}
-	else
-	{
-		// Need to use a spacer when being rendered on another thread, incrementing the SNullWidget will
-		// lead to shared ptr crashes.
-		TipWidget = SNew(SSpacer);
 	}
 	
 
@@ -209,7 +196,12 @@ UE_LOG(LogTemp, Warning, TEXT("SClassicLoadingTheme::Construct"));
 					.VAlign(VAlign_Center)
 					.Padding(FMargin(10.0f))
 					[
-						TipWidget		
+						// Add tip text
+						SNew(STipWidget, ScreenDescription.Tip)
+						//SNew(STextBlock)
+						//.WrapTextAt(ScreenDescription.Tip.TipWrapAt)
+						//.Font(ScreenDescription.Tip.Font)
+						//.Text(ScreenDescription.Tip.TipText[0])
 					]
 				]
 			]

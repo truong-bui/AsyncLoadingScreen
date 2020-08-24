@@ -37,6 +37,33 @@ enum class ELoadingWidgetAlignment : uint8
 	LWA_Vertical UMETA(DisplayName = "Vertical"),
 };
 
+// Text appearance settings
+USTRUCT(BlueprintType)
+struct FTextAppearance
+{
+	GENERATED_BODY()
+
+	/** Text color and opacity */
+	UPROPERTY(BlueprintReadWrite, Config, EditAnywhere, Category = "Text Appearance")
+	FSlateColor ColorAndOpacity = FSlateColor(FLinearColor::White);
+
+	// The font to render the text with.
+	UPROPERTY(BlueprintReadWrite, Config, EditAnywhere, Category = "Text Appearance")
+	FSlateFontInfo Font;
+
+	/** Drop shadow offset in pixels */
+	UPROPERTY(BlueprintReadWrite, Config, EditAnywhere, Category = "Text Appearance")
+	FVector2D ShadowOffset;
+
+	/** Shadow color and opacity */
+	UPROPERTY(BlueprintReadWrite, Config, EditAnywhere, Category = "Text Appearance")
+	FLinearColor ShadowColorAndOpacity;
+
+	/** How the text should be aligned with the margin. */
+	UPROPERTY(BlueprintReadWrite, Config, EditAnywhere, Category = "Text Appearance")
+	TEnumAsByte <ETextJustify::Type> Justification;
+};
+
 USTRUCT(BlueprintType)
 struct FThrobberSettings
 {
@@ -94,7 +121,7 @@ struct ASYNCLOADINGSCREEN_API FBackgroundSettings
 {
 	GENERATED_BODY()
 
-	// The images display while in the loading screen on top of the movie.
+	// The images randomly display while in the loading screen on top of the movie 
 	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "Background", meta = (AllowedClasses = "Texture2D"))
 	TArray<FSoftObjectPath> Images;
 
@@ -154,9 +181,9 @@ struct ASYNCLOADINGSCREEN_API FLoadingWidgetSettings
 	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "Loading Widget Setting")
 	bool bLoadingTextTopPosition = true;
 
-	// The font of the loading text
-	UPROPERTY(BlueprintReadWrite, Config, EditAnywhere, Category = "Loading Widget Setting")
-	FSlateFontInfo Font;	
+	// Loading text appearance settings
+	UPROPERTY(BlueprintReadWrite, Config, EditAnywhere, Category = "Tip Settings")
+	FTextAppearance Appearance;
 
 	/** Throbber settings. Ignore this if you don't choose the 'Throbber' widget type*/
 	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "Loading Widget Setting")
@@ -207,17 +234,13 @@ struct ASYNCLOADINGSCREEN_API FTipSettings
 {
 	GENERATED_BODY()
 
-	// The tips to display on the load screen.
+	// The tip text randomly display in the loading screen.
 	UPROPERTY(BlueprintReadWrite, Config, EditAnywhere, Category = "Tip Settings", meta = (MultiLine = true))
-	TArray<FText> TipsText;
+	TArray<FText> TipText;
 
-	// The background color to use for the tips
-	//UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "Tip Settings")
-	//FLinearColor TipBackgroundColor = FLinearColor(0, 0, 0, 0.75f);
-
-	// The font of Tip text.
+	// Tip text appearance settings
 	UPROPERTY(BlueprintReadWrite, Config, EditAnywhere, Category = "Tip Settings")
-	FSlateFontInfo Font;
+	FTextAppearance Appearance;
 
 	// The size of the tip before it's wrapped to the next line
 	UPROPERTY(BlueprintReadWrite, Config, EditAnywhere, Category = "Tip Settings")
@@ -275,7 +298,7 @@ struct ASYNCLOADINGSCREEN_API FALoadingScreenSettings
 	
 	/** Tips text for the loading screen. Ignore this if you choose "Show Widget Overlay = false" */
 	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "UI Settings")
-	FTipSettings Tips;
+	FTipSettings Tip;
 };
 
 /**

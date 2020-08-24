@@ -1,3 +1,11 @@
+/**********************************************************************************
+ *
+ * Copyright (C) 2020 Truong Bui.
+ * Website:	https://github.com/truong-bui/AsyncLoadingScreen
+ * Licensed under the MIT License. See 'LICENSE' file for full license information.
+ *
+ **********************************************************************************/
+
 #include "SHorizontalLoadingWidget.h"
 #include "LoadingScreenSettings.h"
 #include "Widgets/Layout/SSpacer.h"
@@ -43,8 +51,12 @@ void SHorizontalLoadingWidget::Construct(const FArguments& InArgs, const FLoadin
 			.AutoWidth()
 			[
 				SNew(STextBlock)
+				.ColorAndOpacity(Settings.Appearance.ColorAndOpacity)
+				.Font(Settings.Appearance.Font)
+				.ShadowOffset(Settings.Appearance.ShadowOffset)
+				.ShadowColorAndOpacity(Settings.Appearance.ShadowColorAndOpacity)
+				.Justification(Settings.Appearance.Justification)
 				.Text(Settings.LoadingText)
-				.Font(Settings.Font)
 			];
 	}
 
@@ -58,8 +70,12 @@ void SHorizontalLoadingWidget::Construct(const FArguments& InArgs, const FLoadin
 			.AutoWidth()
 			[
 				SNew(STextBlock)
+				.ColorAndOpacity(Settings.Appearance.ColorAndOpacity)
+				.Font(Settings.Appearance.Font)
+				.ShadowOffset(Settings.Appearance.ShadowOffset)
+				.ShadowColorAndOpacity(Settings.Appearance.ShadowColorAndOpacity)
+				.Justification(Settings.Appearance.Justification)
 				.Text(Settings.LoadingText)
-				.Font(Settings.Font)
 			];
 
 
