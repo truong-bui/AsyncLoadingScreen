@@ -13,7 +13,6 @@ void FAsyncLoadingScreenModule::StartupModule()
 
 	if (!IsRunningDedicatedServer() && FSlateApplication::IsInitialized())
 	{
-		// Load for cooked reference
 		const ULoadingScreenSettings* Settings = GetDefault<ULoadingScreenSettings>();
 		/**
 		for (const FSoftObjectPath& Ref : Settings->StartupLoadingScreen.Background.Images)
@@ -60,9 +59,6 @@ void FAsyncLoadingScreenModule::ShutdownModule()
 		// TODO: Unregister later
 		GetMoviePlayer()->OnPrepareLoadingScreen().RemoveAll(this);
 	}
-
-
-	//ILoadingScreenInterface::ShutdownModule();
 }
 
 /*

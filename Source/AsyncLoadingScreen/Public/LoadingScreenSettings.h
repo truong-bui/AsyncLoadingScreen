@@ -164,7 +164,7 @@ struct ASYNCLOADINGSCREEN_API FLoadingWidgetSettings
 	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "Loading Widget Setting")
 	FCircularThrobberSettings CircularThrobberSettings;
 
-	/** A sequence of images to animate the loading icon. Ignore this if you don't choose the 'Image Sequence' widget type*/
+	/** An array of images for animating the loading icon. Ignore this if you don't choose the 'Image Sequence' widget type*/
 	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "Loading Widget Setting", meta = (AllowedClasses = "Texture2D"))
 	TArray<FSoftObjectPath> Images;	
 
@@ -276,7 +276,7 @@ struct ASYNCLOADINGSCREEN_API FALoadingScreenSettings
 
 
 /**
- * Async Loading Screen plugin Settings 
+ * Async Loading Screen Settings 
  */
 UCLASS(Config = "Game", defaultconfig, meta = (DisplayName = "Async Loading Screen"))
 class ASYNCLOADINGSCREEN_API ULoadingScreenSettings : public UDeveloperSettings
@@ -288,7 +288,7 @@ public:
 	ULoadingScreenSettings(const FObjectInitializer& Initializer);
 	
 	/**
-	 * The startup loading screen when the users first open the game. Setup any studio logo movies here.
+	 * The startup loading screen when you first open the game. Setup any studio logo movies here.
 	 */
 	UPROPERTY(Config, EditAnywhere, Category = "General")
 	FALoadingScreenSettings StartupLoadingScreen;

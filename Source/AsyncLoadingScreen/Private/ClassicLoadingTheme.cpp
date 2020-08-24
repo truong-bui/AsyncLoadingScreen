@@ -103,9 +103,6 @@ UE_LOG(LogTemp, Warning, TEXT("SClassicLoadingTheme::Construct"));
 		}
 	}
 */
-	
-
-
 	// Placeholder widget
 	TSharedRef<SWidget> TipWidget = SNullWidget::NullWidget;
 	TSharedRef<SWidget> LoadingWidget = SNullWidget::NullWidget;
@@ -186,7 +183,6 @@ UE_LOG(LogTemp, Warning, TEXT("SClassicLoadingTheme::Construct"));
 					]
 					*/
 					
-
 					+ SHorizontalBox::Slot()
 					.FillWidth(1)
 					.HAlign(HAlign_Fill)
