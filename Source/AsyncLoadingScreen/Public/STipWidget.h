@@ -18,7 +18,7 @@ struct FTipSettings;
 class STipWidget : public SCompoundWidget
 {
 public:
-	SLATE_BEGIN_ARGS(SClassicLoadingTheme) {}
+	SLATE_BEGIN_ARGS(STipWidget) {}
 
 	SLATE_END_ARGS()
 

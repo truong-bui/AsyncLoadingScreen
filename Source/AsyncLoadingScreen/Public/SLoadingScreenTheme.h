@@ -10,21 +10,20 @@
 
 #include "Widgets/SCompoundWidget.h"
 
-struct FBackgroundSettings;
-class FDeferredCleanupSlateBrush;
-
 /**
- * Background widget
+ * Loading screen base theme
  */
-class SBackgroundWidget : public SCompoundWidget
+class SLoadingScreenTheme : public SCompoundWidget
 {
 public:
-	SLATE_BEGIN_ARGS(SBackgroundWidget) {}
+	static float PointSizeToSlateUnits(float PointSize)
+	{
+		const float SlateFreeTypeHorizontalResolutionDPI = 96.0f;
+		const float FreeTypeNativeDPI = 72.0;
+		const float PixelSize = PointSize * (SlateFreeTypeHorizontalResolutionDPI / FreeTypeNativeDPI);
+		return PixelSize;
+	}
 
-	SLATE_END_ARGS()
-
-	void Construct(const FArguments& InArgs, const FBackgroundSettings& Settings);
-
-private:
-	TSharedPtr<FDeferredCleanupSlateBrush> ImageBrush;
+protected:
+	float GetDPIScale() const;
 };

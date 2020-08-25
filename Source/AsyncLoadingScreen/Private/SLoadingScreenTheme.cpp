@@ -6,21 +6,12 @@
  *
  **********************************************************************************/
 
-#pragma once
+#include "SLoadingScreenTheme.h"
 
-#include "SLoadingWidget.h"
-
-struct FLoadingWidgetSettings;
-
-/**
- * 
- */
-class SHorizontalLoadingWidget : public SLoadingWidget
+float SLoadingScreenTheme::GetDPIScale() const
 {
-public:
-	SLATE_BEGIN_ARGS(SHorizontalLoadingWidget) {}
+	const FVector2D& DrawSize = GetTickSpaceGeometry().ToPaintGeometry().GetLocalSize();
+	const FIntPoint Size((int32)DrawSize.X, (int32)DrawSize.Y);
 
-	SLATE_END_ARGS()
-
-	void Construct(const FArguments& InArgs, const FLoadingWidgetSettings& Settings);
-};
+	return GetDefault<UUserInterfaceSettings>()->GetDPIScaleBasedOnSize(Size);
+}

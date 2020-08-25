@@ -16,7 +16,7 @@
 class SVerticalLoadingWidget : public SLoadingWidget
 {
 public:
-	SLATE_BEGIN_ARGS(SClassicLoadingTheme) {}
+	SLATE_BEGIN_ARGS(SVerticalLoadingWidget) {}
 
 	SLATE_END_ARGS()
 
