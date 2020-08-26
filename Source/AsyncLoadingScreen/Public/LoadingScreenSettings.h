@@ -15,6 +15,20 @@
 #include "Styling/SlateBrush.h"
 #include "LoadingScreenSettings.generated.h"
 
+
+/** 
+ * Asynce Loading Screen Themes
+ */
+UENUM(BlueprintType)
+enum class EAsynceLoadingScreenTheme : uint8
+{
+	/** 
+	 * The loading widget is at the center of the screen, tips can be at the bottom or top. 	
+	 * The Centrality theme is a good choice if your loading icon is the main actor. 
+	 */
+	ALST_Centrality UMETA(DisplayName = "Centrality")
+};
+
 /** Loading Icon Type*/
 UENUM(BlueprintType)
 enum class ELoadingIconType : uint8
@@ -27,14 +41,28 @@ enum class ELoadingIconType : uint8
 	LIT_ImageSequence UMETA(DisplayName = "Image Sequence")
 };
 
-/** Loading Widget Alignment */
+/** Loading Widget type */
 UENUM(BlueprintType)
-enum class ELoadingWidgetAlignment : uint8
+enum class ELoadingWidgetType : uint8
 {
 	/** Horizontal alignment */
-	LWA_Horizontal UMETA(DisplayName = "Horizontal"),
+	LWT_Horizontal UMETA(DisplayName = "Horizontal"),
 	/** Vertical alignment */
-	LWA_Vertical UMETA(DisplayName = "Vertical"),
+	LWT_Vertical UMETA(DisplayName = "Vertical"),
+};
+
+/** Alignment for widget*/
+USTRUCT(BlueprintType)
+struct FWidgetAlignment
+{
+	GENERATED_BODY()
+	/** The horizontal alignment of the widget.*/
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Alignment Setting")
+	TEnumAsByte<EHorizontalAlignment> HorizontalAlignment = EHorizontalAlignment::HAlign_Center;
+
+	/** The vertical alignment of the widget.*/
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Alignment Setting")
+	TEnumAsByte<EVerticalAlignment> VerticalAlignment = EVerticalAlignment::VAlign_Center;
 };
 
 // Text appearance settings
@@ -129,11 +157,11 @@ struct ASYNCLOADINGSCREEN_API FBackgroundSettings
 	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "Background")
 	TEnumAsByte<EStretch::Type> ImageStretch = EStretch::ScaleToFit;
 
-	/** The padding area between the slot and the content it contains.*/
+	/** The padding area between the border and the image it contains.*/
 	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "Background")
 	FMargin Padding;
 
-	// The background color to use
+	// The border's background color if there is any image defined. If padding = 0 you will not see the border color.
 	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "Background")
 	FLinearColor BackgroundColor = FLinearColor::Black;
 
@@ -155,7 +183,7 @@ struct ASYNCLOADINGSCREEN_API FLoadingWidgetSettings
 	
 	/** Loading Widget alignment type*/
 	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "Loading Widget Setting")
-	ELoadingWidgetAlignment LoadingWidgetAlignment = ELoadingWidgetAlignment::LWA_Horizontal;
+	ELoadingWidgetType LoadingWidgetType = ELoadingWidgetType::LWT_Horizontal;
 
 	/** Render transform translation of the loading icon.*/
 	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "Loading Widget Setting")
@@ -204,21 +232,13 @@ struct ASYNCLOADINGSCREEN_API FLoadingWidgetSettings
 	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "Loading Widget Setting", meta = (UIMax = 1.00, UIMin = 0.00, ClampMin = "0", ClampMax = "1"))
 	float Interval = 0.05f;
 	
-	/** The horizontal alignment of the loading text.*/
+	/** The alignment of the loading text.*/
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Loading Widget Setting")
-	TEnumAsByte<EHorizontalAlignment> TextHorizontalAlignment = EHorizontalAlignment::HAlign_Center;
+	FWidgetAlignment TextAlignment;
 
-	/** The vertical alignment of the loading text.*/
+	/** The alignment of the loading icon. */
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Loading Widget Setting")
-	TEnumAsByte<EVerticalAlignment> TextVerticalAlignment = EVerticalAlignment::VAlign_Center;
-
-	/** The horizontal alignment of the loading icon. */
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Loading Widget Setting")
-	TEnumAsByte<EHorizontalAlignment> LoadingIconHorizontalAlignment = EHorizontalAlignment::HAlign_Center;
-
-	/** The vertical alignment of the loading icon*/
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Loading Widget Setting")
-	TEnumAsByte<EVerticalAlignment> LoadingIconTextVerticalAlignment = EVerticalAlignment::VAlign_Center;
+	FWidgetAlignment LoadingIconAlignment;
 
 	/** Empty space between the loading text and the loading icon */
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Loading Widget Setting")
@@ -285,21 +305,59 @@ struct ASYNCLOADINGSCREEN_API FALoadingScreenSettings
 	/** 
 	 * Should we show the loading screen widget (background/tips/loading widget)? Generally you'll want to set this to false if you just want to show a movie.
 	 */ 
-	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "Movies Settings")
+	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "Loading Screen Settings")
 	bool bShowWidgetOverlay = true;
 
+	/**
+	 * Select async loading screen theme. Ignore this if you choose "Show Widget Overlay = false"
+	 */
+	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "Loading Screen Settings")
+	EAsynceLoadingScreenTheme Theme = EAsynceLoadingScreenTheme::ALST_Centrality;
+
 	/** Background content for the loading screen. Ignore this if you choose "Show Widget Overlay = false" */
-	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "UI Settings")
+	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "Loading Screen Settings")
 	FBackgroundSettings Background;
 	
 	/** Loading content for the loading screen. Ignore this if you choose "Show Widget Overlay = false" */
-	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "UI Settings")
+	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "Loading Screen Settings")
 	FLoadingWidgetSettings LoadingWidget;
 	
 	/** Tips text for the loading screen. Ignore this if you choose "Show Widget Overlay = false" */
-	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "UI Settings")
+	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "Loading Screen Settings")
 	FTipSettings Tip;
 };
+
+/** Centrality Theme settings*/
+USTRUCT(BlueprintType)
+struct FCentralityThemeSettings
+{
+	GENERATED_BODY()
+
+	/** Is tip located at the bottom or top? */
+	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "Centrality Theme")
+	bool bTipAtBottom = true;
+	
+	/** Padding area based on tip text located at the bottom or top position.*/
+	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "Centrality Theme")
+	float Padding = 0.0f;
+
+	/** The padding area between the border and the tips it contains.*/
+	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "Centrality Theme")
+	FMargin TipPadding;
+
+	/** The alignment of the tips. */
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Centrality Theme")
+	FWidgetAlignment TipAlignment;
+
+	/** Background appearance settings for tip area */
+	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "Centrality Theme")
+	FSlateBrush TipBackground;
+
+	// The color and opacity for the background of the tip area
+	//UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "Centrality Theme")
+	//FLinearColor TipBackgroundColor = FLinearColor::Black;
+};
+
 
 /**
  * Async Loading Screen Settings 
@@ -325,4 +383,9 @@ public:
 	UPROPERTY(Config, EditAnywhere, Category = "General")
 	FALoadingScreenSettings DefaultLoadingScreen;
 	
+	/**
+	 * Centrality Theme settings.
+	 */
+	UPROPERTY(Config, EditAnywhere, Category = "Themes")
+	FCentralityThemeSettings Centrality;
 };

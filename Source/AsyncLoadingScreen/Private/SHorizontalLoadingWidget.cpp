@@ -27,8 +27,8 @@ void SHorizontalLoadingWidget::Construct(const FArguments& InArgs, const FLoadin
 	{
 		// Add Loading Icon on the left first
 		Root.Get().AddSlot()
-			.HAlign(Settings.LoadingIconHorizontalAlignment)
-			.VAlign(Settings.LoadingIconTextVerticalAlignment)
+			.HAlign(Settings.LoadingIconAlignment.HorizontalAlignment)
+			.VAlign(Settings.LoadingIconAlignment.VerticalAlignment)
 			.AutoWidth()
 			[
 				LoadingIcon
@@ -46,8 +46,8 @@ void SHorizontalLoadingWidget::Construct(const FArguments& InArgs, const FLoadin
 
 		// Add Loading Text on the right
 		Root.Get().AddSlot()
-			.HAlign(Settings.TextHorizontalAlignment)
-			.VAlign(Settings.TextVerticalAlignment)
+			.HAlign(Settings.TextAlignment.HorizontalAlignment)
+			.VAlign(Settings.TextAlignment.VerticalAlignment)
 			.AutoWidth()
 			[
 				SNew(STextBlock)
@@ -65,8 +65,8 @@ void SHorizontalLoadingWidget::Construct(const FArguments& InArgs, const FLoadin
 	{
 		// Add Loading Text on the left first
 		Root.Get().AddSlot()
-			.HAlign(Settings.TextHorizontalAlignment)
-			.VAlign(Settings.TextVerticalAlignment)
+			.HAlign(Settings.TextAlignment.HorizontalAlignment)
+			.VAlign(Settings.TextAlignment.VerticalAlignment)
 			.AutoWidth()
 			[
 				SNew(STextBlock)
@@ -91,8 +91,8 @@ void SHorizontalLoadingWidget::Construct(const FArguments& InArgs, const FLoadin
 
 		// Add Loading Icon on the right finally
 		Root.Get().AddSlot()
-			.HAlign(Settings.LoadingIconHorizontalAlignment)
-			.VAlign(Settings.LoadingIconTextVerticalAlignment)
+			.HAlign(Settings.LoadingIconAlignment.HorizontalAlignment)
+			.VAlign(Settings.LoadingIconAlignment.VerticalAlignment)
 			.AutoWidth()
 			[
 				LoadingIcon

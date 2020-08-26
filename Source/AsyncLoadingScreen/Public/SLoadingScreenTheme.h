@@ -9,6 +9,8 @@
 #pragma once
 
 #include "Widgets/SCompoundWidget.h"
+#include "LoadingScreenSettings.h"
+
 
 /**
  * Loading screen base theme
@@ -16,14 +18,20 @@
 class SLoadingScreenTheme : public SCompoundWidget
 {
 public:
-	static float PointSizeToSlateUnits(float PointSize)
-	{
-		const float SlateFreeTypeHorizontalResolutionDPI = 96.0f;
-		const float FreeTypeNativeDPI = 72.0;
-		const float PixelSize = PointSize * (SlateFreeTypeHorizontalResolutionDPI / FreeTypeNativeDPI);
-		return PixelSize;
-	}
+	SLATE_BEGIN_ARGS(SLoadingScreenTheme) {}
 
-protected:
-	float GetDPIScale() const;
+	SLATE_END_ARGS()
+
+	/**
+	 * Construct this widget
+	 */
+	void Construct(const FArguments& InArgs, const FALoadingScreenSettings& Settings);
+
+	/**
+	 * Construct Centrality theme loading screen
+	 */
+	void ConstructCentralityTheme(const FALoadingScreenSettings& Settings, const FCentralityThemeSettings& ThemeSettings);
+
+	static float PointSizeToSlateUnits(float PointSize);
+	float GetDPIScale() const;	
 };

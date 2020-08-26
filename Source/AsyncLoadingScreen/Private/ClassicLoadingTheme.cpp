@@ -122,7 +122,7 @@ UE_LOG(LogTemp, Warning, TEXT("SClassicLoadingTheme::Construct"));
 	// Placeholder widget
 	TSharedRef<SWidget> LoadingWidget = SNullWidget::NullWidget;
 
-	if (ScreenDescription.LoadingWidget.LoadingWidgetAlignment == ELoadingWidgetAlignment::LWA_Horizontal)
+	if (ScreenDescription.LoadingWidget.LoadingWidgetType == ELoadingWidgetType::LWT_Horizontal)
 	{
 		LoadingWidget = SNew(SHorizontalLoadingWidget, ScreenDescription.LoadingWidget);
 	}

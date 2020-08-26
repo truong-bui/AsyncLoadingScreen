@@ -8,8 +8,8 @@
 
 #include "AsyncLoadingScreen.h"
 #include "MoviePlayer.h"
-#include "ClassicLoadingTheme.h"
 #include "LoadingScreenSettings.h"
+#include "SLoadingScreenTheme.h"
 
 #define LOCTEXT_NAMESPACE "FAsyncLoadingScreenModule"
 
@@ -99,7 +99,7 @@ void FAsyncLoadingScreenModule::SetupLoadingScreen(const FALoadingScreenSettings
 
 	if (LoadingScreenSettings.bShowWidgetOverlay)
 	{
-		LoadingScreen.WidgetLoadingScreen = SNew(SClassicLoadingTheme, LoadingScreenSettings);
+		LoadingScreen.WidgetLoadingScreen = SNew(SLoadingScreenTheme, LoadingScreenSettings);
 	}
 	
 	GetMoviePlayer()->SetupLoadingScreen(LoadingScreen);
