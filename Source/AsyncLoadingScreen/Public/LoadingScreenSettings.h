@@ -1,10 +1,10 @@
-/**********************************************************************************
- *
- * Copyright (C) 2020 Truong Bui.
- * Website:	https://github.com/truong-bui/AsyncLoadingScreen
- * Licensed under the MIT License. See 'LICENSE' file for full license information.
- * 
- **********************************************************************************/
+/************************************************************************************
+ *																					*
+ * Copyright (C) 2020 Truong Bui.													*
+ * Website:	https://github.com/truong-bui/AsyncLoadingScreen						*
+ * Licensed under the MIT License. See 'LICENSE' file for full license information. *
+ *																					*
+ ************************************************************************************/
 
 #pragma once
 
@@ -206,11 +206,11 @@ struct ASYNCLOADINGSCREEN_API FLoadingWidgetSettings
 	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "Loading Widget Setting")
 	FText LoadingText;
 
-	/** Is Loading Text on the right of the loading icon? Ignore this if you don't choose Alignment = Horizontal.*/
+	/** Is Loading Text on the right of the loading icon? Ignore this if you don't choose Loading Widget Type = Horizontal.*/
 	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "Loading Widget Setting")
 	bool bLoadingTextRightPosition = true;
 
-	/** Is Loading Text on the top of the loading icon? Ignore this if you don't choose Alignment = Vertical.*/
+	/** Is Loading Text on the top of the loading icon? Ignore this if you don't choose Loading Widget Type = Vertical.*/
 	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "Loading Widget Setting")
 	bool bLoadingTextTopPosition = true;
 
@@ -218,21 +218,21 @@ struct ASYNCLOADINGSCREEN_API FLoadingWidgetSettings
 	UPROPERTY(BlueprintReadWrite, Config, EditAnywhere, Category = "Tip Settings")
 	FTextAppearance Appearance;
 
-	/** Throbber settings. Ignore this if you don't choose the 'Throbber' widget type*/
+	/** Throbber settings. Ignore this if you don't choose the 'Throbber' icon type*/
 	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "Loading Widget Setting")
 	FThrobberSettings ThrobberSettings;
 
-	/** Circular Throbber settings. Ignore this if you don't choose the 'Circular Throbber' widget type*/
+	/** Circular Throbber settings. Ignore this if you don't choose the 'Circular Throbber' icon type*/
 	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "Loading Widget Setting")
 	FCircularThrobberSettings CircularThrobberSettings;
 
-	/** An array of images for animating the loading icon. Ignore this if you don't choose the 'Image Sequence' widget type*/
+	/** An array of images for animating the loading icon. Ignore this if you don't choose the 'Image Sequence' icon type*/
 	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "Loading Widget Setting", meta = (AllowedClasses = "Texture2D"))
 	TArray<FSoftObjectPath> Images;	
 
 	/** 
-	 * Time in second to change the images, the smaller value the faster of the animation. Interval = 0 means that images will be changed every frame. 
-	 * Ignore this if you don't choose the 'Image Sequence' widget type.
+	 * Time in second to update the images, the smaller value the faster of the animation. A zero value will update the images every frame. 
+	 * Ignore this if you don't choose the 'Image Sequence' icon type.
 	 */
 	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "Loading Widget Setting", meta = (UIMax = 1.00, UIMin = 0.00, ClampMin = "0", ClampMax = "1"))
 	float Interval = 0.05f;
@@ -327,9 +327,9 @@ struct ASYNCLOADINGSCREEN_API FALoadingScreenSettings
 	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "Loading Screen Settings")
 	FLoadingWidgetSettings LoadingWidget;
 	
-	/** Tips text for the loading screen. Ignore this if you choose "Show Widget Overlay = false" */
+	/** Tips text widget for the loading screen. Ignore this if you choose "Show Widget Overlay = false" */
 	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "Loading Screen Settings")
-	FTipSettings Tip;
+	FTipSettings TipWidget;
 };
 
 /** Classic Theme settings*/
@@ -342,13 +342,13 @@ struct FClassicThemeSettings
 	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "Classic Theme")
 	bool bWidgetAtBottom = true;
 
-	/** Is loading widget left of the tip? */
+	/** Is loading widget on the left of the tip? */
 	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "Classic Theme")
 	bool bLoadingWidgetLeft = true;
 
-	/** The padding area between the background and the widget it contains.*/
+	/** The padding area between the border and the widget it contains.*/
 	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "Classic Theme")
-	FMargin WidgetPadding;
+	FMargin WidgetBorderPadding;
 
 	/** The empty space between loading widget and the tip.*/
 	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "Classic Theme")
@@ -358,9 +358,9 @@ struct FClassicThemeSettings
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Classic Theme")
 	FWidgetAlignment TipAlignment;
 
-	/** Background appearance settings for widgets area */
+	/** Background appearance settings for the border widget */
 	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "Classic Theme")
-	FSlateBrush WidgetBackground;
+	FSlateBrush WidgetBorderBackground;
 };
 
 /** Centrality Theme settings*/
@@ -373,13 +373,13 @@ struct FCentralityThemeSettings
 	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "Centrality Theme")
 	bool bTipAtBottom = true;
 	
-	/** Padding bottom/top depend on the tip located at the bottom or top position.*/
+	/** Padding at bottom or top depend on the tip located at the bottom or top position.*/
 	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "Centrality Theme")
-	float Padding = 0.0f;
+	float TipWidgetVerticalPadding = 0.0f;
 
 	/** The padding area between the border and the tips it contains.*/
 	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "Centrality Theme")
-	FMargin TipPadding;
+	FMargin WidgetBorderPadding;
 
 	/** The alignment of the tips. */
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Centrality Theme")
@@ -387,7 +387,7 @@ struct FCentralityThemeSettings
 
 	/** Background appearance settings for tip area */
 	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "Centrality Theme")
-	FSlateBrush TipBackground;
+	FSlateBrush WidgetBorderBackground;
 
 	// The color and opacity for the background of the tip area
 	//UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "Centrality Theme")

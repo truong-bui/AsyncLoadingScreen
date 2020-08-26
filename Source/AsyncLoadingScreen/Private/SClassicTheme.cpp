@@ -1,10 +1,10 @@
-/**********************************************************************************
- *
- * Copyright (C) 2020 Truong Bui.
- * Website:	https://github.com/truong-bui/AsyncLoadingScreen
- * Licensed under the MIT License. See 'LICENSE' file for full license information.
- *
- **********************************************************************************/
+/************************************************************************************
+ *																					*
+ * Copyright (C) 2020 Truong Bui.													*
+ * Website:	https://github.com/truong-bui/AsyncLoadingScreen						*
+ * Licensed under the MIT License. See 'LICENSE' file for full license information. *
+ *																					*
+ ************************************************************************************/
 
 #include "SClassicTheme.h"
 #include "LoadingScreenSettings.h"
@@ -67,7 +67,7 @@ void SClassicTheme::Construct(const FArguments& InArgs, const FALoadingScreenSet
 			.HAlign(ThemeSettings.TipAlignment.HorizontalAlignment)
 			.VAlign(ThemeSettings.TipAlignment.VerticalAlignment)
 			[
-				SNew(STipWidget, Settings.Tip)
+				SNew(STipWidget, Settings.TipWidget)
 			];
 	}
 	else
@@ -79,7 +79,7 @@ void SClassicTheme::Construct(const FArguments& InArgs, const FALoadingScreenSet
 			.VAlign(ThemeSettings.TipAlignment.VerticalAlignment)
 			[
 				// Add tip text
-				SNew(STipWidget, Settings.Tip)
+				SNew(STipWidget, Settings.TipWidget)
 			];
 
 		// Add spacer at midder
@@ -122,14 +122,14 @@ void SClassicTheme::Construct(const FArguments& InArgs, const FALoadingScreenSet
 		SNew(SBorder)
 		.HAlign(HAlign_Fill)
 		.VAlign(VAlign_Fill)
-		.BorderImage(&ThemeSettings.WidgetBackground)
+		.BorderImage(&ThemeSettings.WidgetBorderBackground)
 		.BorderBackgroundColor(FLinearColor::White)
 		[
 			SNew(SSafeZone)
 			.HAlign(HAlign_Fill)
 			.VAlign(VAlign_Fill)
 			.IsTitleSafe(true)
-			.Padding(ThemeSettings.WidgetPadding)
+			.Padding(ThemeSettings.WidgetBorderPadding)
 			[
 				SNew(SDPIScaler)
 				.DPIScale(this, &SClassicTheme::GetDPIScale)		

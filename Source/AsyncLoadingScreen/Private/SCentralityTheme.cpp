@@ -1,10 +1,10 @@
-/**********************************************************************************
- *
- * Copyright (C) 2020 Truong Bui.
- * Website:	https://github.com/truong-bui/AsyncLoadingScreen
- * Licensed under the MIT License. See 'LICENSE' file for full license information.
- *
- **********************************************************************************/
+/************************************************************************************
+ *																					*
+ * Copyright (C) 2020 Truong Bui.													*
+ * Website:	https://github.com/truong-bui/AsyncLoadingScreen						*
+ * Licensed under the MIT License. See 'LICENSE' file for full license information. *
+ *																					*
+ ************************************************************************************/
 
 #include "SCentralityTheme.h"
 #include "LoadingScreenSettings.h"
@@ -50,16 +50,16 @@ void SCentralityTheme::Construct(const FArguments& InArgs, const FALoadingScreen
 		Root->AddSlot()
 			.HAlign(HAlign_Fill)
 			.VAlign(VAlign_Bottom)
-			.Padding(0, 0, 0, ThemeSettings.Padding)
+			.Padding(0, 0, 0, ThemeSettings.TipWidgetVerticalPadding)
 			[
 				SNew(SBorder)
 				.HAlign(ThemeSettings.TipAlignment.HorizontalAlignment)
 				.VAlign(ThemeSettings.TipAlignment.VerticalAlignment)
-				.Padding(ThemeSettings.TipPadding)
-				.BorderImage(&ThemeSettings.TipBackground)
+				.Padding(ThemeSettings.WidgetBorderPadding)
+				.BorderImage(&ThemeSettings.WidgetBorderBackground)
 				.BorderBackgroundColor(FLinearColor::White)
 				[
-					SNew(STipWidget, Settings.Tip)
+					SNew(STipWidget, Settings.TipWidget)
 				]
 			];
 	}
@@ -69,16 +69,16 @@ void SCentralityTheme::Construct(const FArguments& InArgs, const FALoadingScreen
 		Root->AddSlot()
 			.HAlign(HAlign_Fill)
 			.VAlign(VAlign_Top)
-			.Padding(0, ThemeSettings.Padding, 0, 0)
+			.Padding(0, ThemeSettings.TipWidgetVerticalPadding, 0, 0)
 			[
 				SNew(SBorder)
 				.HAlign(ThemeSettings.TipAlignment.HorizontalAlignment)
 				.VAlign(ThemeSettings.TipAlignment.VerticalAlignment)
-				.Padding(ThemeSettings.TipPadding)
-				.BorderImage(&ThemeSettings.TipBackground)
+				.Padding(ThemeSettings.WidgetBorderPadding)
+				.BorderImage(&ThemeSettings.WidgetBorderBackground)
 				.BorderBackgroundColor(FLinearColor::White)
 				[
-					SNew(STipWidget, Settings.Tip)
+					SNew(STipWidget, Settings.TipWidget)
 				]
 			];
 	}
