@@ -10,6 +10,7 @@
 #include "MoviePlayer.h"
 #include "LoadingScreenSettings.h"
 #include "SCentralityTheme.h"
+#include "SClassicTheme.h"
 
 #define LOCTEXT_NAMESPACE "FAsyncLoadingScreenModule"
 
@@ -103,7 +104,10 @@ void FAsyncLoadingScreenModule::SetupLoadingScreen(const FALoadingScreenSettings
 
 		switch (LoadingScreenSettings.Theme)
 		{
-		case EAsynceLoadingScreenTheme::ALST_Centrality:
+		case EAsyncLoadingScreenTheme::ALST_Classic:
+			LoadingScreen.WidgetLoadingScreen = SNew(SClassicTheme, LoadingScreenSettings, Settings->Classic);
+			break;
+		case EAsyncLoadingScreenTheme::ALST_Centrality:
 			LoadingScreen.WidgetLoadingScreen = SNew(SCentralityTheme, LoadingScreenSettings, Settings->Centrality);
 			break;
 		}

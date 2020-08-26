@@ -9,6 +9,7 @@
 #pragma once
 
 #include "Widgets/SCompoundWidget.h"
+#include "Widgets/Images/SThrobber.h"
 
 class FDeferredCleanupSlateBrush;
 struct FLoadingWidgetSettings;

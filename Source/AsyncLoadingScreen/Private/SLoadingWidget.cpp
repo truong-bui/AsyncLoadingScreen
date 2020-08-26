@@ -8,7 +8,6 @@
 
 #include "SLoadingWidget.h"
 #include "LoadingScreenSettings.h"
-#include "Widgets/Images/SThrobber.h"
 #include "Widgets/Images/SImage.h"
 #include "Slate/DeferredCleanupSlateBrush.h"
 #include "Widgets/Layout/SSpacer.h"

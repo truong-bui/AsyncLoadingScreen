@@ -20,8 +20,13 @@
  * Asynce Loading Screen Themes
  */
 UENUM(BlueprintType)
-enum class EAsynceLoadingScreenTheme : uint8
+enum class EAsyncLoadingScreenTheme : uint8
 {
+	/**
+	 * The Classic is a simple, generic theme and fits well with many designs. 
+	 * Loading and tip widgets can be at the bottom or top.
+	 */
+	ALST_Classic UMETA(DisplayName = "Classic"),
 	/** 
 	 * The loading widget is at the center of the screen, tips can be at the bottom or top. 	
 	 * The Centrality theme is a good choice if your loading icon is the main actor. 
@@ -312,7 +317,7 @@ struct ASYNCLOADINGSCREEN_API FALoadingScreenSettings
 	 * Select async loading screen theme. Ignore this if you choose "Show Widget Overlay = false"
 	 */
 	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "Loading Screen Settings")
-	EAsynceLoadingScreenTheme Theme = EAsynceLoadingScreenTheme::ALST_Centrality;
+	EAsyncLoadingScreenTheme Theme = EAsyncLoadingScreenTheme::ALST_Classic;
 
 	/** Background content for the loading screen. Ignore this if you choose "Show Widget Overlay = false" */
 	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "Loading Screen Settings")
@@ -325,6 +330,37 @@ struct ASYNCLOADINGSCREEN_API FALoadingScreenSettings
 	/** Tips text for the loading screen. Ignore this if you choose "Show Widget Overlay = false" */
 	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "Loading Screen Settings")
 	FTipSettings Tip;
+};
+
+/** Classic Theme settings*/
+USTRUCT(BlueprintType)
+struct FClassicThemeSettings
+{
+	GENERATED_BODY()
+
+	/** Is loading/tip widget located at the bottom or top? */
+	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "Classic Theme")
+	bool bWidgetAtBottom = true;
+
+	/** Is loading widget left of the tip? */
+	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "Classic Theme")
+	bool bLoadingWidgetLeft = true;
+
+	/** The padding area between the background and the widget it contains.*/
+	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "Classic Theme")
+	FMargin WidgetPadding;
+
+	/** The empty space between loading widget and the tip.*/
+	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "Classic Theme")
+	float Space = 1.0f;
+
+	/** The alignment of the tips. */
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Classic Theme")
+	FWidgetAlignment TipAlignment;
+
+	/** Background appearance settings for widgets area */
+	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "Classic Theme")
+	FSlateBrush WidgetBackground;
 };
 
 /** Centrality Theme settings*/
@@ -384,8 +420,16 @@ public:
 	FALoadingScreenSettings DefaultLoadingScreen;
 	
 	/**
+	 * Classic Theme settings.
+	 */
+	UPROPERTY(Config, EditAnywhere, Category = "Themes")
+	FClassicThemeSettings Classic;
+	
+	/**
 	 * Centrality Theme settings.
 	 */
 	UPROPERTY(Config, EditAnywhere, Category = "Themes")
 	FCentralityThemeSettings Centrality;
+
+	
 };
