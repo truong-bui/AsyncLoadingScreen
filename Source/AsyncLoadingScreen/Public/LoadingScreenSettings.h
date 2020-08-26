@@ -337,7 +337,7 @@ struct FCentralityThemeSettings
 	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "Centrality Theme")
 	bool bTipAtBottom = true;
 	
-	/** Padding area based on tip text located at the bottom or top position.*/
+	/** Padding bottom/top depend on the tip located at the bottom or top position.*/
 	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "Centrality Theme")
 	float Padding = 0.0f;
 
