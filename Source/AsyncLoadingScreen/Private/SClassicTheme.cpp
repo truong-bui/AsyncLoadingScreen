@@ -122,14 +122,14 @@ void SClassicTheme::Construct(const FArguments& InArgs, const FALoadingScreenSet
 		SNew(SBorder)
 		.HAlign(HAlign_Fill)
 		.VAlign(VAlign_Fill)
-		.BorderImage(&ThemeSettings.WidgetBorderBackground)
+		.BorderImage(&ThemeSettings.BorderBackground)
 		.BorderBackgroundColor(FLinearColor::White)
 		[
 			SNew(SSafeZone)
 			.HAlign(HAlign_Fill)
 			.VAlign(VAlign_Fill)
 			.IsTitleSafe(true)
-			.Padding(ThemeSettings.WidgetBorderPadding)
+			.Padding(ThemeSettings.BorderPadding)
 			[
 				SNew(SDPIScaler)
 				.DPIScale(this, &SClassicTheme::GetDPIScale)		

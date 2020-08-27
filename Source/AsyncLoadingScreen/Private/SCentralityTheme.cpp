@@ -8,10 +8,13 @@
 
 #include "SCentralityTheme.h"
 #include "LoadingScreenSettings.h"
+#include "Widgets/Layout/SSafeZone.h"
+#include "Widgets/Layout/SDPIScaler.h"
 #include "SHorizontalLoadingWidget.h"
 #include "SVerticalLoadingWidget.h"
 #include "SBackgroundWidget.h"
 #include "STipWidget.h"
+
 
 void SCentralityTheme::Construct(const FArguments& InArgs, const FALoadingScreenSettings& Settings, const FCentralityThemeSettings& ThemeSettings)
 {
@@ -53,13 +56,23 @@ void SCentralityTheme::Construct(const FArguments& InArgs, const FALoadingScreen
 			.Padding(0, 0, 0, ThemeSettings.TipWidgetVerticalPadding)
 			[
 				SNew(SBorder)
-				.HAlign(ThemeSettings.TipAlignment.HorizontalAlignment)
-				.VAlign(ThemeSettings.TipAlignment.VerticalAlignment)
-				.Padding(ThemeSettings.WidgetBorderPadding)
-				.BorderImage(&ThemeSettings.WidgetBorderBackground)
+				.HAlign(HAlign_Fill)
+				.VAlign(VAlign_Fill)
+				.BorderImage(&ThemeSettings.BorderBackground)
 				.BorderBackgroundColor(FLinearColor::White)
 				[
-					SNew(STipWidget, Settings.TipWidget)
+					SNew(SSafeZone)					
+					.HAlign(ThemeSettings.TipAlignment.HorizontalAlignment)
+					.VAlign(ThemeSettings.TipAlignment.VerticalAlignment)
+					.IsTitleSafe(true)
+					.Padding(ThemeSettings.BorderPadding)
+					[
+						SNew(SDPIScaler)
+						.DPIScale(this, &SCentralityTheme::GetDPIScale)		
+						[					
+							SNew(STipWidget, Settings.TipWidget)
+						]
+					]					
 				]
 			];
 	}
@@ -72,13 +85,23 @@ void SCentralityTheme::Construct(const FArguments& InArgs, const FALoadingScreen
 			.Padding(0, ThemeSettings.TipWidgetVerticalPadding, 0, 0)
 			[
 				SNew(SBorder)
-				.HAlign(ThemeSettings.TipAlignment.HorizontalAlignment)
-				.VAlign(ThemeSettings.TipAlignment.VerticalAlignment)
-				.Padding(ThemeSettings.WidgetBorderPadding)
-				.BorderImage(&ThemeSettings.WidgetBorderBackground)
+				.HAlign(HAlign_Fill)
+				.VAlign(VAlign_Fill)
+				.BorderImage(&ThemeSettings.BorderBackground)
 				.BorderBackgroundColor(FLinearColor::White)
 				[
-					SNew(STipWidget, Settings.TipWidget)
+					SNew(SSafeZone)					
+					.HAlign(ThemeSettings.TipAlignment.HorizontalAlignment)
+					.VAlign(ThemeSettings.TipAlignment.VerticalAlignment)
+					.IsTitleSafe(true)
+					.Padding(ThemeSettings.BorderPadding)
+					[
+						SNew(SDPIScaler)
+						.DPIScale(this, &SCentralityTheme::GetDPIScale)		
+						[					
+							SNew(STipWidget, Settings.TipWidget)
+						]						
+					]					
 				]
 			];
 	}

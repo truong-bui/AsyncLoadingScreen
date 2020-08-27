@@ -11,6 +11,7 @@
 #include "LoadingScreenSettings.h"
 #include "SCentralityTheme.h"
 #include "SClassicTheme.h"
+#include "SLetterboxTheme.h"
 
 #define LOCTEXT_NAMESPACE "FAsyncLoadingScreenModule"
 
@@ -109,6 +110,9 @@ void FAsyncLoadingScreenModule::SetupLoadingScreen(const FALoadingScreenSettings
 			break;
 		case EAsyncLoadingScreenTheme::ALST_Centrality:
 			LoadingScreen.WidgetLoadingScreen = SNew(SCentralityTheme, LoadingScreenSettings, Settings->Centrality);
+			break;
+		case EAsyncLoadingScreenTheme::ALST_Letterbox:
+			LoadingScreen.WidgetLoadingScreen = SNew(SLetterboxTheme, LoadingScreenSettings, Settings->Letterbox);
 			break;
 		}
 		
