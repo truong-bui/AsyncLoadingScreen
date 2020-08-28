@@ -14,7 +14,7 @@ struct FALoadingScreenSettings;
 struct FClassicLayoutSettings;
 
 /**
- * Classic theme
+ * Classic layout loading screen
  */
 class SClassicLayout : public SLoadingScreenLayout
 {

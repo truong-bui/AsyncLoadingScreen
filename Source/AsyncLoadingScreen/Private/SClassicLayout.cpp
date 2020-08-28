@@ -40,7 +40,7 @@ void SClassicLayout::Construct(const FArguments& InArgs, const FALoadingScreenSe
 
 	TSharedRef<SHorizontalBox> HorizontalBox = SNew(SHorizontalBox);
 
-	if (LayoutSettings.bLoadingWidgetLeft)
+	if (LayoutSettings.bIsLoadingWidgetAtLeft)
 	{
 		// Add Loading widget on left first
 		HorizontalBox.Get().AddSlot()
@@ -105,7 +105,7 @@ void SClassicLayout::Construct(const FArguments& InArgs, const FALoadingScreenSe
 
 	EVerticalAlignment VerticalAlignment;
 	// Set vertical alignment for widget
-	if (LayoutSettings.bWidgetAtBottom)
+	if (LayoutSettings.bIsWidgetAtBottom)
 	{
 		VerticalAlignment = EVerticalAlignment::VAlign_Bottom;
 	}

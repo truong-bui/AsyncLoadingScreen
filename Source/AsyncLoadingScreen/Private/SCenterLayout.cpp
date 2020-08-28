@@ -47,7 +47,7 @@ void SCenterLayout::Construct(const FArguments& InArgs, const FALoadingScreenSet
 		];
 
 
-	if (LayoutSettings.bTipAtBottom)
+	if (LayoutSettings.bIsTipAtBottom)
 	{
 		// Add tip widget at bottom
 		Root->AddSlot()

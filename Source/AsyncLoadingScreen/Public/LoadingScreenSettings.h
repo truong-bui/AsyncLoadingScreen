@@ -33,10 +33,15 @@ enum class EAsyncLoadingScreenLayout : uint8
 	 */
 	ALSL_Center UMETA(DisplayName = "Center"),
 	/**
-	 * The Letterbox Layout has two borders on top and bottom of the screen.
-	 * Loading widget can be on the top and the tip is at the bottom of the screen, or vice versa
+	 * The Letterbox layout has two borders on top and bottom of the screen. Loading widget 
+	 * can be on the top and the tip is at the bottom of the screen, or vice versa.
 	 */
-	 ALSL_Letterbox UMETA(DisplayName = "Letterbox")
+	 ALSL_Letterbox UMETA(DisplayName = "Letterbox"),
+	 /**
+	 * The Sidebar layout has a vertical border on the left or right of the screen. The Sidebar is suitable
+	 * for story-driven, rich content loading screens due to the height of tips.
+	 */
+	 ALSL_Sidebar UMETA(DisplayName = "Sidebar")
 };
 
 /** Loading Icon Type*/
@@ -343,13 +348,13 @@ struct FClassicLayoutSettings
 {
 	GENERATED_BODY()
 
-	/** Is loading/tip widget located at the bottom or top? */
+	/** Is the border that contains loading and tip widget located at the bottom or top? */
 	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "Classic Layout")
-	bool bWidgetAtBottom = true;
+	bool bIsWidgetAtBottom = true;
 
 	/** Is loading widget on the left of the tip? */
 	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "Classic Layout")
-	bool bLoadingWidgetLeft = true;	
+	bool bIsLoadingWidgetAtLeft = true;	
 
 	/** The empty space between loading widget and the tip.*/
 	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "Classic Layout")
@@ -375,30 +380,29 @@ struct FCenterLayoutSettings
 	GENERATED_BODY()
 
 	/** Is tip located at the bottom or top? */
-	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "Centrality Layout")
-	bool bTipAtBottom = true;
+	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "Center Layout")
+	bool bIsTipAtBottom = true;
 	
 	/** Padding at bottom or top depend on the tip located at the bottom or top position.*/
-	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "Centrality Layout")
+	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "Center Layout")
 	float TipWidgetVerticalPadding = 0.0f;	
 
 	/** The alignment of the tips. */
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Centrality Layout")
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Center Layout")
 	FWidgetAlignment TipAlignment;
 
 	/** The padding area between the border and the tips it contains.*/
-	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "Centrality Layout")
+	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "Center Layout")
 	FMargin BorderPadding;
 
 	/** Background appearance settings for tip area */
-	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "Centrality Layout")
+	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "Center Layout")
 	FSlateBrush BorderBackground;
 
 	// The color and opacity for the background of the tip area
 	//UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "Centrality Layout")
 	//FLinearColor TipBackgroundColor = FLinearColor::Black;
 };
-
 
 /** Letterbox Layout settings*/
 USTRUCT(BlueprintType)
@@ -435,6 +439,49 @@ struct FLetterboxLayoutSettings
 	FSlateBrush BottomBorderBackground;
 };
 
+/** Sidebar Layout settings*/
+USTRUCT(BlueprintType)
+struct FSidebarLayoutSettings
+{
+	GENERATED_BODY()
+
+	/** Is the border that contains loading and tip widgets located at the right or left? */
+	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "Sidebar Layout")
+	bool bIsWidgetAtRight = true;
+
+	/** Is loading widget on the top of the tip? */
+	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "Sidebar Layout")
+	bool bIsLoadingWidgetAtTop = true;
+
+	/** The empty space between loading widget and the tip.*/
+	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "Sidebar Layout")
+	float Space = 1.0f;
+
+	/** Padding at left or right depend on the border that contains loading and tip widgets located at the left or right position.*/
+	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "Sidebar Layout")
+	float WidgetHorizontalPadding = 0.0f;
+
+	/** The vertical alignment of the vertical box that contains loading/tip widgets. */
+	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "Sidebar Layout")
+	TEnumAsByte<EVerticalAlignment> VerticalAlignment = EVerticalAlignment::VAlign_Center;
+
+	/** The alignment of the loading widget. */
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Sidebar Layout")
+	FWidgetAlignment LoadingWidgetAlignment;
+
+	/** The alignment of the tips. */
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Sidebar Layout")
+	FWidgetAlignment TipAlignment;
+
+	/** The padding area between the border and the widget it contains.*/
+	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "Sidebar Layout")
+	FMargin BorderPadding;
+
+	/** Background appearance settings for the border widget */
+	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "Sidebar Layout")
+	FSlateBrush BorderBackground;
+};
+
 /**
  * Async Loading Screen Settings 
  */
@@ -461,18 +508,34 @@ public:
 	
 	/**
 	 * Classic Layout settings.
+	 * The Classic is a simple, generic layout and fits well with many designs.
+	 * A border that contains loading and tip widgets can be at the bottom or top.
 	 */
 	UPROPERTY(Config, EditAnywhere, Category = "Layout")
 	FClassicLayoutSettings Classic;
 	
 	/**
 	 * Center Layout settings.
+	 * The loading widget is at the center of the screen, tips can be at the bottom or top.
+	 * The Center layout is a good choice if your loading icon is the main actor.
 	 */
 	UPROPERTY(Config, EditAnywhere, Category = "Layout")
 	FCenterLayoutSettings Center;
+
 	/**
 	 * Letterbox Layout settings.
+	 * The Letterbox layout has two borders on top and bottom of the screen. Loading widget
+	 * can be on the top and the tip is at the bottom of the screen, or vice versa.
 	 */
 	UPROPERTY(Config, EditAnywhere, Category = "Layout")
 	FLetterboxLayoutSettings Letterbox;
+
+	/**
+	 * Sidebar Layout settings.
+	 * The Sidebar layout has a vertical border on the left or right of the screen. The Sidebar is suitable
+	 * for story-driven, rich content loading screens due to the height of tips.
+	 */
+	UPROPERTY(Config, EditAnywhere, Category = "Layout")
+	FSidebarLayoutSettings Sidebar;
+
 };

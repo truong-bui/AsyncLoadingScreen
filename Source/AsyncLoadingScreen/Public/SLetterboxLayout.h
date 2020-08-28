@@ -14,7 +14,7 @@ struct FALoadingScreenSettings;
 struct FLetterboxLayoutSettings;
 
 /**
- * Letterbox Theme
+ * Letterbox layout loading screen
  */
 class SLetterboxLayout : public SLoadingScreenLayout
 {
