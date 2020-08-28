@@ -6,10 +6,10 @@
  *																					*
  ************************************************************************************/
 
-#include "SLoadingScreenTheme.h"
+#include "SLoadingScreenLayout.h"
 #include "Engine/UserInterfaceSettings.h"
 
-float SLoadingScreenTheme::PointSizeToSlateUnits(float PointSize)
+float SLoadingScreenLayout::PointSizeToSlateUnits(float PointSize)
 {
 	const float SlateFreeTypeHorizontalResolutionDPI = 96.0f;
 	const float FreeTypeNativeDPI = 72.0;
@@ -17,7 +17,7 @@ float SLoadingScreenTheme::PointSizeToSlateUnits(float PointSize)
 	return PixelSize;
 }
 
-float SLoadingScreenTheme::GetDPIScale() const
+float SLoadingScreenLayout::GetDPIScale() const
 {
 	const FVector2D& DrawSize = GetTickSpaceGeometry().ToPaintGeometry().GetLocalSize();
 	const FIntPoint Size((int32)DrawSize.X, (int32)DrawSize.Y);

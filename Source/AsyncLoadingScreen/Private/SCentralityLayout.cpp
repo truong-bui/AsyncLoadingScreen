@@ -6,7 +6,7 @@
  *																					*
  ************************************************************************************/
 
-#include "SCentralityTheme.h"
+#include "SCentralityLayout.h"
 #include "LoadingScreenSettings.h"
 #include "Widgets/Layout/SSafeZone.h"
 #include "Widgets/Layout/SDPIScaler.h"
@@ -16,7 +16,7 @@
 #include "STipWidget.h"
 
 
-void SCentralityTheme::Construct(const FArguments& InArgs, const FALoadingScreenSettings& Settings, const FCentralityThemeSettings& ThemeSettings)
+void SCentralityLayout::Construct(const FArguments& InArgs, const FALoadingScreenSettings& Settings, const FCentralityLayoutSettings& LayoutSettings)
 {
 	// Root widget and background
 	TSharedRef<SOverlay> Root = SNew(SOverlay)
@@ -47,28 +47,28 @@ void SCentralityTheme::Construct(const FArguments& InArgs, const FALoadingScreen
 		];
 
 
-	if (ThemeSettings.bTipAtBottom)
+	if (LayoutSettings.bTipAtBottom)
 	{
 		// Add tip widget at bottom
 		Root->AddSlot()
 			.HAlign(HAlign_Fill)
 			.VAlign(VAlign_Bottom)
-			.Padding(0, 0, 0, ThemeSettings.TipWidgetVerticalPadding)
+			.Padding(0, 0, 0, LayoutSettings.TipWidgetVerticalPadding)
 			[
 				SNew(SBorder)
 				.HAlign(HAlign_Fill)
 				.VAlign(VAlign_Fill)
-				.BorderImage(&ThemeSettings.BorderBackground)
+				.BorderImage(&LayoutSettings.BorderBackground)
 				.BorderBackgroundColor(FLinearColor::White)
 				[
 					SNew(SSafeZone)					
-					.HAlign(ThemeSettings.TipAlignment.HorizontalAlignment)
-					.VAlign(ThemeSettings.TipAlignment.VerticalAlignment)
+					.HAlign(LayoutSettings.TipAlignment.HorizontalAlignment)
+					.VAlign(LayoutSettings.TipAlignment.VerticalAlignment)
 					.IsTitleSafe(true)
-					.Padding(ThemeSettings.BorderPadding)
+					.Padding(LayoutSettings.BorderPadding)
 					[
 						SNew(SDPIScaler)
-						.DPIScale(this, &SCentralityTheme::GetDPIScale)		
+						.DPIScale(this, &SCentralityLayout::GetDPIScale)
 						[					
 							SNew(STipWidget, Settings.TipWidget)
 						]
@@ -82,22 +82,22 @@ void SCentralityTheme::Construct(const FArguments& InArgs, const FALoadingScreen
 		Root->AddSlot()
 			.HAlign(HAlign_Fill)
 			.VAlign(VAlign_Top)
-			.Padding(0, ThemeSettings.TipWidgetVerticalPadding, 0, 0)
+			.Padding(0, LayoutSettings.TipWidgetVerticalPadding, 0, 0)
 			[
 				SNew(SBorder)
 				.HAlign(HAlign_Fill)
 				.VAlign(VAlign_Fill)
-				.BorderImage(&ThemeSettings.BorderBackground)
+				.BorderImage(&LayoutSettings.BorderBackground)
 				.BorderBackgroundColor(FLinearColor::White)
 				[
 					SNew(SSafeZone)					
-					.HAlign(ThemeSettings.TipAlignment.HorizontalAlignment)
-					.VAlign(ThemeSettings.TipAlignment.VerticalAlignment)
+					.HAlign(LayoutSettings.TipAlignment.HorizontalAlignment)
+					.VAlign(LayoutSettings.TipAlignment.VerticalAlignment)
 					.IsTitleSafe(true)
-					.Padding(ThemeSettings.BorderPadding)
+					.Padding(LayoutSettings.BorderPadding)
 					[
 						SNew(SDPIScaler)
-						.DPIScale(this, &SCentralityTheme::GetDPIScale)		
+						.DPIScale(this, &SCentralityLayout::GetDPIScale)
 						[					
 							SNew(STipWidget, Settings.TipWidget)
 						]						

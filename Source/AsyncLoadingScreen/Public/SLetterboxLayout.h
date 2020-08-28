@@ -8,23 +8,23 @@
 
 #pragma once
 
-#include "SLoadingScreenTheme.h"
+#include "SLoadingScreenLayout.h"
 
 struct FALoadingScreenSettings;
-struct FCentralityThemeSettings;
+struct FLetterboxLayoutSettings;
 
 /**
- * Centrality Theme loading screen
+ * Letterbox Theme
  */
-class SCentralityTheme : public SLoadingScreenTheme
+class SLetterboxLayout : public SLoadingScreenLayout
 {
 public:
-	SLATE_BEGIN_ARGS(SCentralityTheme) {}
+	SLATE_BEGIN_ARGS(SLetterboxLayout) {}
 
 	SLATE_END_ARGS()
 
 	/**
 	 * Construct this widget
 	 */
-	void Construct(const FArguments& InArgs, const FALoadingScreenSettings& Settings, const FCentralityThemeSettings& ThemeSettings);
+	void Construct(const FArguments& InArgs, const FALoadingScreenSettings& Settings, const FLetterboxLayoutSettings& LayoutSettings);
 };

@@ -6,7 +6,7 @@
  *																					*
  ************************************************************************************/
 
-#include "SClassicTheme.h"
+#include "SClassicLayout.h"
 #include "LoadingScreenSettings.h"
 #include "Widgets/Layout/SSafeZone.h"
 #include "Widgets/Layout/SDPIScaler.h"
@@ -16,7 +16,7 @@
 #include "SBackgroundWidget.h"
 #include "STipWidget.h"
 
-void SClassicTheme::Construct(const FArguments& InArgs, const FALoadingScreenSettings& Settings, const FClassicThemeSettings& ThemeSettings)
+void SClassicLayout::Construct(const FArguments& InArgs, const FALoadingScreenSettings& Settings, const FClassicLayoutSettings& LayoutSettings)
 {
 	// Root widget and background
 	TSharedRef<SOverlay> Root = SNew(SOverlay)
@@ -40,7 +40,7 @@ void SClassicTheme::Construct(const FArguments& InArgs, const FALoadingScreenSet
 
 	TSharedRef<SHorizontalBox> HorizontalBox = SNew(SHorizontalBox);
 
-	if (ThemeSettings.bLoadingWidgetLeft)
+	if (LayoutSettings.bLoadingWidgetLeft)
 	{
 		// Add Loading widget on left first
 		HorizontalBox.Get().AddSlot()
@@ -58,14 +58,14 @@ void SClassicTheme::Construct(const FArguments& InArgs, const FALoadingScreenSet
 			.AutoWidth()
 			[
 				SNew(SSpacer)
-				.Size(FVector2D(ThemeSettings.Space, 0.0f))
+				.Size(FVector2D(LayoutSettings.Space, 0.0f))
 			];
 
 			// Tip Text on the right
 		HorizontalBox.Get().AddSlot()
 			.FillWidth(1.0f)
-			.HAlign(ThemeSettings.TipAlignment.HorizontalAlignment)
-			.VAlign(ThemeSettings.TipAlignment.VerticalAlignment)
+			.HAlign(LayoutSettings.TipAlignment.HorizontalAlignment)
+			.VAlign(LayoutSettings.TipAlignment.VerticalAlignment)
 			[
 				SNew(STipWidget, Settings.TipWidget)
 			];
@@ -75,8 +75,8 @@ void SClassicTheme::Construct(const FArguments& InArgs, const FALoadingScreenSet
 		// Tip Text on the left
 		HorizontalBox.Get().AddSlot()
 			.FillWidth(1.0f)
-			.HAlign(ThemeSettings.TipAlignment.HorizontalAlignment)
-			.VAlign(ThemeSettings.TipAlignment.VerticalAlignment)
+			.HAlign(LayoutSettings.TipAlignment.HorizontalAlignment)
+			.VAlign(LayoutSettings.TipAlignment.VerticalAlignment)
 			[
 				// Add tip text
 				SNew(STipWidget, Settings.TipWidget)
@@ -89,7 +89,7 @@ void SClassicTheme::Construct(const FArguments& InArgs, const FALoadingScreenSet
 			.AutoWidth()
 			[
 				SNew(SSpacer)
-				.Size(FVector2D(ThemeSettings.Space, 0.0f))
+				.Size(FVector2D(LayoutSettings.Space, 0.0f))
 			];
 
 		// Add Loading widget on right
@@ -105,7 +105,7 @@ void SClassicTheme::Construct(const FArguments& InArgs, const FALoadingScreenSet
 
 	EVerticalAlignment VerticalAlignment;
 	// Set vertical alignment for widget
-	if (ThemeSettings.bWidgetAtBottom)
+	if (LayoutSettings.bWidgetAtBottom)
 	{
 		VerticalAlignment = EVerticalAlignment::VAlign_Bottom;
 	}
@@ -122,17 +122,17 @@ void SClassicTheme::Construct(const FArguments& InArgs, const FALoadingScreenSet
 		SNew(SBorder)
 		.HAlign(HAlign_Fill)
 		.VAlign(VAlign_Fill)
-		.BorderImage(&ThemeSettings.BorderBackground)
+		.BorderImage(&LayoutSettings.BorderBackground)
 		.BorderBackgroundColor(FLinearColor::White)
 		[
 			SNew(SSafeZone)
 			.HAlign(HAlign_Fill)
 			.VAlign(VAlign_Fill)
 			.IsTitleSafe(true)
-			.Padding(ThemeSettings.BorderPadding)
+			.Padding(LayoutSettings.BorderPadding)
 			[
 				SNew(SDPIScaler)
-				.DPIScale(this, &SClassicTheme::GetDPIScale)		
+				.DPIScale(this, &SClassicLayout::GetDPIScale)
 				[					
 					HorizontalBox
 				]

@@ -6,7 +6,7 @@
  *																					*
  ************************************************************************************/
 
-#include "SLetterboxTheme.h"
+#include "SLetterboxLayout.h"
 #include "LoadingScreenSettings.h"
 #include "Widgets/Layout/SSafeZone.h"
 #include "Widgets/Layout/SDPIScaler.h"
@@ -15,7 +15,7 @@
 #include "SBackgroundWidget.h"
 #include "STipWidget.h"
 
-void SLetterboxTheme::Construct(const FArguments& InArgs, const FALoadingScreenSettings& Settings, const FLetterboxThemeSettings& ThemeSettings)
+void SLetterboxLayout::Construct(const FArguments& InArgs, const FALoadingScreenSettings& Settings, const FLetterboxLayoutSettings& LayoutSettings)
 {
 	// Root widget and background
 	TSharedRef<SOverlay> Root = SNew(SOverlay)
@@ -38,7 +38,7 @@ void SLetterboxTheme::Construct(const FArguments& InArgs, const FALoadingScreenS
 	}
 	
 
-	if (ThemeSettings.bIsLoadingWidgetAtTop)
+	if (LayoutSettings.bIsLoadingWidgetAtTop)
 	{
 		// Add a border widget at top, then add Loading widget
 		Root->AddSlot()
@@ -48,17 +48,17 @@ void SLetterboxTheme::Construct(const FArguments& InArgs, const FALoadingScreenS
 				SNew(SBorder)
 				.HAlign(HAlign_Fill)
 				.VAlign(VAlign_Fill)		
-				.BorderImage(&ThemeSettings.TopBorderBackground)
+				.BorderImage(&LayoutSettings.TopBorderBackground)
 				.BorderBackgroundColor(FLinearColor::White)
 				[
 					SNew(SSafeZone)
-					.HAlign(ThemeSettings.LoadingWidgetAlignment.HorizontalAlignment)
-					.VAlign(ThemeSettings.LoadingWidgetAlignment.VerticalAlignment)
+					.HAlign(LayoutSettings.LoadingWidgetAlignment.HorizontalAlignment)
+					.VAlign(LayoutSettings.LoadingWidgetAlignment.VerticalAlignment)
 					.IsTitleSafe(true)
-					.Padding(ThemeSettings.TopBorderPadding)
+					.Padding(LayoutSettings.TopBorderPadding)
 					[
 						SNew(SDPIScaler)
-						.DPIScale(this, &SLetterboxTheme::GetDPIScale)
+						.DPIScale(this, &SLetterboxLayout::GetDPIScale)
 						[
 							LoadingWidget
 						]
@@ -74,17 +74,17 @@ void SLetterboxTheme::Construct(const FArguments& InArgs, const FALoadingScreenS
 				SNew(SBorder)
 				.HAlign(HAlign_Fill)
 				.VAlign(VAlign_Fill)
-				.BorderImage(&ThemeSettings.BottomBorderBackground)
+				.BorderImage(&LayoutSettings.BottomBorderBackground)
 				.BorderBackgroundColor(FLinearColor::White)
 				[
 					SNew(SSafeZone)
-					.HAlign(ThemeSettings.TipAlignment.HorizontalAlignment)
-					.VAlign(ThemeSettings.TipAlignment.VerticalAlignment)
+					.HAlign(LayoutSettings.TipAlignment.HorizontalAlignment)
+					.VAlign(LayoutSettings.TipAlignment.VerticalAlignment)
 					.IsTitleSafe(true)
-					.Padding(ThemeSettings.BottomBorderPadding)
+					.Padding(LayoutSettings.BottomBorderPadding)
 					[
 						SNew(SDPIScaler)
-						.DPIScale(this, &SLetterboxTheme::GetDPIScale)
+						.DPIScale(this, &SLetterboxLayout::GetDPIScale)
 						[
 							SNew(STipWidget, Settings.TipWidget)
 						]						
@@ -102,17 +102,17 @@ void SLetterboxTheme::Construct(const FArguments& InArgs, const FALoadingScreenS
 				SNew(SBorder)
 				.HAlign(HAlign_Fill)
 				.VAlign(VAlign_Fill)
-				.BorderImage(&ThemeSettings.TopBorderBackground)
+				.BorderImage(&LayoutSettings.TopBorderBackground)
 				.BorderBackgroundColor(FLinearColor::White)
 				[
 					SNew(SSafeZone)
-					.HAlign(ThemeSettings.TipAlignment.HorizontalAlignment)
-					.VAlign(ThemeSettings.TipAlignment.VerticalAlignment)
+					.HAlign(LayoutSettings.TipAlignment.HorizontalAlignment)
+					.VAlign(LayoutSettings.TipAlignment.VerticalAlignment)
 					.IsTitleSafe(true)
-					.Padding(ThemeSettings.TopBorderPadding)
+					.Padding(LayoutSettings.TopBorderPadding)
 					[
 						SNew(SDPIScaler)
-						.DPIScale(this, &SLetterboxTheme::GetDPIScale)		
+						.DPIScale(this, &SLetterboxLayout::GetDPIScale)
 						[					
 							SNew(STipWidget, Settings.TipWidget)
 						]						
@@ -128,17 +128,17 @@ void SLetterboxTheme::Construct(const FArguments& InArgs, const FALoadingScreenS
 				SNew(SBorder)
 				.HAlign(HAlign_Fill)
 				.VAlign(VAlign_Fill)
-				.BorderImage(&ThemeSettings.BottomBorderBackground)
+				.BorderImage(&LayoutSettings.BottomBorderBackground)
 				.BorderBackgroundColor(FLinearColor::White)
 				[
 					SNew(SSafeZone)
-					.HAlign(ThemeSettings.LoadingWidgetAlignment.HorizontalAlignment)
-					.VAlign(ThemeSettings.LoadingWidgetAlignment.VerticalAlignment)
+					.HAlign(LayoutSettings.LoadingWidgetAlignment.HorizontalAlignment)
+					.VAlign(LayoutSettings.LoadingWidgetAlignment.VerticalAlignment)
 					.IsTitleSafe(true)
-					.Padding(ThemeSettings.BottomBorderPadding)
+					.Padding(LayoutSettings.BottomBorderPadding)
 					[
 						SNew(SDPIScaler)
-						.DPIScale(this, &SLetterboxTheme::GetDPIScale)
+						.DPIScale(this, &SLetterboxLayout::GetDPIScale)
 						[
 							LoadingWidget
 						]						

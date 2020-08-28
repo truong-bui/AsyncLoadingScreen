@@ -8,23 +8,15 @@
 
 #pragma once
 
-#include "SLoadingScreenTheme.h"
-
-struct FALoadingScreenSettings;
-struct FLetterboxThemeSettings;
+#include "Widgets/SCompoundWidget.h"
 
 /**
- * Letterbox Theme
+ * Loading screen base theme
  */
-class SLetterboxTheme : public SLoadingScreenTheme
+class SLoadingScreenLayout : public SCompoundWidget
 {
-public:
-	SLATE_BEGIN_ARGS(SLetterboxTheme) {}
-
-	SLATE_END_ARGS()
-
-	/**
-	 * Construct this widget
-	 */
-	void Construct(const FArguments& InArgs, const FALoadingScreenSettings& Settings, const FLetterboxThemeSettings& ThemeSettings);
+public:	
+	static float PointSizeToSlateUnits(float PointSize);
+protected:
+	float GetDPIScale() const;	
 };

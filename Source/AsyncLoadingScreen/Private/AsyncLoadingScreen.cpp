@@ -9,9 +9,9 @@
 #include "AsyncLoadingScreen.h"
 #include "MoviePlayer.h"
 #include "LoadingScreenSettings.h"
-#include "SCentralityTheme.h"
-#include "SClassicTheme.h"
-#include "SLetterboxTheme.h"
+#include "SCentralityLayout.h"
+#include "SClassicLayout.h"
+#include "SLetterboxLayout.h"
 
 #define LOCTEXT_NAMESPACE "FAsyncLoadingScreenModule"
 
@@ -103,16 +103,16 @@ void FAsyncLoadingScreenModule::SetupLoadingScreen(const FALoadingScreenSettings
 	{
 		const ULoadingScreenSettings* Settings = GetDefault<ULoadingScreenSettings>();
 
-		switch (LoadingScreenSettings.Theme)
+		switch (LoadingScreenSettings.Layout)
 		{
-		case EAsyncLoadingScreenTheme::ALST_Classic:
-			LoadingScreen.WidgetLoadingScreen = SNew(SClassicTheme, LoadingScreenSettings, Settings->Classic);
+		case EAsyncLoadingScreenLayout::ALSL_Classic:
+			LoadingScreen.WidgetLoadingScreen = SNew(SClassicLayout, LoadingScreenSettings, Settings->Classic);
 			break;
-		case EAsyncLoadingScreenTheme::ALST_Centrality:
-			LoadingScreen.WidgetLoadingScreen = SNew(SCentralityTheme, LoadingScreenSettings, Settings->Centrality);
+		case EAsyncLoadingScreenLayout::ALSL_Centrality:
+			LoadingScreen.WidgetLoadingScreen = SNew(SCentralityLayout, LoadingScreenSettings, Settings->Centrality);
 			break;
-		case EAsyncLoadingScreenTheme::ALST_Letterbox:
-			LoadingScreen.WidgetLoadingScreen = SNew(SLetterboxTheme, LoadingScreenSettings, Settings->Letterbox);
+		case EAsyncLoadingScreenLayout::ALSL_Letterbox:
+			LoadingScreen.WidgetLoadingScreen = SNew(SLetterboxLayout, LoadingScreenSettings, Settings->Letterbox);
 			break;
 		}
 		

@@ -8,15 +8,23 @@
 
 #pragma once
 
-#include "Widgets/SCompoundWidget.h"
+#include "SLoadingScreenLayout.h"
+
+struct FALoadingScreenSettings;
+struct FClassicLayoutSettings;
 
 /**
- * Loading screen base theme
+ * Classic theme
  */
-class SLoadingScreenTheme : public SCompoundWidget
+class SClassicLayout : public SLoadingScreenLayout
 {
-public:	
-	static float PointSizeToSlateUnits(float PointSize);
-protected:
-	float GetDPIScale() const;	
+public:
+	SLATE_BEGIN_ARGS(SClassicLayout) {}
+
+	SLATE_END_ARGS()
+
+	/**
+	 * Construct this widget
+	 */
+	void Construct(const FArguments& InArgs, const FALoadingScreenSettings& Settings, const FClassicLayoutSettings& LayoutSettings);
 };

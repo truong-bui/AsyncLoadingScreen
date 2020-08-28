@@ -17,26 +17,26 @@
 
 
 /** 
- * Asynce Loading Screen Themes
+ * Asynce Loading Screen Layouts
  */
 UENUM(BlueprintType)
-enum class EAsyncLoadingScreenTheme : uint8
+enum class EAsyncLoadingScreenLayout : uint8
 {
 	/**
-	 * The Classic is a simple, generic theme and fits well with many designs. 
+	 * The Classic is a simple, generic layout and fits well with many designs. 
 	 * Loading and tip widgets can be at the bottom or top.
 	 */
-	ALST_Classic UMETA(DisplayName = "Classic"),
+	ALSL_Classic UMETA(DisplayName = "Classic"),
 	/** 
 	 * The loading widget is at the center of the screen, tips can be at the bottom or top. 	
-	 * The Centrality theme is a good choice if your loading icon is the main actor. 
+	 * The Centrality layout is a good choice if your loading icon is the main actor. 
 	 */
-	ALST_Centrality UMETA(DisplayName = "Centrality"),
+	ALSL_Centrality UMETA(DisplayName = "Centrality"),
 	/**
-	 * The Letterbox theme has two borders on top and bottom of the screen.
+	 * The Letterbox Layout has two borders on top and bottom of the screen.
 	 * Loading widget can be on the top and the tip is at the bottom of the screen, or vice versa
 	 */
-	 ALST_Letterbox UMETA(DisplayName = "Letterbox")
+	 ALSL_Letterbox UMETA(DisplayName = "Letterbox")
 };
 
 /** Loading Icon Type*/
@@ -319,10 +319,10 @@ struct ASYNCLOADINGSCREEN_API FALoadingScreenSettings
 	bool bShowWidgetOverlay = true;
 
 	/**
-	 * Select async loading screen theme. Ignore this if you choose "Show Widget Overlay = false"
+	 * Select async loading screen Layout. Ignore this if you choose "Show Widget Overlay = false"
 	 */
 	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "Loading Screen Settings")
-	EAsyncLoadingScreenTheme Theme = EAsyncLoadingScreenTheme::ALST_Classic;
+	EAsyncLoadingScreenLayout Layout = EAsyncLoadingScreenLayout::ALSL_Classic;
 
 	/** Background content for the loading screen. Ignore this if you choose "Show Widget Overlay = false" */
 	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "Loading Screen Settings")
@@ -337,101 +337,101 @@ struct ASYNCLOADINGSCREEN_API FALoadingScreenSettings
 	FTipSettings TipWidget;
 };
 
-/** Classic Theme settings*/
+/** Classic Layout settings*/
 USTRUCT(BlueprintType)
-struct FClassicThemeSettings
+struct FClassicLayoutSettings
 {
 	GENERATED_BODY()
 
 	/** Is loading/tip widget located at the bottom or top? */
-	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "Classic Theme")
+	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "Classic Layout")
 	bool bWidgetAtBottom = true;
 
 	/** Is loading widget on the left of the tip? */
-	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "Classic Theme")
+	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "Classic Layout")
 	bool bLoadingWidgetLeft = true;	
 
 	/** The empty space between loading widget and the tip.*/
-	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "Classic Theme")
+	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "Classic Layout")
 	float Space = 1.0f;
 
 	/** The alignment of the tips. */
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Classic Theme")
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Classic Layout")
 	FWidgetAlignment TipAlignment;
 
 	/** The padding area between the border and the widget it contains.*/
-	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "Classic Theme")
+	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "Classic Layout")
 	FMargin BorderPadding;
 
 	/** Background appearance settings for the border widget */
-	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "Classic Theme")
+	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "Classic Layout")
 	FSlateBrush BorderBackground;	
 };
 
-/** Centrality Theme settings*/
+/** Centrality Layout settings*/
 USTRUCT(BlueprintType)
-struct FCentralityThemeSettings
+struct FCentralityLayoutSettings
 {
 	GENERATED_BODY()
 
 	/** Is tip located at the bottom or top? */
-	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "Centrality Theme")
+	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "Centrality Layout")
 	bool bTipAtBottom = true;
 	
 	/** Padding at bottom or top depend on the tip located at the bottom or top position.*/
-	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "Centrality Theme")
+	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "Centrality Layout")
 	float TipWidgetVerticalPadding = 0.0f;	
 
 	/** The alignment of the tips. */
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Centrality Theme")
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Centrality Layout")
 	FWidgetAlignment TipAlignment;
 
 	/** The padding area between the border and the tips it contains.*/
-	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "Centrality Theme")
+	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "Centrality Layout")
 	FMargin BorderPadding;
 
 	/** Background appearance settings for tip area */
-	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "Centrality Theme")
+	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "Centrality Layout")
 	FSlateBrush BorderBackground;
 
 	// The color and opacity for the background of the tip area
-	//UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "Centrality Theme")
+	//UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "Centrality Layout")
 	//FLinearColor TipBackgroundColor = FLinearColor::Black;
 };
 
 
-/** Letterbox Theme settings*/
+/** Letterbox Layout settings*/
 USTRUCT(BlueprintType)
-struct FLetterboxThemeSettings
+struct FLetterboxLayoutSettings
 {
 	GENERATED_BODY()
 
 	/** Is loading widget located at the bottom or top? */
-	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "Letterbox Theme")
+	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "Letterbox Layout")
 	bool bIsLoadingWidgetAtTop = true;
 
 	/** The alignment of the tips. */
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Letterbox Theme")
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Letterbox Layout")
 	FWidgetAlignment TipAlignment;
 
 	/** The alignment of the loading widget. */
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Letterbox Theme")
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Letterbox Layout")
 	FWidgetAlignment LoadingWidgetAlignment;
 
 	/** The top padding area between the border and the widget it contains.*/
-	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "Letterbox Theme")
+	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "Letterbox Layout")
 	FMargin TopBorderPadding;
 
 	/** The bottom padding area between the border and the widget it contains.*/
-	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "Letterbox Theme")
+	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "Letterbox Layout")
 	FMargin BottomBorderPadding;
 
 	/** Background appearance settings for top border */
-	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "Letterbox Theme")
+	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "Letterbox Layout")
 	FSlateBrush TopBorderBackground;
 
 	/** Background appearance settings for bottom border */
-	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "Letterbox Theme")
+	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "Letterbox Layout")
 	FSlateBrush BottomBorderBackground;
 };
 
@@ -460,19 +460,19 @@ public:
 	FALoadingScreenSettings DefaultLoadingScreen;
 	
 	/**
-	 * Classic Theme settings.
+	 * Classic Layout settings.
 	 */
-	UPROPERTY(Config, EditAnywhere, Category = "Themes")
-	FClassicThemeSettings Classic;
+	UPROPERTY(Config, EditAnywhere, Category = "Layout")
+	FClassicLayoutSettings Classic;
 	
 	/**
-	 * Centrality Theme settings.
+	 * Centrality Layout settings.
 	 */
-	UPROPERTY(Config, EditAnywhere, Category = "Themes")
-	FCentralityThemeSettings Centrality;
+	UPROPERTY(Config, EditAnywhere, Category = "Layout")
+	FCentralityLayoutSettings Centrality;
 	/**
-	 * Letterbox Theme settings.
+	 * Letterbox Layout settings.
 	 */
-	UPROPERTY(Config, EditAnywhere, Category = "Themes")
-	FLetterboxThemeSettings Letterbox;
+	UPROPERTY(Config, EditAnywhere, Category = "Layout")
+	FLetterboxLayoutSettings Letterbox;
 };
