@@ -11,20 +11,20 @@
 #include "SLoadingScreenLayout.h"
 
 struct FALoadingScreenSettings;
-struct FCentralityLayoutSettings;
+struct FCenterLayoutSettings;
 
 /**
  * Centrality Theme loading screen
  */
-class SCentralityLayout : public SLoadingScreenLayout
+class SCenterLayout : public SLoadingScreenLayout
 {
 public:
-	SLATE_BEGIN_ARGS(SCentralityLayout) {}
+	SLATE_BEGIN_ARGS(SCenterLayout) {}
 
 	SLATE_END_ARGS()
 
 	/**
 	 * Construct this widget
 	 */
-	void Construct(const FArguments& InArgs, const FALoadingScreenSettings& Settings, const FCentralityLayoutSettings& LayoutSettings);
+	void Construct(const FArguments& InArgs, const FALoadingScreenSettings& Settings, const FCenterLayoutSettings& LayoutSettings);
 };

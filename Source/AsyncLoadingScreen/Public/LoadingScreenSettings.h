@@ -29,9 +29,9 @@ enum class EAsyncLoadingScreenLayout : uint8
 	ALSL_Classic UMETA(DisplayName = "Classic"),
 	/** 
 	 * The loading widget is at the center of the screen, tips can be at the bottom or top. 	
-	 * The Centrality layout is a good choice if your loading icon is the main actor. 
+	 * The Center layout is a good choice if your loading icon is the main actor. 
 	 */
-	ALSL_Centrality UMETA(DisplayName = "Centrality"),
+	ALSL_Center UMETA(DisplayName = "Center"),
 	/**
 	 * The Letterbox Layout has two borders on top and bottom of the screen.
 	 * Loading widget can be on the top and the tip is at the bottom of the screen, or vice versa
@@ -368,9 +368,9 @@ struct FClassicLayoutSettings
 	FSlateBrush BorderBackground;	
 };
 
-/** Centrality Layout settings*/
+/** Center Layout settings*/
 USTRUCT(BlueprintType)
-struct FCentralityLayoutSettings
+struct FCenterLayoutSettings
 {
 	GENERATED_BODY()
 
@@ -466,10 +466,10 @@ public:
 	FClassicLayoutSettings Classic;
 	
 	/**
-	 * Centrality Layout settings.
+	 * Center Layout settings.
 	 */
 	UPROPERTY(Config, EditAnywhere, Category = "Layout")
-	FCentralityLayoutSettings Centrality;
+	FCenterLayoutSettings Center;
 	/**
 	 * Letterbox Layout settings.
 	 */

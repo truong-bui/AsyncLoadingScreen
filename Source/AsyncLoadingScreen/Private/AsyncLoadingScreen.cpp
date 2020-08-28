@@ -9,7 +9,7 @@
 #include "AsyncLoadingScreen.h"
 #include "MoviePlayer.h"
 #include "LoadingScreenSettings.h"
-#include "SCentralityLayout.h"
+#include "SCenterLayout.h"
 #include "SClassicLayout.h"
 #include "SLetterboxLayout.h"
 
@@ -108,8 +108,8 @@ void FAsyncLoadingScreenModule::SetupLoadingScreen(const FALoadingScreenSettings
 		case EAsyncLoadingScreenLayout::ALSL_Classic:
 			LoadingScreen.WidgetLoadingScreen = SNew(SClassicLayout, LoadingScreenSettings, Settings->Classic);
 			break;
-		case EAsyncLoadingScreenLayout::ALSL_Centrality:
-			LoadingScreen.WidgetLoadingScreen = SNew(SCentralityLayout, LoadingScreenSettings, Settings->Centrality);
+		case EAsyncLoadingScreenLayout::ALSL_Center:
+			LoadingScreen.WidgetLoadingScreen = SNew(SCenterLayout, LoadingScreenSettings, Settings->Center);
 			break;
 		case EAsyncLoadingScreenLayout::ALSL_Letterbox:
 			LoadingScreen.WidgetLoadingScreen = SNew(SLetterboxLayout, LoadingScreenSettings, Settings->Letterbox);

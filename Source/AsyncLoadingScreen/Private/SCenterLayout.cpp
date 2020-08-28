@@ -6,7 +6,7 @@
  *																					*
  ************************************************************************************/
 
-#include "SCentralityLayout.h"
+#include "SCenterLayout.h"
 #include "LoadingScreenSettings.h"
 #include "Widgets/Layout/SSafeZone.h"
 #include "Widgets/Layout/SDPIScaler.h"
@@ -16,7 +16,7 @@
 #include "STipWidget.h"
 
 
-void SCentralityLayout::Construct(const FArguments& InArgs, const FALoadingScreenSettings& Settings, const FCentralityLayoutSettings& LayoutSettings)
+void SCenterLayout::Construct(const FArguments& InArgs, const FALoadingScreenSettings& Settings, const FCenterLayoutSettings& LayoutSettings)
 {
 	// Root widget and background
 	TSharedRef<SOverlay> Root = SNew(SOverlay)
@@ -68,7 +68,7 @@ void SCentralityLayout::Construct(const FArguments& InArgs, const FALoadingScree
 					.Padding(LayoutSettings.BorderPadding)
 					[
 						SNew(SDPIScaler)
-						.DPIScale(this, &SCentralityLayout::GetDPIScale)
+						.DPIScale(this, &SCenterLayout::GetDPIScale)
 						[					
 							SNew(STipWidget, Settings.TipWidget)
 						]
@@ -97,7 +97,7 @@ void SCentralityLayout::Construct(const FArguments& InArgs, const FALoadingScree
 					.Padding(LayoutSettings.BorderPadding)
 					[
 						SNew(SDPIScaler)
-						.DPIScale(this, &SCentralityLayout::GetDPIScale)
+						.DPIScale(this, &SCenterLayout::GetDPIScale)
 						[					
 							SNew(STipWidget, Settings.TipWidget)
 						]						
