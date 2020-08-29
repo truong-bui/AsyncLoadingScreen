@@ -20,8 +20,7 @@
 void FAsyncLoadingScreenModule::StartupModule()
 {
 	// This code will execute after your module is loaded into memory; the exact timing is specified in the .uplugin file per-module
-	
-	//ILoadingScreenInterface::StartupModule();
+
 
 	if (!IsRunningDedicatedServer() && FSlateApplication::IsInitialized())
 	{
@@ -73,13 +72,6 @@ void FAsyncLoadingScreenModule::ShutdownModule()
 	}
 }
 
-/*
-void FAsyncLoadingScreenModule::AddModuleListeners()
-{
-	// Add new modules here
-}
-*/
-
 bool FAsyncLoadingScreenModule::IsGameModule() const
 {
 	return true;
@@ -120,7 +112,7 @@ void FAsyncLoadingScreenModule::SetupLoadingScreen(const FALoadingScreenSettings
 			LoadingScreen.WidgetLoadingScreen = SNew(SSidebarLayout, LoadingScreenSettings, Settings->Sidebar);
 			break;
 		case EAsyncLoadingScreenLayout::ALSL_DualSidebar:
-			//LoadingScreen.WidgetLoadingScreen = SNew(SSidebarLayout, LoadingScreenSettings, Settings->Sidebar);
+			LoadingScreen.WidgetLoadingScreen = SNew(SDualSidebarLayout, LoadingScreenSettings, Settings->DualSidebar);
 			break;
 		}
 		
