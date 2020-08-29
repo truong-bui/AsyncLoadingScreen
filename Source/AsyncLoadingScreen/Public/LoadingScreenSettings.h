@@ -37,11 +37,17 @@ enum class EAsyncLoadingScreenLayout : uint8
 	 * can be on the top and the tip is at the bottom of the screen, or vice versa.
 	 */
 	 ALSL_Letterbox UMETA(DisplayName = "Letterbox"),
-	 /**
-	 * The Sidebar layout has a vertical border on the left or right of the screen. The Sidebar is suitable
-	 * for story-driven, rich content loading screens due to the height of tips.
+	/**
+	 * The Sidebar layout has a vertical border on the left or right of the screen. The Sidebar 
+	 * is suitable for storytelling, long paragraphs due to the height of the tip.
 	 */
-	 ALSL_Sidebar UMETA(DisplayName = "Sidebar")
+	 ALSL_Sidebar UMETA(DisplayName = "Sidebar"),
+
+	/**
+	 * Similar to Sidebar layout but Dual Sidebar layout has two vertical borders on both left and right of the screen.
+	 * The Dual Sidebar layout is suitable for storytelling, long paragraphs due to the height of the tip.
+	 */
+	 ALSL_DualSidebar UMETA(DisplayName = "Dual Sidebar")
 };
 
 /** Loading Icon Type*/
@@ -482,6 +488,41 @@ struct FSidebarLayoutSettings
 	FSlateBrush BorderBackground;
 };
 
+/** Dual Sidebar Layout settings*/
+USTRUCT(BlueprintType)
+struct FDualSidebarLayoutSettings
+{
+	GENERATED_BODY()
+
+	/** Is loading widget on the right or left border? */
+	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "Dual Sidebar Layout")
+	bool bIsLoadingWidgetAtRight = true;
+
+	/** The vertical alignment of the left widget. */
+	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "Dual Sidebar Layout")
+	TEnumAsByte<EVerticalAlignment> LeftVerticalAlignment = EVerticalAlignment::VAlign_Center;
+
+	/** The vertical alignment of the right widget. */
+	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "Dual Sidebar Layout")
+	TEnumAsByte<EVerticalAlignment> RightVerticalAlignment = EVerticalAlignment::VAlign_Center;
+
+	/** The padding area between the left border and the widget it contains.*/
+	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "Dual Sidebar Layout")
+	FMargin LeftBorderPadding;
+
+	/** The padding area between the right border and the widget it contains.*/
+	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "Dual Sidebar Layout")
+	FMargin RightBorderPadding;
+
+	/** Background appearance settings for the left border widget */
+	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "Dual Sidebar Layout")
+	FSlateBrush LeftBorderBackground;
+
+	/** Background appearance settings for the right border widget */
+	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "Dual Sidebar Layout")
+	FSlateBrush RightBorderBackground;
+};
+
 /**
  * Async Loading Screen Settings 
  */
@@ -532,10 +573,18 @@ public:
 
 	/**
 	 * Sidebar Layout settings.
-	 * The Sidebar layout has a vertical border on the left or right of the screen. The Sidebar is suitable
-	 * for story-driven, rich content loading screens due to the height of tips.
+	 * The Sidebar layout has a vertical border on the left or right of the screen. The Sidebar 
+	 * is suitable for storytelling, long paragraph due to the height of the tip.
 	 */
 	UPROPERTY(Config, EditAnywhere, Category = "Layout")
 	FSidebarLayoutSettings Sidebar;
+
+	/**
+	 * Dual Sidebar Layout settings
+	 * Similar to Sidebar layout but Dual Sidebar layout has two vertical borders on both left and right of the screen.
+	 * The Dual Sidebar layout is suitable for storytelling, long paragraphs due to the height of the tip.
+	 */
+	UPROPERTY(Config, EditAnywhere, Category = "Layout")
+	FDualSidebarLayoutSettings DualSidebar;
 
 };

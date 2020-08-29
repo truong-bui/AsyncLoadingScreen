@@ -13,6 +13,7 @@
 #include "SClassicLayout.h"
 #include "SLetterboxLayout.h"
 #include "SSidebarLayout.h"
+#include "SDualSidebarLayout.h"
 
 #define LOCTEXT_NAMESPACE "FAsyncLoadingScreenModule"
 
@@ -117,6 +118,9 @@ void FAsyncLoadingScreenModule::SetupLoadingScreen(const FALoadingScreenSettings
 			break;
 		case EAsyncLoadingScreenLayout::ALSL_Sidebar:
 			LoadingScreen.WidgetLoadingScreen = SNew(SSidebarLayout, LoadingScreenSettings, Settings->Sidebar);
+			break;
+		case EAsyncLoadingScreenLayout::ALSL_DualSidebar:
+			//LoadingScreen.WidgetLoadingScreen = SNew(SSidebarLayout, LoadingScreenSettings, Settings->Sidebar);
 			break;
 		}
 		
