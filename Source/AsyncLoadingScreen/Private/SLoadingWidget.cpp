@@ -47,12 +47,12 @@ void SLoadingWidget::ConstructLoadingIcon(const FLoadingWidgetSettings& Settings
 	if (Settings.LoadingIconType == ELoadingIconType::LIT_ImageSequence)
 	{
 		// Loading Widget is image sequence
-		if (Settings.Images.Num() > 0)
+		if (Settings.ImageSequenceSettings.Images.Num() > 0)
 		{
 			CleanupBrushList.Empty();
 			ImageIndex = 0;
 
-			for (auto ImageAsset : Settings.Images)
+			for (auto ImageAsset : Settings.ImageSequenceSettings.Images)
 			{
 				UObject* ImageObject = ImageAsset.TryLoad();
 				if (UTexture2D* LoadingImage = Cast<UTexture2D>(ImageObject))
@@ -69,7 +69,7 @@ void SLoadingWidget::ConstructLoadingIcon(const FLoadingWidgetSettings& Settings
 			if (!bIsActiveTimerRegistered)
 			{
 				bIsActiveTimerRegistered = true;
-				RegisterActiveTimer(Settings.Interval, FWidgetActiveTimerDelegate::CreateSP(this, &SLoadingWidget::AnimatingImageSequence));
+				RegisterActiveTimer(Settings.ImageSequenceSettings.Interval, FWidgetActiveTimerDelegate::CreateSP(this, &SLoadingWidget::AnimatingImageSequence));
 			}
 		}
 		else

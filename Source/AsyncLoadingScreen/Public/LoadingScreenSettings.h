@@ -161,6 +161,22 @@ struct FCircularThrobberSettings
 	FSlateBrush Image;
 };
 
+USTRUCT(BlueprintType)
+struct FImageSequenceSettings
+{
+	GENERATED_BODY()
+
+	/** An array of images for animating the loading icon.*/
+	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "Loading Widget Setting", meta = (AllowedClasses = "Texture2D"))
+	TArray<FSoftObjectPath> Images;
+
+	/**
+	 * Time in second to update the images, the smaller value the faster of the animation. A zero value will update the images every frame.
+	 */
+	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "Loading Widget Setting", meta = (UIMax = 1.00, UIMin = 0.00, ClampMin = "0", ClampMax = "1"))
+	float Interval = 0.05f;
+
+};
 
 /**
  * Background content for the widget loading screen
@@ -242,17 +258,10 @@ struct ASYNCLOADINGSCREEN_API FLoadingWidgetSettings
 	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "Loading Widget Setting")
 	FCircularThrobberSettings CircularThrobberSettings;
 
-	/** An array of images for animating the loading icon. Ignore this if you don't choose the 'Image Sequence' icon type*/
-	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "Loading Widget Setting", meta = (AllowedClasses = "Texture2D"))
-	TArray<FSoftObjectPath> Images;	
+	/** Image Sequence settings. Ignore this if you don't choose the 'Image Sequence' icon type*/
+	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "Loading Widget Setting")
+	FImageSequenceSettings ImageSequenceSettings;
 
-	/** 
-	 * Time in second to update the images, the smaller value the faster of the animation. A zero value will update the images every frame. 
-	 * Ignore this if you don't choose the 'Image Sequence' icon type.
-	 */
-	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "Loading Widget Setting", meta = (UIMax = 1.00, UIMin = 0.00, ClampMin = "0", ClampMax = "1"))
-	float Interval = 0.05f;
-	
 	/** The alignment of the loading text.*/
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Loading Widget Setting")
 	FWidgetAlignment TextAlignment;
