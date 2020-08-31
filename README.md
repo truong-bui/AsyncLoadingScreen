@@ -65,7 +65,7 @@ Async Loading Screen plug-in requires C++ Visual Studio and a C++ code project. 
 - ### Clone from Github
 Clone this repository into your project's /Plugins folder, make one if it doesn’t exist, then compile your game in Visual Studio. If your project is blueprint based you’ll need to convert it to a c++ project by adding any c++ class.
 
-The plug-in will be enabled by default. You can disable it in “Edit→Plugins→Project/Loading Screen”. You can configure the plug-in in project settings "Game/Async Loading Screen".
+The plug-in will be enabled by default. You can disable it in “Edit→Plugins→Project/Loading Screen”. You configure the plug-in in project settings "Game/Async Loading Screen".
 
 ![async-loading-screen-screenshot-01](https://user-images.githubusercontent.com/1840964/91760594-d02bb500-ebfd-11ea-85fc-08c5a556a903.png)
 
