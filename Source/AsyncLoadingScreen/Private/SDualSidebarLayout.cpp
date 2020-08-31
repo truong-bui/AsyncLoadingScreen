@@ -46,7 +46,7 @@ void SDualSidebarLayout::Construct(const FArguments& InArgs, const FALoadingScre
 		// Add loading widget at right
 		Root.Get().AddSlot()
 		.HAlign(HAlign_Right)
-		.VAlign(VAlign_Fill)		
+		.VAlign(LayoutSettings.RightBorderVerticalAlignment)		
 		[
 			SNew(SBorder)
 			.HAlign(HAlign_Fill)
@@ -72,7 +72,7 @@ void SDualSidebarLayout::Construct(const FArguments& InArgs, const FALoadingScre
 		// Add tip widget at left
 		Root.Get().AddSlot()
 		.HAlign(HAlign_Left)
-		.VAlign(VAlign_Fill)		
+		.VAlign(LayoutSettings.LeftBorderVerticalAlignment)		
 		[
 			SNew(SBorder)
 			.HAlign(HAlign_Fill)
@@ -101,7 +101,7 @@ void SDualSidebarLayout::Construct(const FArguments& InArgs, const FALoadingScre
 		// Add Tip widget at right
 		Root.Get().AddSlot()
 		.HAlign(HAlign_Right)
-		.VAlign(VAlign_Fill)		
+		.VAlign(LayoutSettings.RightBorderVerticalAlignment)		
 		[
 			SNew(SBorder)
 			.HAlign(HAlign_Fill)
@@ -127,7 +127,7 @@ void SDualSidebarLayout::Construct(const FArguments& InArgs, const FALoadingScre
 		// Add Loading widget at left
 		Root.Get().AddSlot()
 		.HAlign(HAlign_Left)
-		.VAlign(VAlign_Fill)		
+		.VAlign(LayoutSettings.LeftBorderVerticalAlignment)		
 		[
 			SNew(SBorder)
 			.HAlign(HAlign_Fill)

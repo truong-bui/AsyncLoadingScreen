@@ -51,7 +51,7 @@ void SCenterLayout::Construct(const FArguments& InArgs, const FALoadingScreenSet
 	{
 		// Add tip widget at bottom
 		Root->AddSlot()
-			.HAlign(HAlign_Fill)
+			.HAlign(LayoutSettings.BorderHorizontalAlignment)
 			.VAlign(VAlign_Bottom)
 			.Padding(0, 0, 0, LayoutSettings.TipWidgetVerticalPadding)
 			[
@@ -80,7 +80,7 @@ void SCenterLayout::Construct(const FArguments& InArgs, const FALoadingScreenSet
 	{
 		// Add tip widget at top
 		Root->AddSlot()
-			.HAlign(HAlign_Fill)
+			.HAlign(LayoutSettings.BorderHorizontalAlignment)
 			.VAlign(VAlign_Top)
 			.Padding(0, LayoutSettings.TipWidgetVerticalPadding, 0, 0)
 			[

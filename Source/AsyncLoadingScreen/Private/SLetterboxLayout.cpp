@@ -42,7 +42,7 @@ void SLetterboxLayout::Construct(const FArguments& InArgs, const FALoadingScreen
 	{
 		// Add a border widget at top, then add Loading widget
 		Root->AddSlot()
-			.HAlign(HAlign_Fill)
+			.HAlign(LayoutSettings.TopBorderHorizontalAlignment)
 			.VAlign(VAlign_Top)	
 			[
 				SNew(SBorder)
@@ -68,7 +68,7 @@ void SLetterboxLayout::Construct(const FArguments& InArgs, const FALoadingScreen
 
 		// Add a border widget at bottom, then add Tip widget
 		Root->AddSlot()
-			.HAlign(HAlign_Fill)
+			.HAlign(LayoutSettings.BottomBorderHorizontalAlignment)
 			.VAlign(VAlign_Bottom)	
 			[
 				SNew(SBorder)
@@ -96,7 +96,7 @@ void SLetterboxLayout::Construct(const FArguments& InArgs, const FALoadingScreen
 	{
 		// Add a border widget at top, then add Tip widget
 		Root->AddSlot()
-			.HAlign(HAlign_Fill)
+			.HAlign(LayoutSettings.TopBorderHorizontalAlignment)
 			.VAlign(VAlign_Top)	
 			[
 				SNew(SBorder)
@@ -122,7 +122,7 @@ void SLetterboxLayout::Construct(const FArguments& InArgs, const FALoadingScreen
 
 		// Add a border widget at bottom, then add Loading widget
 		Root->AddSlot()
-			.HAlign(HAlign_Fill)
+			.HAlign(LayoutSettings.BottomBorderHorizontalAlignment)
 			.VAlign(VAlign_Bottom)	
 			[
 				SNew(SBorder)

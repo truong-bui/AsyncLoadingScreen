@@ -379,6 +379,10 @@ struct FClassicLayoutSettings
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Classic Layout")
 	FWidgetAlignment TipAlignment;
 
+	/** The horizontal alignment of the border background.*/
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Center Layout")
+	TEnumAsByte<EHorizontalAlignment> BorderHorizontalAlignment = EHorizontalAlignment::HAlign_Fill;
+
 	/** The padding area between the border and the widget it contains.*/
 	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "Classic Layout")
 	FMargin BorderPadding;
@@ -405,6 +409,10 @@ struct FCenterLayoutSettings
 	/** The alignment of the tips. */
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Center Layout")
 	FWidgetAlignment TipAlignment;
+
+	/** The horizontal alignment of the border.*/
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Center Layout")
+	TEnumAsByte<EHorizontalAlignment> BorderHorizontalAlignment = EHorizontalAlignment::HAlign_Fill;
 
 	/** The padding area between the border and the tips it contains.*/
 	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "Center Layout")
@@ -436,6 +444,14 @@ struct FLetterboxLayoutSettings
 	/** The alignment of the loading widget. */
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Letterbox Layout")
 	FWidgetAlignment LoadingWidgetAlignment;
+
+	/** The horizontal alignment of the top border.*/
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Letterbox Layout")
+	TEnumAsByte<EHorizontalAlignment> TopBorderHorizontalAlignment = EHorizontalAlignment::HAlign_Fill;
+
+	/** The horizontal alignment of the bottom border.*/
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Letterbox Layout")
+	TEnumAsByte<EHorizontalAlignment> BottomBorderHorizontalAlignment = EHorizontalAlignment::HAlign_Fill;
 
 	/** The top padding area between the border and the widget it contains.*/
 	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "Letterbox Layout")
@@ -488,6 +504,10 @@ struct FSidebarLayoutSettings
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Sidebar Layout")
 	FWidgetAlignment TipAlignment;
 
+	/** The vertical alignment of the border background that contains all widgets. */
+	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "Sidebar Layout")
+	TEnumAsByte<EVerticalAlignment> BorderVerticalAlignment = EVerticalAlignment::VAlign_Fill;
+
 	/** The padding area between the border and the widget it contains.*/
 	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "Sidebar Layout")
 	FMargin BorderPadding;
@@ -514,6 +534,14 @@ struct FDualSidebarLayoutSettings
 	/** The vertical alignment of the right widget. */
 	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "Dual Sidebar Layout")
 	TEnumAsByte<EVerticalAlignment> RightVerticalAlignment = EVerticalAlignment::VAlign_Center;
+
+	/** The vertical alignment of the left border background that contains all widgets. */
+	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "Dual Sidebar Layout")
+	TEnumAsByte<EVerticalAlignment> LeftBorderVerticalAlignment = EVerticalAlignment::VAlign_Fill;
+
+	/** The vertical alignment of the right border background that contains all widgets. */
+	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "Dual Sidebar Layout")
+	TEnumAsByte<EVerticalAlignment> RightBorderVerticalAlignment = EVerticalAlignment::VAlign_Fill;
 
 	/** The padding area between the left border and the widget it contains.*/
 	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "Dual Sidebar Layout")

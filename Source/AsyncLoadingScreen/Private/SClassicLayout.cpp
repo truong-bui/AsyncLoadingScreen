@@ -116,7 +116,7 @@ void SClassicLayout::Construct(const FArguments& InArgs, const FALoadingScreenSe
 
 	// Creating loading theme
 	Root->AddSlot()
-	.HAlign(HAlign_Fill)
+	.HAlign(LayoutSettings.BorderHorizontalAlignment)
 	.VAlign(VerticalAlignment)		
 	[
 		SNew(SBorder)
