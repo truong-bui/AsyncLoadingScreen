@@ -12,6 +12,8 @@
 - [Showcases](#showcases)
 - [Requirements](#requirements)
 - [Installation](#installation)
+    - [Clone from Github](#clone-from-github)
+    - [Download from Marketplace](#download-from-marketplace)
 - [How to Use](#how-to-use)
 - [Wiki](#wiki)
 - [License](#license)
@@ -29,7 +31,7 @@ Async Loading Screen allows you to easily configure a Loading Screen System in t
 
 ## How it works
 
-Async Loading Screen uses MoviePlayer to play a movie at level transition. MoviePlayer is not only playing movie files but also can display a Slate widget on top of the movie. We use this widget for the loading screen.
+Async Loading Screen uses MoviePlayer to play a movie at level transition, on a different thread than game thread. MoviePlayer is not only playing movie files but also can display a Slate widget on top of the movie. We use this widget for the loading screen.
 
 MoviePlayer is registered to PreLoadMap and PostLoadMapWithWorld delegates so it will be called and shut down automatically by the engine whenever you open a new level.
 
@@ -57,12 +59,18 @@ MoviePlayer is registered to PreLoadMap and PostLoadMapWithWorld delegates so it
 
 ## Requirements
 
-Async Loading Screen plug-in requires C++ Visual Studio and a C++ code project. If your project is blueprint based then you will need to convert it to C++ project otherwise you cannot packaging your game with code plug-in.
+Async Loading Screen plug-in requires C++ Visual Studio and a C++ code project. If your project is blueprint based then you will need to convert it to C++ project otherwise you cannot package your game with code plug-in.
 
 ## Installation
+- ### Clone from Github
+Clone this repository into your project's /Plugins folder, make one if it doesn’t exist, then compile your game in Visual Studio. If your project is blueprint based you’ll need to convert it to a c++ project by adding any c++ class.
 
+The plug-in will be enabled by default. You can disable it in “Edit→Plugins→Project/Loading Screen”. You can configure the plug-in in project settings "Game/Async Loading Screen".
+
+![async-loading-screen-screenshot-01](https://user-images.githubusercontent.com/1840964/91760594-d02bb500-ebfd-11ea-85fc-08c5a556a903.png)
+
+- ### Download from Marketplace
 --- Comming soon ---
-
 ## How to Use
 
 --- Comming soon ---
