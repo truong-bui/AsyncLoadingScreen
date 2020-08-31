@@ -37,7 +37,7 @@ MoviePlayer is registered to PreLoadMap and PostLoadMapWithWorld delegates so it
 
 - Easy to set up, easy to use.
 - Customizable pre-make layouts.
-- Customizable Loading icons.
+- Customizable loading icons.
 - Lot of default loading icons.
 - Supported custom animated images.
 - Supported on all major platforms.
@@ -80,7 +80,7 @@ Async Loading Screen plug-in is licensed under the [MIT](LICENSE) License.
 
 ## Acknowledgment
 
-Async Loading Screen plug-in is inspired from [Loading Screen](https://github.com/ue4plugins/LoadingScreen) plugin by Nick Darnell.
+Async Loading Screen plug-in is inspired from [Loading Screen](https://github.com/ue4plugins/LoadingScreen) plug-in by Nick Darnell.
 
 
 
