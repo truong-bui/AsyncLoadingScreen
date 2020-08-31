@@ -29,7 +29,7 @@ Async Loading Screen allows you to easily configure a Loading Screen System in t
 
 ## How it works
 
-Async Loading Screen uses MoviePlayer to play a movie at level transition. MoviePlayer is not only playing movie files but also can display a Slate widget on top of the movie. I use this widget for the loading screen.
+Async Loading Screen uses MoviePlayer to play a movie at level transition. MoviePlayer is not only playing movie files but also can display a Slate widget on top of the movie. We use this widget for the loading screen.
 
 MoviePlayer is registered to PreLoadMap and PostLoadMapWithWorld delegates so it will be called and shut down automatically by the engine whenever you open a new level.
 
