@@ -40,8 +40,8 @@ MoviePlayer is registered to PreLoadMap and PostLoadMapWithWorld delegates so it
 - Easy to set up, easy to use.
 - Customizable pre-make layouts.
 - Customizable loading icons.
-- Lot of default loading icons.
-- Supported custom animated images.
+- Pre-make default loading icons.
+- Supported animating images sequence.
 - Supported on all major platforms.
 - Easily play movies, audio files.
 - No need for coding.
@@ -51,11 +51,11 @@ MoviePlayer is registered to PreLoadMap and PostLoadMapWithWorld delegates so it
 
 ## Plugin Architecture
 
---- Comming soon ---
+--- Coming soon ---
 
 ## Showcases
 
---- Comming soon ---
+--- Coming soon ---
 
 ## Requirements
 
@@ -70,21 +70,21 @@ The plug-in will be enabled by default. You can disable it in “Edit→Plugins�
 ![async-loading-screen-screenshot-01](https://user-images.githubusercontent.com/1840964/91760594-d02bb500-ebfd-11ea-85fc-08c5a556a903.png)
 
 - ### Download from Marketplace
---- Comming soon ---
+--- Coming soon ---
 ## How to Use
 
---- Comming soon ---
+--- Coming soon ---
 
 ## Wiki
 
---- Comming soon ---
+--- Coming soon ---
 
 ## License
 Async Loading Screen plug-in is licensed under the [MIT](LICENSE) License.
 
 ## Contributing
 
---- Comming soon ---
+--- Coming soon ---
 
 ## Acknowledgment
 
