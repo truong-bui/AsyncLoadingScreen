@@ -1,5 +1,5 @@
 <p align="center">
-    <a>
+    <a href="#">
         <img src="/Resources/Icon256.png">
     </a>
 </p>
