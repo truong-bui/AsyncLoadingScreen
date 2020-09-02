@@ -36,6 +36,9 @@ protected:
 	TArray<TSharedPtr<FDeferredCleanupSlateBrush>> CleanupBrushList;
 	// Current image sequence index
 	int32 ImageIndex = 0;
+	// Play image sequence in reverse
+	bool bPlayReverse = false;
 
 	bool bIsActiveTimerRegistered = false;
+	
 };

@@ -176,6 +176,9 @@ struct FImageSequenceSettings
 	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "Loading Widget Setting", meta = (UIMax = 1.00, UIMin = 0.00, ClampMin = "0", ClampMax = "1"))
 	float Interval = 0.05f;
 
+	/** Play the image sequence in reverse.*/
+	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "Loading Widget Setting")
+	bool bPlayReverse = false;
 };
 
 /**

@@ -15,6 +15,7 @@
 void SVerticalLoadingWidget::Construct(const FArguments& InArgs, const FLoadingWidgetSettings& Settings)
 {
 	bIsActiveTimerRegistered = false;
+	bPlayReverse = Settings.ImageSequenceSettings.bPlayReverse;
 
 	// Root is a Vertical Box
 	TSharedRef<SVerticalBox> Root = SNew(SVerticalBox);

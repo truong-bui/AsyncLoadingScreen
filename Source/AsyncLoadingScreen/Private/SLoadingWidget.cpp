@@ -16,10 +16,22 @@ EActiveTimerReturnType SLoadingWidget::AnimatingImageSequence(double InCurrentTi
 {	
 	if (CleanupBrushList.Num() > 1)
 	{
-		ImageIndex++;
+		if (bPlayReverse)
+		{
+			ImageIndex--;
+		}
+		else
+		{
+			ImageIndex++;
+		}
+		
 		if (ImageIndex >= CleanupBrushList.Num())
 		{
 			ImageIndex = 0;
+		}
+		else if (ImageIndex < 0)
+		{
+			ImageIndex = CleanupBrushList.Num() - 1;
 		}
 
 		StaticCastSharedRef<SImage>(LoadingIcon)->SetImage(CleanupBrushList[ImageIndex].IsValid() ? CleanupBrushList[ImageIndex]->GetSlateBrush() : nullptr);
