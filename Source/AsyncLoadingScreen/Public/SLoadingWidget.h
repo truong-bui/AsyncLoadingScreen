@@ -33,7 +33,7 @@ protected:
 	// Placeholder widgets
 	TSharedRef<SWidget> LoadingIcon = SNullWidget::NullWidget;
 	// Image slate brush list
-	TArray<TSharedPtr<FDeferredCleanupSlateBrush>> CleanupBrushList;
+	TArray<TSharedPtr<FDeferredCleanupSlateBrush>> CleanupBrushList;	
 	// Current image sequence index
 	int32 ImageIndex = 0;
 	// Play image sequence in reverse

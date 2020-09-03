@@ -64,15 +64,16 @@ void SLoadingWidget::ConstructLoadingIcon(const FLoadingWidgetSettings& Settings
 			CleanupBrushList.Empty();
 			ImageIndex = 0;
 
-			for (auto ImageAsset : Settings.ImageSequenceSettings.Images)
-			{
-				UObject* ImageObject = ImageAsset.TryLoad();
-				if (UTexture2D* LoadingImage = Cast<UTexture2D>(ImageObject))
-				{
-					CleanupBrushList.Add(FDeferredCleanupSlateBrush::CreateBrush(LoadingImage));
-				}
-			}
+			FVector2D Scale = Settings.ImageSequenceSettings.Scale;
 
+			for (auto Image: Settings.ImageSequenceSettings.Images)
+			{
+				if (Image)
+				{
+					CleanupBrushList.Add(FDeferredCleanupSlateBrush::CreateBrush(Image, FVector2D(Image->GetSurfaceWidth() * Scale.X, Image->GetSurfaceHeight() * Scale.Y)));					
+				}				
+			}
+		
 			// Create Image slate widget
 			LoadingIcon = SNew(SImage)
 				.Image(CleanupBrushList[ImageIndex]->GetSlateBrush());

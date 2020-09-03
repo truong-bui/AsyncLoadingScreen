@@ -168,7 +168,11 @@ struct FImageSequenceSettings
 
 	/** An array of images for animating the loading icon.*/
 	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "Loading Widget Setting", meta = (AllowedClasses = "Texture2D"))
-	TArray<FSoftObjectPath> Images;
+	TArray<UTexture2D*> Images;
+
+	/** Scale of the images.*/
+	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "Loading Widget Setting")
+	FVector2D Scale = FVector2D(1.0f, 1.0f);
 
 	/**
 	 * Time in second to update the images, the smaller value the faster of the animation. A zero value will update the images every frame.
@@ -182,7 +186,7 @@ struct FImageSequenceSettings
 };
 
 /**
- * Background content for the widget loading screen
+ * Background widget for the widget loading screen
  */
 USTRUCT(BlueprintType)
 struct ASYNCLOADINGSCREEN_API FBackgroundSettings
@@ -347,15 +351,15 @@ struct ASYNCLOADINGSCREEN_API FALoadingScreenSettings
 	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "Loading Screen Settings")
 	EAsyncLoadingScreenLayout Layout = EAsyncLoadingScreenLayout::ALSL_Classic;
 
-	/** Background content for the loading screen. Ignore this if you choose "Show Widget Overlay = false" */
+	/** Background widget for the loading screen. Ignore this if you choose "Show Widget Overlay = false" */
 	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "Loading Screen Settings")
 	FBackgroundSettings Background;
 	
-	/** Loading content for the loading screen. Ignore this if you choose "Show Widget Overlay = false" */
+	/** Loading widget for the loading screen. Ignore this if you choose "Show Widget Overlay = false" */
 	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "Loading Screen Settings")
 	FLoadingWidgetSettings LoadingWidget;
 	
-	/** Tips text widget for the loading screen. Ignore this if you choose "Show Widget Overlay = false" */
+	/** Tip widget for the loading screen. Ignore this if you choose "Show Widget Overlay = false" */
 	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "Loading Screen Settings")
 	FTipSettings TipWidget;
 };
