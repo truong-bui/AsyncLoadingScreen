@@ -26,29 +26,7 @@ void FAsyncLoadingScreenModule::StartupModule()
 	if (!IsRunningDedicatedServer() && FSlateApplication::IsInitialized())
 	{
 		const ULoadingScreenSettings* Settings = GetDefault<ULoadingScreenSettings>();
-		/**
-		for (const FSoftObjectPath& Ref : Settings->StartupLoadingScreen.Background.Images)
-		{
-			Ref.TryLoad();
-		}
-
-		for (const FSoftObjectPath& Ref : Settings->DefaultLoadingScreen.Background.Images)
-		{
-			Ref.TryLoad();
-		}
-
-		for (const FSoftObjectPath& Ref : Settings->StartupLoadingScreen.LoadingWidget.Images)
-		{
-			Ref.TryLoad();
-		}
-
-		for (const FSoftObjectPath& Ref : Settings->DefaultLoadingScreen.LoadingWidget.Images)
-		{
-			Ref.TryLoad();
-		}
-		*/
-		
-
+				
 		if (IsMoviePlayerEnabled())
 		{
 			GetMoviePlayer()->OnPrepareLoadingScreen().AddRaw(this, &FAsyncLoadingScreenModule::PreSetupLoadingScreen);
