@@ -18,7 +18,7 @@
 		{
 			"Name": "AsyncLoadingScreen",
 			"Type": "Runtime",
-			"LoadingPhase": "PreLoadingScreen"
+			"LoadingPhase": "PreLoadingScreen"			
 		}
 	]
 }

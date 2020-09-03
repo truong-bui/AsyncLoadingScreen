@@ -14,6 +14,7 @@
 #include "SLetterboxLayout.h"
 #include "SSidebarLayout.h"
 #include "SDualSidebarLayout.h"
+#include "Framework/Application/SlateApplication.h"
 
 #define LOCTEXT_NAMESPACE "FAsyncLoadingScreenModule"
 

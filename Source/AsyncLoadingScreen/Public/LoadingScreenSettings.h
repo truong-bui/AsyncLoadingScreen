@@ -13,6 +13,7 @@
 #include "MoviePlayer.h"
 #include "Widgets/Layout/SScaleBox.h"
 #include "Styling/SlateBrush.h"
+#include "Framework/Text/TextLayout.h"
 #include "LoadingScreenSettings.generated.h"
 
 

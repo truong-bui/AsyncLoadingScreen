@@ -11,6 +11,7 @@
 #include "Widgets/Images/SImage.h"
 #include "Slate/DeferredCleanupSlateBrush.h"
 #include "Widgets/Layout/SSpacer.h"
+#include "Engine/Texture2D.h"
 
 EActiveTimerReturnType SLoadingWidget::AnimatingImageSequence(double InCurrentTime, float InDeltaTime)
 {	

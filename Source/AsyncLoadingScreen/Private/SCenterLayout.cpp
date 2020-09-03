@@ -14,6 +14,8 @@
 #include "SVerticalLoadingWidget.h"
 #include "SBackgroundWidget.h"
 #include "STipWidget.h"
+#include "Widgets/SOverlay.h"
+#include "Widgets/Layout/SBorder.h"
 
 
 void SCenterLayout::Construct(const FArguments& InArgs, const FALoadingScreenSettings& Settings, const FCenterLayoutSettings& LayoutSettings)

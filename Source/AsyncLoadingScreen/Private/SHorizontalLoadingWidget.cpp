@@ -11,6 +11,7 @@
 #include "Widgets/Layout/SSpacer.h"
 #include "Widgets/Images/SImage.h"
 #include "Slate/DeferredCleanupSlateBrush.h"
+#include "Widgets/Text/STextBlock.h"
 
 void SHorizontalLoadingWidget::Construct(const FArguments& InArgs, const FLoadingWidgetSettings& Settings)
 {

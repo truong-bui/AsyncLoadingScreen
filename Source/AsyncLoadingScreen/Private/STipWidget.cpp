@@ -8,6 +8,7 @@
 
 #include "STipWidget.h"
 #include "LoadingScreenSettings.h"
+#include "Widgets/Text/STextBlock.h"
 
 void STipWidget::Construct(const FArguments& InArgs, const FTipSettings& Settings)
 {

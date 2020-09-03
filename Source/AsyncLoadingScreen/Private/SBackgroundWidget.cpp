@@ -10,6 +10,8 @@
 #include "LoadingScreenSettings.h"
 #include "Slate/DeferredCleanupSlateBrush.h"
 #include "Widgets/Images/SImage.h"
+#include "Widgets/Layout/SBorder.h"
+#include "Engine/Texture2D.h"
 
 void SBackgroundWidget::Construct(const FArguments& InArgs, const FBackgroundSettings& Settings)
 {
