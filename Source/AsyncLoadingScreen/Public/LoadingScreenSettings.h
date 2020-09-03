@@ -39,13 +39,13 @@ enum class EAsyncLoadingScreenLayout : uint8
 	 ALSL_Letterbox UMETA(DisplayName = "Letterbox"),
 	/**
 	 * The Sidebar layout has a vertical border on the left or right of the screen. The Sidebar 
-	 * is suitable for storytelling, long paragraphs due to the height of the tip.
+	 * is suitable for storytelling, long paragraphs due to the height of the tip widget.
 	 */
 	 ALSL_Sidebar UMETA(DisplayName = "Sidebar"),
 
 	/**
 	 * Similar to Sidebar layout but Dual Sidebar layout has two vertical borders on both left and right of the screen.
-	 * The Dual Sidebar layout is suitable for storytelling, long paragraphs due to the height of the tip.
+	 * The Dual Sidebar layout is suitable for storytelling, long paragraphs due to the height of the tip widget.
 	 */
 	 ALSL_DualSidebar UMETA(DisplayName = "Dual Sidebar")
 };
@@ -618,7 +618,7 @@ public:
 	/**
 	 * Sidebar Layout settings.
 	 * The Sidebar layout has a vertical border on the left or right of the screen. The Sidebar 
-	 * is suitable for storytelling, long paragraph due to the height of the tip.
+	 * is suitable for storytelling, long paragraphs due to the height of the tip widget.
 	 */
 	UPROPERTY(Config, EditAnywhere, Category = "Layout")
 	FSidebarLayoutSettings Sidebar;
@@ -626,7 +626,7 @@ public:
 	/**
 	 * Dual Sidebar Layout settings
 	 * Similar to Sidebar layout but Dual Sidebar layout has two vertical borders on both left and right of the screen.
-	 * The Dual Sidebar layout is suitable for storytelling, long paragraphs due to the height of the tip.
+	 * The Dual Sidebar layout is suitable for storytelling, long paragraphs due to the height of the tip widget.
 	 */
 	UPROPERTY(Config, EditAnywhere, Category = "Layout")
 	FDualSidebarLayoutSettings DualSidebar;
