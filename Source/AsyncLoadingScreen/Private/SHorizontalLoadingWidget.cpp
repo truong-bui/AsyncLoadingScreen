@@ -16,13 +16,24 @@
 void SHorizontalLoadingWidget::Construct(const FArguments& InArgs, const FLoadingWidgetSettings& Settings)
 {
 	bIsActiveTimerRegistered = false;
-	bPlayReverse = Settings.ImageSequenceSettings.bPlayReverse;
+	bPlayReverse = Settings.ImageSequenceSettings.bPlayReverse;	
 
 	// Root is a Horizontal Box of course
 	TSharedRef<SHorizontalBox> Root = SNew(SHorizontalBox);		
 	
 	// Construct Loading Icon Widget
 	ConstructLoadingIcon(Settings);
+
+	EVisibility LoadingTextVisibility;
+
+	if (Settings.LoadingText.IsEmpty())
+	{
+		LoadingTextVisibility = EVisibility::Collapsed;
+	}
+	else
+	{
+		LoadingTextVisibility = EVisibility::SelfHitTestInvisible;
+	}
 
 	// If loading text is on the right
 	if (Settings.bLoadingTextRightPosition)
@@ -53,12 +64,13 @@ void SHorizontalLoadingWidget::Construct(const FArguments& InArgs, const FLoadin
 			.AutoWidth()
 			[
 				SNew(STextBlock)
+				.Visibility(LoadingTextVisibility)
 				.ColorAndOpacity(Settings.Appearance.ColorAndOpacity)
 				.Font(Settings.Appearance.Font)
 				.ShadowOffset(Settings.Appearance.ShadowOffset)
 				.ShadowColorAndOpacity(Settings.Appearance.ShadowColorAndOpacity)
 				.Justification(Settings.Appearance.Justification)
-				.Text(Settings.LoadingText)
+				.Text(Settings.LoadingText)				
 			];
 	}
 
@@ -72,12 +84,13 @@ void SHorizontalLoadingWidget::Construct(const FArguments& InArgs, const FLoadin
 			.AutoWidth()
 			[
 				SNew(STextBlock)
+				.Visibility(LoadingTextVisibility)
 				.ColorAndOpacity(Settings.Appearance.ColorAndOpacity)
 				.Font(Settings.Appearance.Font)
 				.ShadowOffset(Settings.Appearance.ShadowOffset)
 				.ShadowColorAndOpacity(Settings.Appearance.ShadowColorAndOpacity)
 				.Justification(Settings.Appearance.Justification)
-				.Text(Settings.LoadingText)
+				.Text(Settings.LoadingText)				
 			];
 
 

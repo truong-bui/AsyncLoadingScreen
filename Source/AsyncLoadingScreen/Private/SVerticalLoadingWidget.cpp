@@ -24,6 +24,17 @@ void SVerticalLoadingWidget::Construct(const FArguments& InArgs, const FLoadingW
 	// Construct Loading Icon Widget
 	ConstructLoadingIcon(Settings);
 
+	EVisibility LoadingTextVisibility;
+
+	if (Settings.LoadingText.IsEmpty())
+	{
+		LoadingTextVisibility = EVisibility::Collapsed;
+	}
+	else
+	{
+		LoadingTextVisibility = EVisibility::SelfHitTestInvisible;
+	}
+
 	// If loading text is on the top
 	if (Settings.bLoadingTextTopPosition)
 	{
@@ -34,12 +45,13 @@ void SVerticalLoadingWidget::Construct(const FArguments& InArgs, const FLoadingW
 			.AutoHeight()
 			[
 				SNew(STextBlock)
+				.Visibility(LoadingTextVisibility)
 				.ColorAndOpacity(Settings.Appearance.ColorAndOpacity)
 				.Font(Settings.Appearance.Font)
 				.ShadowOffset(Settings.Appearance.ShadowOffset)
 				.ShadowColorAndOpacity(Settings.Appearance.ShadowColorAndOpacity)
 				.Justification(Settings.Appearance.Justification)
-				.Text(Settings.LoadingText)
+				.Text(Settings.LoadingText)				
 			];
 
 		// Add a Spacer in middle
@@ -81,7 +93,7 @@ void SVerticalLoadingWidget::Construct(const FArguments& InArgs, const FLoadingW
 			.AutoHeight()
 			[
 				SNew(SSpacer)
-				.Size(FVector2D(Settings.Space, 0.0f))
+				.Size(FVector2D(0.0f, Settings.Space))
 			];
 
 		// Add Loading Text at the bottom
@@ -91,12 +103,13 @@ void SVerticalLoadingWidget::Construct(const FArguments& InArgs, const FLoadingW
 			.AutoHeight()
 			[
 				SNew(STextBlock)
+				.Visibility(LoadingTextVisibility)
 				.ColorAndOpacity(Settings.Appearance.ColorAndOpacity)
 				.Font(Settings.Appearance.Font)
 				.ShadowOffset(Settings.Appearance.ShadowOffset)
 				.ShadowColorAndOpacity(Settings.Appearance.ShadowColorAndOpacity)
 				.Justification(Settings.Appearance.Justification)
-				.Text(Settings.LoadingText)
+				.Text(Settings.LoadingText)				
 			];
 	}
 

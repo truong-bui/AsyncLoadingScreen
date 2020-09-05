@@ -29,8 +29,8 @@ enum class EAsyncLoadingScreenLayout : uint8
 	 */
 	ALSL_Classic UMETA(DisplayName = "Classic"),
 	/** 
-	 * The loading widget is at the center of the screen, tips can be at the bottom or top. 	
-	 * The Center layout is a good choice if your loading icon is the main actor. 
+	 * The loading widget is at the center of the screen, tip widget can be at the bottom or top. 	
+	 * The Center layout is a good choice if your loading icon is the main design. 
 	 */
 	ALSL_Center UMETA(DisplayName = "Center"),
 	/**
@@ -602,8 +602,8 @@ public:
 	
 	/**
 	 * Center Layout settings.
-	 * The loading widget is at the center of the screen, tips can be at the bottom or top.
-	 * The Center layout is a good choice if your loading icon is the main actor.
+	 * The loading widget is at the center of the screen, tip widget can be at the bottom or top.
+	 * The Center layout is a good choice if your loading icon is the main design.
 	 */
 	UPROPERTY(Config, EditAnywhere, Category = "Layout")
 	FCenterLayoutSettings Center;
