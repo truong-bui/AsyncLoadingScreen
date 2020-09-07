@@ -52,7 +52,7 @@ MoviePlayer is registered to PreLoadMap and PostLoadMapWithWorld delegates so it
 Async Loading Screen has four main components: Background, Loading Widget, Tip Widget, and Layout.
 
 ## Background
-The background is a static image, you can add many images as you want, it will be displayed randomly. Leave it empty if you just want to show a movie.
+The background is a static image, you can add many images as you want, it will be displayed randomly. Leave it empty if you just want to show a movie instead of a static image.
 
 - Background Settings:
 
@@ -152,7 +152,7 @@ This is the way Async Loading Screen widgets are arranged on the screen. In vers
 ---------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
 # Showcases
-If your game uses Async Loading Screen plugin and want to showcase here, shoot me an email about your game title, including screenshots(gif/png/jpeg) of your in-game loading screen.
+If you're using Async Loading Screen plugin in your game and want to showcase here, shoot me an email about your game's info, including screenshots(gif/png/jpeg) of your in-game loading screen.
 
 # Requirements
 
