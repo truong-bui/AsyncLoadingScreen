@@ -117,32 +117,37 @@ This is the way Async Loading Screen widgets are arranged on the screen. In vers
 ---------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
 ### Classic Layout
-The Classic is a simple, generic layout and fits well with many designs. Loading and tip widgets can be at the bottom or top.
 - Classic layout examples:
+
+![classic-layout-01](https://user-images.githubusercontent.com/1840964/92415877-14cac980-f185-11ea-870a-dc8a7e7d68ea.jpg)
 
 ---------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
-### Center Layout
-The loading widget is at the center of the screen, tip widget can be at the bottom or top. The Center layout is a good choice if your loading icon is the main design. 
+### Center Layout 
 - Center layout examples:
+
+![center-layout-01](https://user-images.githubusercontent.com/1840964/92416035-c833be00-f185-11ea-8d7d-625b4166ca26.jpg)
 
 ---------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
 ### Letterbox Layout
-The Letterbox layout has two borders on top and bottom of the screen. Loading widget can be on the top and the tip is at the bottom of the screen, or vice versa.
 - Letterbox layout examples:
+
+![letterbox-layout-01](https://user-images.githubusercontent.com/1840964/92416029-c2d67380-f185-11ea-92f9-f7f9021b825f.jpg)
 
 ---------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
 ### Sidebar Layout
-The Sidebar layout has a vertical border on the left or right of the screen. The Sidebar is suitable for storytelling, long paragraphs due to the height of the tip widget.
 - Sidebar layout examples:
+
+![sidebar-layout-01](https://user-images.githubusercontent.com/1840964/92416031-c4a03700-f185-11ea-9938-b63f1a2971fa.jpg)
 
 ---------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
 ### Dual Sidebar Layout
-Similar to Sidebar layout but Dual Sidebar layout has two vertical borders on both left and right of the screen. The Dual Sidebar layout is suitable for storytelling, long paragraphs due to the height of the tip widget.
-- Classic layout examples:
+- Dual Sidebar layout examples:
+
+![dual-sidebar-layout-01](https://user-images.githubusercontent.com/1840964/92416037-c964eb00-f185-11ea-8ed4-086bb49fc52a.jpg)
 
 ---------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
@@ -154,6 +159,9 @@ If your game uses Async Loading Screen plugin and want to showcase here, shoot m
 Async Loading Screen plug-in requires Visual Studio and a C++ code project. If your project is blueprint based then you will need to convert it to C++ project otherwise you cannot package your game with code plug-in.
 
 # Installation
+
+> :warning: **After installed Async Loading Screen plugin, the "Project/Movies" setting won't work anymore. You need to set up your startup movies in the 'Startup Loading Screen' section of the plugin's setting.**
+
 - ## Clone from Github
 Clone this repository into your project's /Plugins folder, make one if it doesn’t exist, then compile your game in Visual Studio. If your project is blueprint based you’ll need to convert it to a c++ project by adding any c++ class.
 
