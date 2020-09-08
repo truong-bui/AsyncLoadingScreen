@@ -54,14 +54,14 @@ Async Loading Screen has four main components: Background, Loading Widget, Tip W
 ## Background
 The background is a static image, you can add many images as you want, it will be displayed randomly. Leave it empty if you just want to show a movie instead of a static image.
 
-- Background Settings:
+- Background Setting:
 
 ![background-settings](https://user-images.githubusercontent.com/1840964/92411337-a0d2f600-f171-11ea-8960-9c15f54bd62a.png)
 
 ## Tip Widget
 Just some useful texts that will be shown randomly for players to have something to look at while waiting for a new level loaded.
 
-- Tip Widget Settings:
+- Tip Widget Setting:
 
 ![tip-widget-settings](https://user-images.githubusercontent.com/1840964/92411408-f6a79e00-f171-11ea-8de7-14744375e67a.png)
 
@@ -70,13 +70,13 @@ This is the most important component of the plug-in, Loading Widget lets players
 
 Loading Widget has two parts: Loading Icon and Loading Text. The Loading Text is just a text shown beside the Loading Icon, we mostly care about the Loading Icon. Async Loading Screen supports 3 types of Loading Icon: Throbber, Circular Throbber, and Image Sequence.
 
-- Loading Widget Settings:
+- Loading Widget Setting:
 
 ![loading-widget-settings](https://user-images.githubusercontent.com/1840964/92412275-7edb7280-f175-11ea-9ef7-c02f183f5c88.png)
 
 ### Loading Icon
 
-- Throbber Settings:
+- Throbber Setting:
 
 ![throbber-settings](https://user-images.githubusercontent.com/1840964/92412332-b9dda600-f175-11ea-986c-852cc93cf61c.png)
 
@@ -86,7 +86,7 @@ Loading Widget has two parts: Loading Icon and Loading Text. The Loading Text is
 
 ---------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
-- Circular Throbber Settings:
+- Circular Throbber Setting:
 
 ![circular-throbber-settings](https://user-images.githubusercontent.com/1840964/92413277-8735ac80-f179-11ea-8e16-ab5e08be1595.png)
 
@@ -95,7 +95,7 @@ Loading Widget has two parts: Loading Icon and Loading Text. The Loading Text is
 ![circular-throbber-loading-01](https://user-images.githubusercontent.com/1840964/92412600-a2eb8380-f176-11ea-9a6f-ab162490a9e3.gif) ![circular-throbber-loading-02](https://user-images.githubusercontent.com/1840964/92412750-450b6b80-f177-11ea-8af8-9eb68cea0155.gif)
 
 ---------------------------------------------------------------------------------------------------------------------------------------------------------------------
-- Image Sequence Settings:
+- Image Sequence Setting:
 
 ![image-sequence-settings](https://user-images.githubusercontent.com/1840964/92413824-0e841f80-f17c-11ea-896a-3e16e8291967.png)
 
@@ -167,7 +167,7 @@ The plug-in will be enabled by default. You can disable it in “Edit→Plugins�
 In this tutorial, I will use a blank C++ project with UE version 4.25. But you can freely integrate Async Loading Screen plugin into your existing projects without problems. You should install the plugin following [Installation](#installation) steps above.
 
 ## 1) Create Testing Levels and Blueprints
-- First, we create two empty levels named **Level_1* and **Level_2** for testing purposes:
+- First, we create two empty levels named **Level_1** and **Level_2** for testing purposes:
 
 ![tutorial-02](https://user-images.githubusercontent.com/1840964/92516241-1c4ea900-f23f-11ea-9e32-76b67f2c96a9.png)
 
@@ -203,9 +203,56 @@ In this tutorial, I will use a blank C++ project with UE version 4.25. But you c
 
 ![tutorial-10](https://user-images.githubusercontent.com/1840964/92521633-c3cfd980-f247-11ea-984b-98f17d604387.png)
 
-Now if you play Standalone Game or Launch the game you will see a black screen with a white panel shows up very quickly. We'll need a little setup to make our loading screen looks better.
+If you play Standalone Game or Launch the game you will see a black screen with a white panel shows up very quickly. Now We'll need a little setup to make our loading screen looks better.
 
 ---
+
+## 2) Gathering images and movies
+You can use your own assets instead but for this tutorial, I'll use Unreal Engine 5 Wallpapers Desktop from this [post](https://forums.unrealengine.com/unreal-engine/announcements-and-releases/1760020-share-your-excitement-for-unreal-engine-5-with-free-wallpapers-gifs-and-more) and UE4 Startup Video Files from this [page](https://www.unrealengine.com/en-US/branding). Here are links download for you:
+- [UE5 Wallpapers - Desktop](https://epicgames.ent.box.com/s/zuorr34ojf3010k71tiv2c79s266v12b/folder/112871747507)
+- [UE4 Startup Video Files](https://epicgames.ent.box.com/s/t94yqy3lxb3mlytmqf5znrr2pobus3fm)
+
+- Create a "Movies" folder in the "Content" folder and copy your movie files into the "Content/Movies" folder (don't import movies into the project just copy the original movie files):
+
+![tutorial-11](https://user-images.githubusercontent.com/1840964/92527405-24afdf80-f251-11ea-97f0-ebe893e27986.png)
+
+- Import your background images into the project:
+
+![tutorial-12](https://user-images.githubusercontent.com/1840964/92527677-96882900-f251-11ea-8cb3-b99c41925337.png)
+
+---
+
+## 3) Setup Startup Movies
+
+Now go to "Game/Async Loading Screen" setting in the Project Settings and open "Startup Loading Screen" section. This Startup Loading Screen only shows once when the player first opens the game so usually, you don't want to show a loading screen here. Instead, you'll want to show a UE4 logo intro movie, your studio logo movie, your sponsor 1 logo movie, your sponsor 2 logo movie, or some weird shit movies, depending on you.
+
+- Uncheck "Auto Complete when Loading Completes" option so we can see the movies play till end
+- Add your movie path without extension in "Movie Paths" array
+
+Here is the Startup Loading Screen setting:
+
+![tutorial-13](https://user-images.githubusercontent.com/1840964/92529902-8eca8380-f255-11ea-92a4-a1c3ed376d62.png)
+
+Click play Standalone Game or Launch button, you will see UE4 logo movie show up here.
+
+---
+
+## 4) Configure Default Loading Screen setting
+
+Now open "Default Loading Screen" setting, here we actually set up a loading screen for our game. You can leave most of options default but for testing purpose, we'll change some options.
+
+- Set "Minimum Loading Screen Display Time" value to 10 (I recommend set it to -1 in packaged games)
+
+Here is Default Loading Screen setting:
+
+![tutorial-14](https://user-images.githubusercontent.com/1840964/92531295-33e65b80-f258-11ea-98d7-489521a93a87.png)
+
+## 4.1) Configure Default Loading Screen - Background setting
+
+Now open "Background" setting in the Default Loading Screen section. Add your background images to the Images array. You can leave other options default:
+
+![tutorial-15](https://user-images.githubusercontent.com/1840964/92531949-7492a480-f259-11ea-8645-1081770770d6.png)
+
 
 # Wiki
 
