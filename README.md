@@ -9,13 +9,13 @@
 - [How it works](#how-it-works)
 - [Features](#features)
 - [Architecture](#architecture)
-- [Showcases](#showcases)
 - [Requirements](#requirements)
 - [Installation](#installation)
     - [Clone from Github](#clone-from-github)
     - [Download from Marketplace](#download-from-marketplace)
-- [How to Use](#how-to-use)
+- [Tutorial](#tutorial)
 - [Wiki](#wiki)
+- [Showcases](#showcases)
 - [License](#license)
 - [Acknowledgment](#acknowledgment)
 
@@ -59,7 +59,7 @@ The background is a static image, you can add many images as you want, it will b
 ![background-settings](https://user-images.githubusercontent.com/1840964/92411337-a0d2f600-f171-11ea-8960-9c15f54bd62a.png)
 
 ## Tip Widget
-Just some advice texts that will be shown randomly for players to read while waiting for a new level loaded.
+Just some useful texts that will be shown randomly for players to have something to look at while waiting for a new level loaded.
 
 - Tip Widget Settings:
 
@@ -116,43 +116,35 @@ This is the way Async Loading Screen widgets are arranged on the screen. In vers
 
 ---------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
-### Classic Layout
-- Classic layout examples:
+- Classic layout example:
 
 ![classic-layout-01](https://user-images.githubusercontent.com/1840964/92415877-14cac980-f185-11ea-870a-dc8a7e7d68ea.jpg)
 
 ---------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
-### Center Layout 
-- Center layout examples:
+- Center layout example:
 
 ![center-layout-01](https://user-images.githubusercontent.com/1840964/92416035-c833be00-f185-11ea-8d7d-625b4166ca26.jpg)
 
 ---------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
-### Letterbox Layout
-- Letterbox layout examples:
+- Letterbox layout example:
 
 ![letterbox-layout-01](https://user-images.githubusercontent.com/1840964/92416029-c2d67380-f185-11ea-92f9-f7f9021b825f.jpg)
 
 ---------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
-### Sidebar Layout
-- Sidebar layout examples:
+- Sidebar layout example:
 
 ![sidebar-layout-01](https://user-images.githubusercontent.com/1840964/92416031-c4a03700-f185-11ea-9938-b63f1a2971fa.jpg)
 
 ---------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
-### Dual Sidebar Layout
-- Dual Sidebar layout examples:
+- Dual Sidebar layout example:
 
 ![dual-sidebar-layout-01](https://user-images.githubusercontent.com/1840964/92416037-c964eb00-f185-11ea-8ed4-086bb49fc52a.jpg)
 
 ---------------------------------------------------------------------------------------------------------------------------------------------------------------------
-
-# Showcases
-If you're using Async Loading Screen plugin in your game and want to showcase here, shoot me an email about your game's info, including screenshots(gif/png/jpeg) of your in-game loading screen.
 
 # Requirements
 
@@ -171,13 +163,56 @@ The plug-in will be enabled by default. You can disable it in “Edit→Plugins�
 
 - ## Download from Marketplace
 --- Coming soon ---
-# How to Use
+# Tutorial
+In this tutorial, I will use a blank C++ project with UE version 4.25. But you can freely integrate Async Loading Screen plugin into your existing projects without problems. You should install the plugin following [Installation](#installation) steps above.
 
---- Coming soon ---
+## 1) Create Testing Levels and Blueprints
+- First, we create two empty levels named **Level_1* and **Level_2** for testing purposes:
+
+![tutorial-02](https://user-images.githubusercontent.com/1840964/92516241-1c4ea900-f23f-11ea-9e32-76b67f2c96a9.png)
+
+- Create BP_GameMode, BP_PlayerController, and an UMG blueprint WBP_OpenLevelButton:
+
+![tutorial-03](https://user-images.githubusercontent.com/1840964/92516572-95e69700-f23f-11ea-9a81-c9e4fb9fa0e4.png)
+
+- In WBP_OpenLevelButton, create a button at the center of the screen:
+
+![tutorial-04](https://user-images.githubusercontent.com/1840964/92516863-fece0f00-f23f-11ea-81f4-6dabd9c05d66.png)
+
+- In WBP_OpenLevelButton graph, add the following nodes in the button's OnClick event:
+
+![tutorial-05](https://user-images.githubusercontent.com/1840964/92517440-dd215780-f240-11ea-855c-0f41e8f66046.png)
+
+- In BP_PlayerController, create that widget and add to the viewport:
+
+![tutorial-06](https://user-images.githubusercontent.com/1840964/92517611-1eb20280-f241-11ea-9bc1-f84521432e41.png)
+
+- Also enable "Show Mouse Cursor" option in BP_PlayerController: 
+
+![tutorial-07](https://user-images.githubusercontent.com/1840964/92517958-cb8c7f80-f241-11ea-83fc-2a74ecdbc4db.png)
+
+- Change default GameMode to our BP_GameMode and BP_PlayerController in "Project/Maps & Modes" setting:
+
+![tutorial-08](https://user-images.githubusercontent.com/1840964/92518004-dfd07c80-f241-11ea-900d-dd89e4163325.png)
+
+- Add two maps to the included list in "Projects/Packaging" setting so you don't have to see annoying warnings when Launch:
+
+![tutorial-09](https://user-images.githubusercontent.com/1840964/92518328-5cfbf180-f242-11ea-9b8b-e7452dff4454.png)
+
+- Note that to see the plugin is actually working, you need to play as Standalone Game or Launch button. Play in Editor will not work due to different level managing of Play in Editor and packaged game:
+
+![tutorial-10](https://user-images.githubusercontent.com/1840964/92521633-c3cfd980-f247-11ea-984b-98f17d604387.png)
+
+Now if you play Standalone Game or Launch the game you will see a black screen with a white panel shows up very quickly. We'll need a little setup to make our loading screen looks better.
+
+---
 
 # Wiki
 
 --- Coming soon ---
+
+# Showcases
+If you're using Async Loading Screen plugin in your game and would like to showcase here, shoot me an email about your game's info, including screenshots(gif/png/jpeg/video) of your in-game loading screen.
 
 # License
 Async Loading Screen plug-in is licensed under the [MIT](LICENSE) License.
