@@ -354,15 +354,15 @@ struct ASYNCLOADINGSCREEN_API FALoadingScreenSettings
 
 	/** Background widget for the loading screen. Ignore this if you choose "Show Widget Overlay = false" */
 	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "Loading Screen Settings")
-	FBackgroundSettings Background;
-	
-	/** Loading widget for the loading screen. Ignore this if you choose "Show Widget Overlay = false" */
-	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "Loading Screen Settings")
-	FLoadingWidgetSettings LoadingWidget;
+	FBackgroundSettings Background;	
 	
 	/** Tip widget for the loading screen. Ignore this if you choose "Show Widget Overlay = false" */
 	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "Loading Screen Settings")
 	FTipSettings TipWidget;
+
+	/** Loading widget for the loading screen. Ignore this if you choose "Show Widget Overlay = false" */
+	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "Loading Screen Settings")
+	FLoadingWidgetSettings LoadingWidget;
 };
 
 /** Classic Layout settings*/
