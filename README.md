@@ -14,6 +14,15 @@
     - [Clone from Github](#clone-from-github)
     - [Download from Marketplace](#download-from-marketplace)
 - [Tutorial](#tutorial)
+    - [1) Create Testing Levels and Blueprints](#1-create-testing-levels-and-blueprints)
+    - [2) Gathering images and movies](#2-gathering-images-and-movies)
+    - [3) Setup Startup Movies](#3-setup-startup-movies)
+    - [4) Configure Default Loading Screen setting](#4-configure-default-loading-screen-setting)        
+        - [4.1) Default Loading Screen - Background setting](#41-default-loading-screen---background-setting)
+        - [4.2) Default Loading Screen - Tip Widget setting](#42-default-loading-screen---tip-widget-setting)
+        - [4.3) Default Loading Screen - Loading Widget setting](#43-default-loading-screen---loading-widget-setting)
+    - [5) Configure Classic Layout setting](#5-configure-classic-layout-setting)
+    - [6) Image Sequence Settings](#6-image-sequence-settings)
 - [Wiki](#wiki)
 - [Showcases](#showcases)
 - [License](#license)
@@ -260,7 +269,7 @@ Open "Tip Widget" setting in the Default Loading Screen. Add some useful texts, 
 
 ![tutorial-16](https://user-images.githubusercontent.com/1840964/92533302-5b3f2780-f25c-11ea-9975-24f0c09c6e03.png)
 
-### 4.2) Default Loading Screen - Loading Widget setting
+### 4.3) Default Loading Screen - Loading Widget setting
 Open "Loading Widget" setting in the Default Loading Screen, here we will custom our loading icon. If you open AsyncLoadingScreen Content folder, you can see there are a lot of default loading images I had made. We'll use those default images in this tutorial.
 
 ![tutorial-17](https://user-images.githubusercontent.com/1840964/92533833-81b19280-f25d-11ea-91b5-239bea77ba1a.png)
