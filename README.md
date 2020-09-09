@@ -110,7 +110,7 @@ Loading Widget has two parts: Loading Icon and Loading Text. The Loading Text is
 
 - Image Sequence loading icon examples:
 
-![image-sequence-loading-03](https://user-images.githubusercontent.com/1840964/92413857-2cea1b00-f17c-11ea-9d59-9cd03f1ed069.gif)
+![image-sequence-loading-03](https://user-images.githubusercontent.com/1840964/92539810-c98be600-f26c-11ea-832c-770af9438050.gif)
 ![image-sequence-loading-01](https://user-images.githubusercontent.com/1840964/92413859-2fe50b80-f17c-11ea-9254-74ebd073a0eb.gif)
 ![image-sequence-loading-02](https://user-images.githubusercontent.com/1840964/92413848-26f43a00-f17c-11ea-8f72-c658e3f904a0.gif)
 
