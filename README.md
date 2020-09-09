@@ -14,8 +14,18 @@
     - [Clone from Github](#clone-from-github)
     - [Download from Marketplace](#download-from-marketplace)
 - [Tutorial](#tutorial)
+    - [1) Create Testing Levels and Blueprints](#1-create-testing-levels-and-blueprints)
+    - [2) Gathering images and movies](#2-gathering-images-and-movies)
+    - [3) Setup Startup Movies](#3-setup-startup-movies)
+    - [4) Configure Default Loading Screen setting](#4-configure-default-loading-screen-setting)        
+        - [4.1) Default Loading Screen - Background setting](#41-default-loading-screen---background-setting)
+        - [4.2) Default Loading Screen - Tip Widget setting](#42-default-loading-screen---tip-widget-setting)
+        - [4.3) Default Loading Screen - Loading Widget setting](#43-default-loading-screen---loading-widget-setting)
+    - [5) Configure Classic Layout setting](#5-configure-classic-layout-setting)
+    - [6) Image Sequence Settings](#6-image-sequence-settings)
 - [Wiki](#wiki)
 - [Showcases](#showcases)
+- [Donate](#donate)
 - [License](#license)
 - [Acknowledgment](#acknowledgment)
 
@@ -101,7 +111,7 @@ Loading Widget has two parts: Loading Icon and Loading Text. The Loading Text is
 
 - Image Sequence loading icon examples:
 
-![image-sequence-loading-03](https://user-images.githubusercontent.com/1840964/92413857-2cea1b00-f17c-11ea-9d59-9cd03f1ed069.gif)
+![image-sequence-loading-03](https://user-images.githubusercontent.com/1840964/92539810-c98be600-f26c-11ea-832c-770af9438050.gif)
 ![image-sequence-loading-01](https://user-images.githubusercontent.com/1840964/92413859-2fe50b80-f17c-11ea-9254-74ebd073a0eb.gif)
 ![image-sequence-loading-02](https://user-images.githubusercontent.com/1840964/92413848-26f43a00-f17c-11ea-8f72-c658e3f904a0.gif)
 
@@ -239,20 +249,76 @@ Click play Standalone Game or Launch button, you will see UE4 logo movie show up
 
 ## 4) Configure Default Loading Screen setting
 
-Now open "Default Loading Screen" setting, here we actually set up a loading screen for our game. You can leave most of options default but for testing purpose, we'll change some options.
+Open "Default Loading Screen" setting, here we actually set up a loading screen for our game. You can leave most of options default but for testing purpose, we'll change some options.
 
-- Set "Minimum Loading Screen Display Time" value to 10 (I recommend set it to -1 in packaged games)
+- Set "Minimum Loading Screen Display Time" value to 10 (I recommend setting it to -1 in packaged games)
+- Set "Layout" to Classic for this tutorial.
 
 Here is Default Loading Screen setting:
 
 ![tutorial-14](https://user-images.githubusercontent.com/1840964/92531295-33e65b80-f258-11ea-98d7-489521a93a87.png)
 
-## 4.1) Configure Default Loading Screen - Background setting
+### 4.1) Default Loading Screen - Background setting
 
-Now open "Background" setting in the Default Loading Screen section. Add your background images to the Images array. You can leave other options default:
+Open "Background" setting in the Default Loading Screen section. Add your background images to the Images array. You can leave other options default:
 
-![tutorial-15](https://user-images.githubusercontent.com/1840964/92531949-7492a480-f259-11ea-8645-1081770770d6.png)
+![tutorial-15](https://user-images.githubusercontent.com/1840964/92533170-13b89b80-f25c-11ea-9542-3947df9a0079.png)
 
+### 4.2) Default Loading Screen - Tip Widget setting
+
+Open "Tip Widget" setting in the Default Loading Screen. Add some useful texts, you can change text's appearance like color, font, shadow effect here:
+
+![tutorial-16](https://user-images.githubusercontent.com/1840964/92533302-5b3f2780-f25c-11ea-9975-24f0c09c6e03.png)
+
+### 4.3) Default Loading Screen - Loading Widget setting
+Open "Loading Widget" setting in the Default Loading Screen, here we will custom our loading icon. If you open AsyncLoadingScreen Content folder, you can see there are a lot of default loading images I had made. We'll use those default images in this tutorial.
+
+![tutorial-17](https://user-images.githubusercontent.com/1840964/92533833-81b19280-f25d-11ea-91b5-239bea77ba1a.png)
+
+- Set "Loading Icon Type" to "Throbber"
+- Set "Loading Widget Type" to "Horizontal"
+- Open "Throbber Settings" and select icon-cat-print in "Image" option
+- Set "Space" value to 20
+
+We can leave other options default.
+
+![tutorial-18](https://user-images.githubusercontent.com/1840964/92534376-ce499d80-f25e-11ea-8a13-98ef026b34bf.png)
+
+---
+## 5) Configure Classic Layout setting
+Because we already chose the Classic layout in previous step so we will configure the Classic layout and ignore other layouts. Open "Classic" setting in Layout category and change following options:
+
+- Set "Border Padding" to 20
+- Open "Border Background" option and set Tint color (R:0.1, G:0.1, B:0.1, A:0.8)
+
+You can leave other options default:
+
+![tutorial-19](https://user-images.githubusercontent.com/1840964/92535368-4749f480-f261-11ea-9fe5-76ff2e5dd215.png)
+
+---
+
+Congratulation, now you can click play Standalone Game or Launch button to see your loading screen.
+
+![tutorial-20](https://user-images.githubusercontent.com/1840964/92536073-f6d39680-f262-11ea-8c42-8f540aea6217.jpg)
+
+
+## 6) Image Sequence Settings
+Async Loading Screen also supports custom loading icon using Image Sequence. Open "Loading Widget" and change following options:
+
+- Set "Loading Icon Type" to "Image Sequence"
+- Open "Image Sequence Settings" and add all images in folder "Default/Mannequin/RunImages" to Images array
+
+You can leave other options default:
+
+![tutorial-21](https://user-images.githubusercontent.com/1840964/92536598-48c8ec00-f264-11ea-8e35-73b14364e3bb.png)
+
+Click play or Launch button and you'll see the Mannequin is running as a loading icon:
+
+![tutorial-22](https://user-images.githubusercontent.com/1840964/92536933-0eac1a00-f265-11ea-8d62-c173e632b55a.jpg)
+
+---
+
+Alright! We have finished the tutorial. You should try other layouts and settings to see which is fit for your game.
 
 # Wiki
 
@@ -260,6 +326,9 @@ Now open "Background" setting in the Default Loading Screen section. Add your ba
 
 # Showcases
 If you're using Async Loading Screen plugin in your game and would like to showcase here, shoot me an email about your game's info, including screenshots(gif/png/jpeg/video) of your in-game loading screen.
+
+# Donate
+If Async Loading Screen is useful for you or your team, you can [buy me a coffee](https://www.buymeacoffee.com/truongbui) to support this project.
 
 # License
 Async Loading Screen plug-in is licensed under the [MIT](LICENSE) License.
