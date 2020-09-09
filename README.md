@@ -25,6 +25,7 @@
     - [6) Image Sequence Settings](#6-image-sequence-settings)
 - [Wiki](#wiki)
 - [Showcases](#showcases)
+- [Donate](#donate)
 - [License](#license)
 - [Acknowledgment](#acknowledgment)
 
@@ -325,6 +326,9 @@ Alright! We have finished the tutorial. You should try other layouts and setting
 
 # Showcases
 If you're using Async Loading Screen plugin in your game and would like to showcase here, shoot me an email about your game's info, including screenshots(gif/png/jpeg/video) of your in-game loading screen.
+
+# Donate
+If Async Loading Screen is useful for you or your team, you can [buy me a coffee](https://www.buymeacoffee.com/truongbui) to support this project.
 
 # License
 Async Loading Screen plug-in is licensed under the [MIT](LICENSE) License.
