@@ -219,7 +219,7 @@ In this tutorial, I will use a blank C++ project with UE version 4.25. But you c
 
 ![tutorial-10](https://user-images.githubusercontent.com/1840964/92521633-c3cfd980-f247-11ea-984b-98f17d604387.png)
 
-If you play Standalone Game or Launch the game you will see a black screen with a white panel shows up very quickly. Now We'll need a little setup to make our loading screen looks better.
+If you play Standalone Game or Launch the game you will see a black screen with a white panel shows up very quickly. We'll need a little setting up to make the loading screen looks better.
 
 ---
 
@@ -286,7 +286,7 @@ Open "Loading Widget" setting in the Default Loading Screen, here we will custom
 - Open "Throbber Settings" and select icon-cat-print in "Image" option
 - Set "Space" value to 20
 
-We can leave other options default.
+You can leave other options default.
 
 ![tutorial-18](https://user-images.githubusercontent.com/1840964/92534376-ce499d80-f25e-11ea-8a13-98ef026b34bf.png)
 
@@ -297,13 +297,13 @@ Because we already chose the Classic layout in previous step so we will configur
 - Set "Border Padding" to 20
 - Open "Border Background" option and set Tint color (R:0.1, G:0.1, B:0.1, A:0.8)
 
-You can leave other options default:
+You can leave other options default.
 
 ![tutorial-19](https://user-images.githubusercontent.com/1840964/92535368-4749f480-f261-11ea-9fe5-76ff2e5dd215.png)
 
 ---
 
-Congratulation, now you can click play Standalone Game or Launch button to see your loading screen.
+Alright! Now you can click play Standalone Game or Launch button to see your loading screen.
 
 ![tutorial-20](https://user-images.githubusercontent.com/1840964/92536073-f6d39680-f262-11ea-8c42-8f540aea6217.jpg)
 
@@ -314,7 +314,7 @@ Async Loading Screen also supports custom loading icon using Image Sequence. Ope
 - Set "Loading Icon Type" to "Image Sequence"
 - Open "Image Sequence Settings" and add all images in folder "Default/Mannequin/RunImages" to Images array
 
-You can leave other options default:
+You can leave other options default.
 
 ![tutorial-21](https://user-images.githubusercontent.com/1840964/92536598-48c8ec00-f264-11ea-8e35-73b14364e3bb.png)
 
@@ -324,7 +324,7 @@ Click play or Launch button and you'll see the Mannequin is running as a loading
 
 ---
 
-Alright! We have finished the tutorial. You should try other layouts and settings to see which is fit for your game.
+Congratulation! We have finished the tutorial. You should try other layouts and settings to see which is fit for your game.
 
 # Wiki
 
