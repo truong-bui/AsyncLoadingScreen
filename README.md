@@ -72,14 +72,14 @@ Async Loading Screen plug-in requires Visual Studio and a C++ code project. If y
 > :warning: **After installed Async Loading Screen plugin, the "Project/Movies" setting won't work anymore. You need to set up your startup movies in the 'Startup Loading Screen' section of the plugin's setting.**
 
 - ## Clone from Github
-Clone this repository into your project's /Plugins folder, make one if it doesn’t exist, then compile your game in Visual Studio. If your project is blueprint based you’ll need to convert it to a c++ project by adding any c++ class.
+Clone this repository into your project's /Plugins folder, make one if it doesn’t exist, then compile your game in Visual Studio. If your project is blueprint based you’ll need to convert it to a c++ project by adding any c++ class. Supports Engine version from 4.24 and above.
 
 The plug-in will be enabled by default. You can disable it in “Edit→Plugins→Project/Loading Screen”. You configure the plug-in in project settings "Game/Async Loading Screen".
 
 ![async-loading-screen-screenshot-01](https://user-images.githubusercontent.com/1840964/91760594-d02bb500-ebfd-11ea-85fc-08c5a556a903.png)
 
 - ## Download from Marketplace
---- Coming soon ---
+Download Async Loading Screen from [Marketplace](https://www.unrealengine.com/marketplace/en-US/product/async-loading-screen) and enable the plugin in Plugins.
 
 # Architecture
 Async Loading Screen has four main components: Background, Loading Widget, Tip Widget, and Layout.
@@ -342,9 +342,3 @@ Async Loading Screen plug-in is licensed under the [MIT](LICENSE) License.
 # Acknowledgment
 
 Async Loading Screen plug-in is inspired from [Loading Screen](https://github.com/ue4plugins/LoadingScreen) plug-in by Nick Darnell.
-
-
-
-
-
-
