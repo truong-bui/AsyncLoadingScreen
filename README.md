@@ -9,11 +9,11 @@
 - [About](#about)
 - [How it works](#how-it-works)
 - [Features](#features)
-- [Architecture](#architecture)
 - [Requirements](#requirements)
 - [Installation](#installation)
     - [Clone from Github](#clone-from-github)
     - [Download from Marketplace](#download-from-marketplace)
+- [Architecture](#architecture)
 - [Tutorial](#tutorial)
     - [1) Create Testing Levels and Blueprints](#1-create-testing-levels-and-blueprints)
     - [2) Gathering images and movies](#2-gathering-images-and-movies)
@@ -62,6 +62,24 @@ MoviePlayer is registered to PreLoadMap and PostLoadMapWithWorld delegates so it
 - No temporary maps, no level streaming.
 - Automatically handles all level transitions.
 - Integrates seamlessly with an existing project.
+
+# Requirements
+
+Async Loading Screen plug-in requires Visual Studio and a C++ code project. If your project is blueprint based then you will need to convert it to C++ project otherwise you cannot package your game with code plug-in.
+
+# Installation
+
+> :warning: **After installed Async Loading Screen plugin, the "Project/Movies" setting won't work anymore. You need to set up your startup movies in the 'Startup Loading Screen' section of the plugin's setting.**
+
+- ## Clone from Github
+Clone this repository into your project's /Plugins folder, make one if it doesn’t exist, then compile your game in Visual Studio. If your project is blueprint based you’ll need to convert it to a c++ project by adding any c++ class.
+
+The plug-in will be enabled by default. You can disable it in “Edit→Plugins→Project/Loading Screen”. You configure the plug-in in project settings "Game/Async Loading Screen".
+
+![async-loading-screen-screenshot-01](https://user-images.githubusercontent.com/1840964/91760594-d02bb500-ebfd-11ea-85fc-08c5a556a903.png)
+
+- ## Download from Marketplace
+--- Coming soon ---
 
 # Architecture
 Async Loading Screen has four main components: Background, Loading Widget, Tip Widget, and Layout.
@@ -161,23 +179,6 @@ This is the way Async Loading Screen widgets are arranged on the screen. In vers
 
 ---------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
-# Requirements
-
-Async Loading Screen plug-in requires Visual Studio and a C++ code project. If your project is blueprint based then you will need to convert it to C++ project otherwise you cannot package your game with code plug-in.
-
-# Installation
-
-> :warning: **After installed Async Loading Screen plugin, the "Project/Movies" setting won't work anymore. You need to set up your startup movies in the 'Startup Loading Screen' section of the plugin's setting.**
-
-- ## Clone from Github
-Clone this repository into your project's /Plugins folder, make one if it doesn’t exist, then compile your game in Visual Studio. If your project is blueprint based you’ll need to convert it to a c++ project by adding any c++ class.
-
-The plug-in will be enabled by default. You can disable it in “Edit→Plugins→Project/Loading Screen”. You configure the plug-in in project settings "Game/Async Loading Screen".
-
-![async-loading-screen-screenshot-01](https://user-images.githubusercontent.com/1840964/91760594-d02bb500-ebfd-11ea-85fc-08c5a556a903.png)
-
-- ## Download from Marketplace
---- Coming soon ---
 # Tutorial
 In this tutorial, I will use a blank C++ project with UE version 4.25. But you can freely integrate Async Loading Screen plugin into your existing projects without problems. You should install the plugin following [Installation](#installation) steps above.
 
