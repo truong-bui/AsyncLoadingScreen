@@ -25,6 +25,7 @@
         - [4.3) Default Loading Screen - Loading Widget setting](#43-default-loading-screen---loading-widget-setting)
     - [5) Configure Classic Layout setting](#5-configure-classic-layout-setting)
     - [6) Image Sequence Settings](#6-image-sequence-settings)
+    - [7) Set proper background and tip for each level](#7-set-proper-background-and-tip-for-each-level)
 - [Wiki](#wiki)
 - [Showcases](#showcases)
 - [Donate](#donate)
@@ -71,6 +72,8 @@ MoviePlayer is registered to PreLoadMap and PostLoadMapWithWorld delegates so it
 - Added SetDisplayBackgroundManually, SetDisplayTipTextManually, SetDisplayMovieManually options.
 - Changed TipWidgetVerticalPadding to BorderVerticalOffset in Center Layout settings.
 - Changed WidgetHorizontalPadding to BorderHorizontalOffset in Sidebar Layout settings.
+- Add Async Loading Screen Function Library with 3 Blueprint functions:
+![function-library-01](https://user-images.githubusercontent.com/1840964/93088595-577c2c80-f6c4-11ea-8f23-ec9d065277dc.png)
 
 # Requirements
 
@@ -98,14 +101,14 @@ The background is a static image, you can add many images as you want, it will b
 
 - Background Setting:
 
-![background-settings](https://user-images.githubusercontent.com/1840964/92411337-a0d2f600-f171-11ea-8960-9c15f54bd62a.png)
+![background-settings](https://user-images.githubusercontent.com/1840964/93088749-8397ad80-f6c4-11ea-9a85-5399efea3ddd.png)
 
 ## Tip Widget
 Just some useful texts that will be shown randomly for players to have something to look at while waiting for a new level loaded.
 
 - Tip Widget Setting:
 
-![tip-widget-settings](https://user-images.githubusercontent.com/1840964/92411408-f6a79e00-f171-11ea-8de7-14744375e67a.png)
+![tip-widget-settings](https://user-images.githubusercontent.com/1840964/93089000-df623680-f6c4-11ea-82fb-e2a44f9a524f.png)
 
 ## Loading Widget
 This is the most important component of the plug-in, Loading Widget lets players know that the game is still running and not freezing. 
@@ -330,6 +333,21 @@ You can leave other options default.
 Click play or Launch button and you'll see the Mannequin is running as a loading icon:
 
 ![tutorial-22](https://user-images.githubusercontent.com/1840964/92536933-0eac1a00-f265-11ea-8d62-c173e632b55a.jpg)
+
+---
+## 7) Set proper background and tip for each level:
+In updated version 1.1, Async Loading Screen supports display specific background/tip/movie for each level as you want. In this tutorial we'll show proper background and tip for **Level_1** and **Level_2**:
+
+- Open **Background** setting and enable **Set Display Background Manually**.
+![tutorial-23](https://user-images.githubusercontent.com/1840964/93087118-534f0f80-f6c2-11ea-94e3-4d3c0fc27c55.png)
+
+- Open **Tip Widget** setting, enable **Set Display Tip Text Manually** and add 2 more following texts in **TipText** array:
+![tutorial-24](https://user-images.githubusercontent.com/1840964/93087270-842f4480-f6c2-11ea-9e8f-d79ff58dd35b.png)
+
+- Open **WBP_OpenLevelButton** blueprint, in On Clicked event, set **Background Index=4, Tip Text Index=2** before **Open Level=Level_2** and **Background Index=2, Tip Text Index=1** before **Open Level=Level_1**:
+![tutorial-25](https://user-images.githubusercontent.com/1840964/93087474-ceb0c100-f6c2-11ea-8502-5a5615fd15eb.png)
+
+- Now click play Standalone Game or Launch button, you'll see Async Loading Screen always show Background index 4, TipText index 2 when loading Level_2, and Background index 2, TipText index 1 when loading Level_1.
 
 ---
 
