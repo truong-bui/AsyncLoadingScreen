@@ -84,7 +84,7 @@ Async Loading Screen plug-in requires Visual Studio and a C++ code project. If y
 > :warning: **After installed Async Loading Screen plugin, the "Project/Movies" setting won't work anymore. You need to set up your startup movies in the 'Startup Loading Screen' section of the plugin's setting.**
 
 - ## Clone from Github
-Clone this repository into your project's /Plugins folder, make one if it doesn’t exist, then compile your game in Visual Studio. If your project is blueprint based you’ll need to convert it to a c++ project by adding any c++ class. Supports Engine version from 4.24 and above.
+Clone this repository into your project's /Plugins folder, make one if it doesn’t exist, then compile your game in Visual Studio. If your project is blueprint based you’ll need to convert it to a c++ project by adding any c++ class. Supports Engine version from 4.23 and above.
 
 The plug-in will be enabled by default. You can disable it in “Edit→Plugins→Project/Loading Screen”. You configure the plug-in in project settings "Game/Async Loading Screen".
 
