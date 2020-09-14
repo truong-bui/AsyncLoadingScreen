@@ -9,6 +9,7 @@
 - [About](#about)
 - [How it works](#how-it-works)
 - [Features](#features)
+- [Changelog](#changelog)
 - [Requirements](#requirements)
 - [Installation](#installation)
     - [Clone from Github](#clone-from-github)
@@ -62,6 +63,14 @@ MoviePlayer is registered to PreLoadMap and PostLoadMapWithWorld delegates so it
 - No temporary maps, no level streaming.
 - Automatically handles all level transitions.
 - Integrates seamlessly with an existing project.
+
+# Changelog
+### Updated version 1.1 (14/09/2020):
+- Added Shuffle option in movies setting.
+- Implemented set specific bacground/tip/movie for each level.
+- Added SetDisplayBackgroundManually, SetDisplayTipTextManually, SetDisplayMovieManually options.
+- Changed TipWidgetVerticalPadding to BorderVerticalOffset in Center Layout settings.
+- Changed WidgetHorizontalPadding to BorderHorizontalOffset in Sidebar Layout settings.
 
 # Requirements
 
