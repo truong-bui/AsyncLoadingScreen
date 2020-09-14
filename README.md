@@ -67,7 +67,7 @@ MoviePlayer is registered to PreLoadMap and PostLoadMapWithWorld delegates so it
 
 # Changelog
 ### Updated version 1.1 (14/09/2020):
-- Added Shuffle option in movie setting.
+- Added Shuffle option in the movie setting.
 - Implemented set specific background/tip/movie for each level.
 - Added SetDisplayBackgroundManually, SetDisplayTipTextManually, SetDisplayMovieManually options.
 - Changed TipWidgetVerticalPadding to BorderVerticalOffset in Center Layout settings.
@@ -358,6 +358,13 @@ Congratulation! We have finished the tutorial. You should try other layouts and 
 --- Coming soon ---
 
 # Showcases
+
+- [Cursed Spire](https://www.youtube.com/watch?v=ZZlxmdRDRMI)
+
+![cursed-spire-async-loading-screen](https://user-images.githubusercontent.com/1840964/93096502-ac24a500-f6ce-11ea-9f6a-613c7a6bb926.gif)
+
+---
+
 If you're using Async Loading Screen plugin in your game and would like to showcase here, shoot me an email about your game's info, including screenshots(gif/png/jpeg/video) of your in-game loading screen.
 
 # Donate
