@@ -109,7 +109,7 @@ void SSidebarLayout::Construct(const FArguments& InArgs, const FALoadingScreenSe
 		Root.Get().AddSlot()
 		.HAlign(HAlign_Right)
 		.VAlign(LayoutSettings.BorderVerticalAlignment)
-		.Padding(0, 0, LayoutSettings.WidgetHorizontalPadding, 0)
+		.Padding(0, 0, LayoutSettings.BorderHorizontalOffset, 0)
 		[
 			SNew(SBorder)
 			.HAlign(HAlign_Fill)
@@ -138,7 +138,7 @@ void SSidebarLayout::Construct(const FArguments& InArgs, const FALoadingScreenSe
 		Root.Get().AddSlot()
 		.HAlign(HAlign_Left)
 		.VAlign(LayoutSettings.BorderVerticalAlignment)
-		.Padding(LayoutSettings.WidgetHorizontalPadding, 0, 0, 0)
+		.Padding(LayoutSettings.BorderHorizontalOffset, 0, 0, 0)
 		[
 			SNew(SBorder)
 			.HAlign(HAlign_Fill)

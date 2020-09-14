@@ -210,6 +210,12 @@ struct ASYNCLOADINGSCREEN_API FBackgroundSettings
 	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "Background")
 	FLinearColor BackgroundColor = FLinearColor::Black;
 
+	/**
+	 * If true, you will have to manually set which background index you want to display on the loading screen by calling "SetDisplayBackgroundIndex" function
+	 * in your Blueprint before opening a new level. If the index you set is not valid, then it will display random background in the "Images" array.
+	 */
+	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "Background")
+	bool bSetDisplayBackgroundManually = false;
 };
 
 /**
@@ -255,7 +261,7 @@ struct ASYNCLOADINGSCREEN_API FLoadingWidgetSettings
 	bool bLoadingTextTopPosition = true;
 
 	// Loading text appearance settings
-	UPROPERTY(BlueprintReadWrite, Config, EditAnywhere, Category = "Tip Settings")
+	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "Tip Settings")
 	FTextAppearance Appearance;
 
 	/** Throbber settings. Ignore this if you don't choose the 'Throbber' icon type*/
@@ -293,16 +299,23 @@ struct ASYNCLOADINGSCREEN_API FTipSettings
 	GENERATED_BODY()
 
 	// The tip text randomly display in the loading screen.
-	UPROPERTY(BlueprintReadWrite, Config, EditAnywhere, Category = "Tip Settings", meta = (MultiLine = true))
+	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "Tip Settings", meta = (MultiLine = true))
 	TArray<FText> TipText;
 
 	// Tip text appearance settings
-	UPROPERTY(BlueprintReadWrite, Config, EditAnywhere, Category = "Tip Settings")
+	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "Tip Settings")
 	FTextAppearance Appearance;
 
 	// The size of the tip before it's wrapped to the next line
-	UPROPERTY(BlueprintReadWrite, Config, EditAnywhere, Category = "Tip Settings")
+	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "Tip Settings")
 	float TipWrapAt;
+
+	/**
+	 * If true, you will have to manually set which TipText index you want to display on the loading screen by calling "SetDisplayTipTextIndex" function
+	 * in your Blueprint before opening a new level. If the index you set is not valid, then it will display random Tip in the "TipText" array.
+	 */
+	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "Background")
+	bool bSetDisplayTipTextManually = false;
 };
 
 /**
@@ -334,14 +347,28 @@ struct ASYNCLOADINGSCREEN_API FALoadingScreenSettings
 	TEnumAsByte<EMoviePlaybackType> PlaybackType;
 
 	/**
-	* All movie files must be locate at Content/Movies/ directory. Suggested format: MPEG-4 Movie (mp4). Enter file path/name without the extension.
-	* E.g., if you have a movie name my_movie.mp4 in the 'Content/Movies' folder, then enter my_movie in the input field.
-	*/
+	 * All movie files must be locate at Content/Movies/ directory. Suggested format: MPEG-4 Movie (mp4). Enter file path/name without the extension.
+	 * E.g., if you have a movie name my_movie.mp4 in the 'Content/Movies' folder, then enter my_movie in the input field.
+	 */
 	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "Movies Settings")
 	TArray<FString> MoviePaths;
 	
+	/**
+	 * If true, shuffle the movies list before playing.
+	 */
+	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "Movies Settings")
+	bool bShuffle = false;
+
+	/**
+	 * If true, the "Shuffle" option will be ignored, and you will have to manually set which Movie index you want to display on the loading screen 
+	 * by calling "SetDisplayMovieIndex" function in your Blueprint before opening a new level.
+	 */
+	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "Movies Settings")
+	bool bSetDisplayMovieIndexManually = false;
+
+
 	/** 
-	 * Should we show the loading screen widget (background/tips/loading widget)? Generally you'll want to set this to false if you just want to show a movie.
+	 * Should we show the loading screen widgets (background/tips/loading widget)? Generally you'll want to set this to false if you just want to show a movie.
 	 */ 
 	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "Loading Screen Settings")
 	bool bShowWidgetOverlay = true;
@@ -408,11 +435,7 @@ struct FCenterLayoutSettings
 
 	/** Is tip located at the bottom or top? */
 	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "Center Layout")
-	bool bIsTipAtBottom = true;
-	
-	/** Padding at bottom or top depend on the tip located at the bottom or top position.*/
-	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "Center Layout")
-	float TipWidgetVerticalPadding = 0.0f;	
+	bool bIsTipAtBottom = true;	
 
 	/** The alignment of the tips. */
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Center Layout")
@@ -422,6 +445,10 @@ struct FCenterLayoutSettings
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Center Layout")
 	TEnumAsByte<EHorizontalAlignment> BorderHorizontalAlignment = EHorizontalAlignment::HAlign_Fill;
 
+	/** Offset to bottom or top of the screen depending on the tip located at the bottom or top position.*/
+	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "Center Layout")
+	float BorderVerticalOffset = 0.0f;
+
 	/** The padding area between the border and the tips it contains.*/
 	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "Center Layout")
 	FMargin BorderPadding;
@@ -429,10 +456,6 @@ struct FCenterLayoutSettings
 	/** Background appearance settings for tip area */
 	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "Center Layout")
 	FSlateBrush BorderBackground;
-
-	// The color and opacity for the background of the tip area
-	//UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "Centrality Layout")
-	//FLinearColor TipBackgroundColor = FLinearColor::Black;
 };
 
 /** Letterbox Layout settings*/
@@ -494,11 +517,7 @@ struct FSidebarLayoutSettings
 
 	/** The empty space between loading widget and the tip.*/
 	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "Sidebar Layout")
-	float Space = 1.0f;
-
-	/** Padding at left or right depend on the border that contains loading and tip widgets located at the left or right position.*/
-	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "Sidebar Layout")
-	float WidgetHorizontalPadding = 0.0f;
+	float Space = 1.0f;	
 
 	/** The vertical alignment of the vertical box that contains loading/tip widgets. */
 	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "Sidebar Layout")
@@ -515,6 +534,10 @@ struct FSidebarLayoutSettings
 	/** The vertical alignment of the border background that contains all widgets. */
 	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "Sidebar Layout")
 	TEnumAsByte<EVerticalAlignment> BorderVerticalAlignment = EVerticalAlignment::VAlign_Fill;
+
+	/** Offset to left or right of the screen depending on the border that contains loading and tip widgets located at the left or right position.*/
+	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "Sidebar Layout")
+	float BorderHorizontalOffset = 0.0f;
 
 	/** The padding area between the border and the widget it contains.*/
 	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "Sidebar Layout")

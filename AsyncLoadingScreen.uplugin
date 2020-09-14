@@ -1,7 +1,7 @@
 {
 	"FileVersion": 3,
-	"Version": 1,
-	"VersionName": "1.0",
+	"Version": 2,
+	"VersionName": "1.1",
 	"EngineVersion": "4.25.0",
 	"FriendlyName": "Async Loading Screen",
 	"Description": "Allows you to easily configure a Loading Screen system in the project settings, and automatically add a Loading Screen in your game whenever you open a new level, without Level Streaming.",
@@ -20,7 +20,7 @@
 			"Name": "AsyncLoadingScreen",
 			"Type": "Runtime",
 			"LoadingPhase": "PreLoadingScreen",
-			"WhitelistPlatforms": [ "Win64", "Win32", "Mac", "Android" ]
+			"BlacklistPlatforms": []
 		}
 	]
 }

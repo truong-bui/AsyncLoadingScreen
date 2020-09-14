@@ -12,13 +12,23 @@
 #include "Widgets/Images/SImage.h"
 #include "Widgets/Layout/SBorder.h"
 #include "Engine/Texture2D.h"
+#include "AsyncLoadingScreenLibrary.h"
 
 void SBackgroundWidget::Construct(const FArguments& InArgs, const FBackgroundSettings& Settings)
 {
 	// If there's an image defined
 	if (Settings.Images.Num() > 0)
 	{
-		const int32 ImageIndex = FMath::RandRange(0, Settings.Images.Num() - 1);
+		int32 ImageIndex = FMath::RandRange(0, Settings.Images.Num() - 1);
+
+		if (Settings.bSetDisplayBackgroundManually == true)
+		{
+			if (Settings.Images.IsValidIndex(UAsyncLoadingScreenLibrary::GetDisplayBackgroundIndex()))
+			{
+				ImageIndex = UAsyncLoadingScreenLibrary::GetDisplayBackgroundIndex();
+			}
+		}
+
 		const FSoftObjectPath& ImageAsset = Settings.Images[ImageIndex];
 		UObject* ImageObject = ImageAsset.TryLoad();
 		if (UTexture2D* LoadingImage = Cast<UTexture2D>(ImageObject))

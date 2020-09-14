@@ -9,12 +9,21 @@
 #include "STipWidget.h"
 #include "LoadingScreenSettings.h"
 #include "Widgets/Text/STextBlock.h"
+#include "AsyncLoadingScreenLibrary.h"
 
 void STipWidget::Construct(const FArguments& InArgs, const FTipSettings& Settings)
 {
 	if (Settings.TipText.Num() > 0)
 	{
-		const int32 TipIndex = FMath::RandRange(0, Settings.TipText.Num() - 1);
+		int32 TipIndex = FMath::RandRange(0, Settings.TipText.Num() - 1);
+		
+		if (Settings.bSetDisplayTipTextManually == true)
+		{			
+			if (Settings.TipText.IsValidIndex(UAsyncLoadingScreenLibrary::GetDisplayTipTextIndex()))
+			{
+				TipIndex = UAsyncLoadingScreenLibrary::GetDisplayTipTextIndex();
+			}
+		}
 
 		ChildSlot
 		[

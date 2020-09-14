@@ -55,7 +55,7 @@ void SCenterLayout::Construct(const FArguments& InArgs, const FALoadingScreenSet
 		Root->AddSlot()
 			.HAlign(LayoutSettings.BorderHorizontalAlignment)
 			.VAlign(VAlign_Bottom)
-			.Padding(0, 0, 0, LayoutSettings.TipWidgetVerticalPadding)
+			.Padding(0, 0, 0, LayoutSettings.BorderVerticalOffset)
 			[
 				SNew(SBorder)
 				.HAlign(HAlign_Fill)
@@ -84,7 +84,7 @@ void SCenterLayout::Construct(const FArguments& InArgs, const FALoadingScreenSet
 		Root->AddSlot()
 			.HAlign(LayoutSettings.BorderHorizontalAlignment)
 			.VAlign(VAlign_Top)
-			.Padding(0, LayoutSettings.TipWidgetVerticalPadding, 0, 0)
+			.Padding(0, LayoutSettings.BorderVerticalOffset, 0, 0)
 			[
 				SNew(SBorder)
 				.HAlign(HAlign_Fill)

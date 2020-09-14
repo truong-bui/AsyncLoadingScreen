@@ -15,6 +15,7 @@
 #include "SSidebarLayout.h"
 #include "SDualSidebarLayout.h"
 #include "Framework/Application/SlateApplication.h"
+#include "AsyncLoadingScreenLibrary.h"
 
 #define LOCTEXT_NAMESPACE "FAsyncLoadingScreenModule"
 
@@ -64,12 +65,35 @@ void FAsyncLoadingScreenModule::PreSetupLoadingScreen()
 
 void FAsyncLoadingScreenModule::SetupLoadingScreen(const FALoadingScreenSettings& LoadingScreenSettings)
 {
+	TArray<FString> MoviesList = LoadingScreenSettings.MoviePaths;
+
+	// Shuffle the movies list
+	if (LoadingScreenSettings.bShuffle == true)
+	{
+		ShuffleMovies(MoviesList);
+	}
+		
+	if (LoadingScreenSettings.bSetDisplayMovieIndexManually == true)
+	{
+		MoviesList.Empty();
+
+		// Show specific movie if valid otherwise show original movies list
+		if (LoadingScreenSettings.MoviePaths.IsValidIndex(UAsyncLoadingScreenLibrary::GetDisplayMovieIndex()))
+		{
+			MoviesList.Add(LoadingScreenSettings.MoviePaths[UAsyncLoadingScreenLibrary::GetDisplayMovieIndex()]);
+		}
+		else
+		{
+			MoviesList = LoadingScreenSettings.MoviePaths;
+		}
+	}
+
 	FLoadingScreenAttributes LoadingScreen;
 	LoadingScreen.MinimumLoadingScreenDisplayTime = LoadingScreenSettings.MinimumLoadingScreenDisplayTime;
 	LoadingScreen.bAutoCompleteWhenLoadingCompletes = LoadingScreenSettings.bAutoCompleteWhenLoadingCompletes;
 	LoadingScreen.bMoviesAreSkippable = LoadingScreenSettings.bMoviesAreSkippable;
 	LoadingScreen.bWaitForManualStop = LoadingScreenSettings.bWaitForManualStop;
-	LoadingScreen.MoviePaths = LoadingScreenSettings.MoviePaths;
+	LoadingScreen.MoviePaths = MoviesList;
 	LoadingScreen.PlaybackType = LoadingScreenSettings.PlaybackType;
 
 	if (LoadingScreenSettings.bShowWidgetOverlay)
@@ -98,6 +122,22 @@ void FAsyncLoadingScreenModule::SetupLoadingScreen(const FALoadingScreenSettings
 	}
 	
 	GetMoviePlayer()->SetupLoadingScreen(LoadingScreen);
+}
+
+void FAsyncLoadingScreenModule::ShuffleMovies(TArray<FString>& MoviesList)
+{
+	if (MoviesList.Num() > 0)
+	{
+		int32 LastIndex = MoviesList.Num() - 1;
+		for (int32 i = 0; i <= LastIndex; ++i)
+		{
+			int32 Index = FMath::RandRange(i, LastIndex);
+			if (i != Index)
+			{
+				MoviesList.Swap(i, Index);
+			}
+		}
+	}
 }
 
 #undef LOCTEXT_NAMESPACE
