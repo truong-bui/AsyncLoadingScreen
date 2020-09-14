@@ -97,14 +97,14 @@ Download Async Loading Screen from [Marketplace](https://www.unrealengine.com/ma
 Async Loading Screen has four main components: Background, Loading Widget, Tip Widget, and Layout.
 
 ## Background
-The background is a static image, you can add many images as you want, it will be displayed randomly. Leave it empty if you just want to show a movie instead of a static image.
+The background is a static image, you can add many images as you want, it will be displayed randomly (unless **Set Display Background Manually** option is enabled). Leave it empty if you just want to show a movie instead of a static image.
 
 - Background Setting:
 
 ![background-settings](https://user-images.githubusercontent.com/1840964/93088749-8397ad80-f6c4-11ea-9a85-5399efea3ddd.png)
 
 ## Tip Widget
-Just some useful texts that will be shown randomly for players to have something to look at while waiting for a new level loaded.
+Just some useful texts that will be shown randomly (unless **Set Display Tip Text Manually** option is enabled) for players to have something to look at while waiting for a new level loaded.
 
 - Tip Widget Setting:
 
