@@ -67,8 +67,8 @@ MoviePlayer is registered to PreLoadMap and PostLoadMapWithWorld delegates so it
 
 # Changelog
 ### Updated version 1.1 (14/09/2020):
-- Added Shuffle option in movies setting.
-- Implemented set specific bacground/tip/movie for each level.
+- Added Shuffle option in movie setting.
+- Implemented set specific background/tip/movie for each level.
 - Added SetDisplayBackgroundManually, SetDisplayTipTextManually, SetDisplayMovieManually options.
 - Changed TipWidgetVerticalPadding to BorderVerticalOffset in Center Layout settings.
 - Changed WidgetHorizontalPadding to BorderHorizontalOffset in Sidebar Layout settings.
