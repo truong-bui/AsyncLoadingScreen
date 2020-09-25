@@ -342,6 +342,14 @@ struct ASYNCLOADINGSCREEN_API FALoadingScreenSettings
 	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "Movies Settings")
 	bool bWaitForManualStop = false;
 
+	/** If true loading screens here cannot have any uobjects of any kind or use any engine features at all. This will start the movies very early as a result on platforms that support it */
+	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "Movies Settings")
+	bool bAllowInEarlyStartup = false;
+
+	/** If true, this will call the engine tick while the game thread is stalled waiting for a loading movie to finish. This only works for post-startup load screens and is potentially unsafe */
+	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "Movies Settings")
+	bool bAllowEngineTick = false;
+
 	/** Should we just play back, loop, etc.  NOTE: if the playback type is MT_LoopLast, then bAutoCompleteWhenLoadingCompletes will be togged on when the last movie is hit*/
 	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "Movies Settings")
 	TEnumAsByte<EMoviePlaybackType> PlaybackType;
