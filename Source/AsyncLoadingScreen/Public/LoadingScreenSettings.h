@@ -609,7 +609,7 @@ class ASYNCLOADINGSCREEN_API ULoadingScreenSettings : public UDeveloperSettings
 
 public:
 
-	ULoadingScreenSettings(const FObjectInitializer& Initializer);
+	ULoadingScreenSettings(const FObjectInitializer& ObjectInitializer = FObjectInitializer::Get());
 	
 	/**
 	 * The startup loading screen when you first open the game. Setup any studio logo movies here.
