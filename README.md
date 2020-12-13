@@ -26,7 +26,6 @@
     - [5) Configure Classic Layout setting](#5-configure-classic-layout-setting)
     - [6) Image Sequence Settings](#6-image-sequence-settings)
     - [7) Set proper background and tip for each level](#7-set-proper-background-and-tip-for-each-level)
-- [Wiki](#wiki)
 - [Showcases](#showcases)
 - [Donate](#donate)
 - [License](#license)
@@ -353,15 +352,18 @@ In updated version 1.1, Async Loading Screen supports display specific backgroun
 
 Congratulation! We have finished the tutorial. You should try other layouts and settings to see which is fit for your game.
 
-# Wiki
-
---- Coming soon ---
 
 # Showcases
 
 - [Cursed Spire](https://www.youtube.com/watch?v=ZZlxmdRDRMI)
 
 ![cursed-spire-async-loading-screen](https://user-images.githubusercontent.com/1840964/93096502-ac24a500-f6ce-11ea-9f6a-613c7a6bb926.gif)
+
+---
+
+- [Pumpkin Jack](https://www.pumpkin-jack.com/)
+
+![pumpkin-jack](https://user-images.githubusercontent.com/1840964/99428459-41475280-2939-11eb-86a5-b27f39b73037.png)
 
 ---
 
