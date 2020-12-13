@@ -1,6 +1,6 @@
 {
 	"FileVersion": 3,
-	"Version": 2,
+	"Version": 3,
 	"VersionName": "1.1",
 	"EngineVersion": "4.26.0",
 	"FriendlyName": "Async Loading Screen",
@@ -12,15 +12,12 @@
 	"MarketplaceURL": "com.epicgames.launcher://ue/marketplace/product/01f39767dc6b4290877f38365787cbf8",
 	"SupportURL": "https://github.com/truong-bui/AsyncLoadingScreen/issues",
 	"CanContainContent": true,
-	"IsBetaVersion": false,
-	"IsExperimentalVersion": false,
-	"Installed": false,
+	"Installed": true,
 	"Modules": [
 		{
 			"Name": "AsyncLoadingScreen",
 			"Type": "Runtime",
-			"LoadingPhase": "PreLoadingScreen",
-			"BlacklistPlatforms": []
+			"LoadingPhase": "PreLoadingScreen"			
 		}
 	]
 }
