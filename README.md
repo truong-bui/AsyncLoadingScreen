@@ -65,7 +65,22 @@ MoviePlayer is registered to PreLoadMap and PostLoadMapWithWorld delegates so it
 - Integrates seamlessly with an existing project.
 
 # Changelog
-### Updated version 1.1 (14/09/2020):
+### Version 1.2 (11/01.2021)
+- Added new blueprint library function **Stop Loading Screen**. To use this function, you must enable the **Allow Engine Tick** option. Call this function in **BeginPlay** event to stop the Loading Screen (works with Delay node):
+
+![async-loading-screen-01](https://user-images.githubusercontent.com/1840964/104131830-a3f22300-53ab-11eb-8543-3e8ba6ef2609.png)
+
+- Added **Show Loading Complete Text** option and **Loading Complete Text Settings** section, which show a text when level loading is complete. Note that you need to set **Wait For Manual Stop** = true, and **Minimum Loading Screen Display Time** = -1, this also allows players press any key to stop the Loading Screen by themself.
+
+Show Loading Complete Text Settings:
+![async-loading-screen-02](https://user-images.githubusercontent.com/1840964/104131945-896c7980-53ac-11eb-870a-b7987364f00c.png)
+
+Example:
+![async-loading-screen-03](https://user-images.githubusercontent.com/1840964/104131958-ad2fbf80-53ac-11eb-92a7-8951cbe2061e.png)
+
+---
+
+### Version 1.1 (14/09/2020):
 - Added Shuffle option in the movie setting.
 - Implemented set specific background/tip/movie for each level.
 - Added SetDisplayBackgroundManually, SetDisplayTipTextManually, SetDisplayMovieManually options.
