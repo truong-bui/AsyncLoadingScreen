@@ -9,6 +9,7 @@
 #pragma once
 
 #include "Widgets/SCompoundWidget.h"
+#include "Widgets/SOverlay.h"
 
 /**
  * Loading screen base theme
