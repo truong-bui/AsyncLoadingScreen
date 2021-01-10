@@ -50,7 +50,15 @@ public:
 	static void SetDisplayMovieIndex(int32 MovieIndex);
 
 
+	/**
+	 * Stop the loading screen. To use this function, you must enable the "bAllowEngineTick" option.
+	 * Call this function in BeginPlay event to stop the Loading Screen (works with Delay node).
+	 *
+	 **/
+	UFUNCTION(BlueprintCallable, Category = "Async Loading Screen")
+	static void StopLoadingScreen();
+
 	static inline int32 GetDisplayBackgroundIndex() { return DisplayBackgroundIndex; }
 	static inline int32 GetDisplayTipTextIndex() { return DisplayTipTextIndex; }
-	static inline int32 GetDisplayMovieIndex() { return DisplayMovieIndex; }
+	static inline int32 GetDisplayMovieIndex() { return DisplayMovieIndex; }	
 };

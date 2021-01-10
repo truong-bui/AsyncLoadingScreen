@@ -26,7 +26,6 @@
     - [5) Configure Classic Layout setting](#5-configure-classic-layout-setting)
     - [6) Image Sequence Settings](#6-image-sequence-settings)
     - [7) Set proper background and tip for each level](#7-set-proper-background-and-tip-for-each-level)
-- [Wiki](#wiki)
 - [Showcases](#showcases)
 - [Donate](#donate)
 - [License](#license)
@@ -66,7 +65,22 @@ MoviePlayer is registered to PreLoadMap and PostLoadMapWithWorld delegates so it
 - Integrates seamlessly with an existing project.
 
 # Changelog
-### Updated version 1.1 (14/09/2020):
+### Version 1.2 (11/01.2021)
+- Added new blueprint library function **Stop Loading Screen**. To use this function, you must enable the **Allow Engine Tick** option. Call this function in **BeginPlay** event to stop the Loading Screen (works with Delay node):
+
+![async-loading-screen-01](https://user-images.githubusercontent.com/1840964/104131830-a3f22300-53ab-11eb-8543-3e8ba6ef2609.png)
+
+- Added **Show Loading Complete Text** option and **Loading Complete Text Settings** section, which show a text when level loading is complete. Note that you need to set **Wait For Manual Stop** = true, and **Minimum Loading Screen Display Time** = -1, this also allows players press any key to stop the Loading Screen by themself.
+
+Show Loading Complete Text Settings:
+![async-loading-screen-02](https://user-images.githubusercontent.com/1840964/104131945-896c7980-53ac-11eb-870a-b7987364f00c.png)
+
+Example:
+![async-loading-screen-03](https://user-images.githubusercontent.com/1840964/104131958-ad2fbf80-53ac-11eb-92a7-8951cbe2061e.png)
+
+---
+
+### Version 1.1 (14/09/2020):
 - Added Shuffle option in the movie setting.
 - Implemented set specific background/tip/movie for each level.
 - Added SetDisplayBackgroundManually, SetDisplayTipTextManually, SetDisplayMovieManually options.
@@ -353,15 +367,18 @@ In updated version 1.1, Async Loading Screen supports display specific backgroun
 
 Congratulation! We have finished the tutorial. You should try other layouts and settings to see which is fit for your game.
 
-# Wiki
-
---- Coming soon ---
 
 # Showcases
 
 - [Cursed Spire](https://www.youtube.com/watch?v=ZZlxmdRDRMI)
 
 ![cursed-spire-async-loading-screen](https://user-images.githubusercontent.com/1840964/93096502-ac24a500-f6ce-11ea-9f6a-613c7a6bb926.gif)
+
+---
+
+- [Pumpkin Jack](https://www.pumpkin-jack.com/)
+
+![pumpkin-jack](https://user-images.githubusercontent.com/1840964/99428459-41475280-2939-11eb-86a5-b27f39b73037.png)
 
 ---
 

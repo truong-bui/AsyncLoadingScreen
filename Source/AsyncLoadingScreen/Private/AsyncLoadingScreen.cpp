@@ -36,8 +36,7 @@ void FAsyncLoadingScreenModule::StartupModule()
 		// Prepare the startup screen, the PreSetupLoadingScreen callback won't be called
 		// if we've already explicitly setup the loading screen
 		SetupLoadingScreen(Settings->StartupLoadingScreen);
-	}
-	
+	}	
 }
 
 void FAsyncLoadingScreenModule::ShutdownModule()
@@ -123,6 +122,9 @@ void FAsyncLoadingScreenModule::SetupLoadingScreen(const FALoadingScreenSettings
 		
 	}
 	
+	// For testing only
+	//LoadingScreen.WidgetLoadingScreen = FLoadingScreenAttributes::NewTestLoadingScreenWidget();
+
 	GetMoviePlayer()->SetupLoadingScreen(LoadingScreen);
 }
 
