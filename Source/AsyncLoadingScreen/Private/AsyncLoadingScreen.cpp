@@ -121,9 +121,6 @@ void FAsyncLoadingScreenModule::SetupLoadingScreen(const FALoadingScreenSettings
 		}
 		
 	}
-	
-	// For testing only
-	//LoadingScreen.WidgetLoadingScreen = FLoadingScreenAttributes::NewTestLoadingScreenWidget();
 
 	GetMoviePlayer()->SetupLoadingScreen(LoadingScreen);
 }
