@@ -147,6 +147,12 @@ void SLetterboxLayout::Construct(const FArguments& InArgs, const FALoadingScreen
 			];
 	}
 
+	// Construct loading complete text if enable
+	if (Settings.bShowLoadingCompleteText)
+	{
+		ConstructLoadingCompleteText(Root, Settings.LoadingCompleteTextSettings);
+	}
+
 	// Add Root to this widget
 	ChildSlot
 		[
