@@ -38,8 +38,7 @@ public class AsyncLoadingScreen : ModuleRules
 				"Engine",
 				"Slate",
 				"SlateCore",
-				"MoviePlayer",
-				"DeveloperSettings"
+				"MoviePlayer"
 				// ... add private dependencies that you statically link with here ...	
 			}
 			);
