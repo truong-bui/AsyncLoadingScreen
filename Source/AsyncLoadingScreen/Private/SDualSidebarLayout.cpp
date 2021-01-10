@@ -151,6 +151,12 @@ void SDualSidebarLayout::Construct(const FArguments& InArgs, const FALoadingScre
 		];
 	}
 
+	// Construct loading complete text if enable
+	if (Settings.bShowLoadingCompleteText)
+	{
+		ConstructLoadingCompleteText(Root, Settings.LoadingCompleteTextSettings);
+	}
+
 	// Add root to this widget
 	ChildSlot
 	[

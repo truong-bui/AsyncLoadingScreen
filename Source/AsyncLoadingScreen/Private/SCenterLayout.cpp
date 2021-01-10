@@ -108,6 +108,12 @@ void SCenterLayout::Construct(const FArguments& InArgs, const FALoadingScreenSet
 			];
 	}
 
+	// Construct loading complete text if enable
+	if (Settings.bShowLoadingCompleteText)
+	{
+		ConstructLoadingCompleteText(Root, Settings.LoadingCompleteTextSettings);
+	}
+
 	// Add root to this widget
 	ChildSlot
 	[
