@@ -140,6 +140,12 @@ void SClassicLayout::Construct(const FArguments& InArgs, const FALoadingScreenSe
 		]
 	];
 
+	// Construct loading complete text if enable
+	if (Settings.bShowLoadingCompleteText)
+	{
+		ConstructLoadingCompleteText(Root, Settings.LoadingCompleteTextSettings);
+	}
+
 	// Add root to this widget
 	ChildSlot
 		[
