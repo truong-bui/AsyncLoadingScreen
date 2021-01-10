@@ -24,13 +24,13 @@ UENUM(BlueprintType)
 enum class EAsyncLoadingScreenLayout : uint8
 {
 	/**
-	 * The Classic is a simple, generic layout and fits well with many designs. 
+	 * The Classic is a simple, generic layout and fits well with many designs.
 	 * Loading and tip widgets can be at the bottom or top.
 	 */
 	ALSL_Classic UMETA(DisplayName = "Classic"),
 	/** 
-	 * The loading widget is at the center of the screen, tip widget can be at the bottom or top. 	
-	 * The Center layout is a good choice if your loading icon is the main design. 
+	 * The loading widget is at the center of the screen, tip widget can be at the bottom or top.
+	 * The Center layout is a good choice if your loading icon is the main design.
 	 */
 	ALSL_Center UMETA(DisplayName = "Center"),
 	/**
@@ -319,6 +319,43 @@ struct ASYNCLOADINGSCREEN_API FTipSettings
 };
 
 /**
+ * The text that displayed when loading is complete. Ignore this if you don't set "bShowLoadingCompletedText" = true
+ */
+USTRUCT(BlueprintType)
+struct ASYNCLOADINGSCREEN_API FLoadingCompleteTextSettings
+{
+	GENERATED_BODY()
+
+	FLoadingCompleteTextSettings();
+
+	// The text that shows up when level loading is done.
+	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "Loading Complete Text Settings")
+	FText LoadingCompleteText;
+
+	// Text appearance settings
+	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "Loading Complete Text Settings")
+	FTextAppearance Appearance;
+	
+	/** The alignment of the text.*/
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Loading Widget Setting")
+	FWidgetAlignment Alignment;
+
+	/** Text padding. */
+	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "Loading Complete Text Settings")
+	FMargin Padding;
+
+	// Animate the text?
+	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "Loading Complete Text Settings")
+	bool bFadeInFadeOutAnim = true;
+
+	/**
+	 * Animation speed
+	 */
+	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "Loading Complete Text Settings", meta = (UIMax = 10.00, UIMin = 0.00, ClampMin = "0", ClampMax = "10"))
+	float AnimationSpeed = 1.0f;
+};
+
+/**
  * Loading Screen Settings
  */
 USTRUCT(BlueprintType)
@@ -326,7 +363,7 @@ struct ASYNCLOADINGSCREEN_API FALoadingScreenSettings
 {
 	GENERATED_BODY()	
 
-	// The minimum time that a loading screen should be opened for, -1 if there is nor minimum time.
+	// The minimum time that a loading screen should be opened for, -1 if there is no minimum time. I recommend set it to -1.
 	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "Movies Settings")
 	float MinimumLoadingScreenDisplayTime = -1;
 	
@@ -338,9 +375,22 @@ struct ASYNCLOADINGSCREEN_API FALoadingScreenSettings
 	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "Movies Settings")
 	bool bMoviesAreSkippable = true;
 
-	// If true, movie playback continue until Stop is called.
+	/** 
+	 * If true, movie playback continue until Stop is called.
+	 * 
+	 * NOTE: If set "Minimum Loading Screen Display Time" = -1, it will allow players to press any key to stop the loading screen.
+	 * If "Minimum Loading Screen Display Time" >= 0, you will need to call "StopLoadingScreen" in BeginPlay event to stop the loading screen ("bAllowEngineTick" must be true)
+	 **/
 	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "Movies Settings")
 	bool bWaitForManualStop = false;
+
+	/** If true loading screens here cannot have any uobjects of any kind or use any engine features at all. This will start the movies very early as a result on platforms that support it */
+	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "Movies Settings")
+	bool bAllowInEarlyStartup = false;
+
+	/** If true, this will call the engine tick while the game thread is stalled waiting for a loading movie to finish. This only works for post-startup load screens and is potentially unsafe */
+	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "Movies Settings")
+	bool bAllowEngineTick = false;
 
 	/** Should we just play back, loop, etc.  NOTE: if the playback type is MT_LoopLast, then bAutoCompleteWhenLoadingCompletes will be togged on when the last movie is hit*/
 	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "Movies Settings")
@@ -371,13 +421,22 @@ struct ASYNCLOADINGSCREEN_API FALoadingScreenSettings
 	 * Should we show the loading screen widgets (background/tips/loading widget)? Generally you'll want to set this to false if you just want to show a movie.
 	 */ 
 	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "Loading Screen Settings")
-	bool bShowWidgetOverlay = true;
+	bool bShowWidgetOverlay = true;		
 
 	/**
-	 * Select async loading screen Layout. Ignore this if you choose "Show Widget Overlay = false"
+	 * If true show a text when level loading is completed. Ignore this if you choose "Show Widget Overlay" = false
+	 *
+	 * NOTE: To enable this option properly, you need to set "Wait For Manual Stop" = true, and "Minimum Loading Screen Display Time" = -1.
+	 * This also allows players press any button to stop the Loading Screen.
 	 */
 	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "Loading Screen Settings")
-	EAsyncLoadingScreenLayout Layout = EAsyncLoadingScreenLayout::ALSL_Classic;
+	bool bShowLoadingCompleteText = false;
+
+	/**
+	 * The text that displayed when loading is complete. Ignore this if you set "Show Loading Complete Text" = false.
+	 */
+	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "Loading Screen Settings")
+	FLoadingCompleteTextSettings LoadingCompleteTextSettings;
 
 	/** Background widget for the loading screen. Ignore this if you choose "Show Widget Overlay = false" */
 	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "Loading Screen Settings")
@@ -390,6 +449,12 @@ struct ASYNCLOADINGSCREEN_API FALoadingScreenSettings
 	/** Loading widget for the loading screen. Ignore this if you choose "Show Widget Overlay = false" */
 	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "Loading Screen Settings")
 	FLoadingWidgetSettings LoadingWidget;
+
+	/**
+	 * Select async loading screen Layout. Ignore this if you choose "Show Widget Overlay = false"
+	 */
+	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "Loading Screen Settings")
+	EAsyncLoadingScreenLayout Layout = EAsyncLoadingScreenLayout::ALSL_Classic;
 };
 
 /** Classic Layout settings*/
@@ -601,7 +666,7 @@ class ASYNCLOADINGSCREEN_API ULoadingScreenSettings : public UDeveloperSettings
 
 public:
 
-	ULoadingScreenSettings(const FObjectInitializer& Initializer);
+	ULoadingScreenSettings(const FObjectInitializer& ObjectInitializer = FObjectInitializer::Get());
 	
 	/**
 	 * The startup loading screen when you first open the game. Setup any studio logo movies here.
