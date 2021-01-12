@@ -15,6 +15,7 @@
 #include "SVerticalLoadingWidget.h"
 #include "SBackgroundWidget.h"
 #include "STipWidget.h"
+#include "SLoadingCompleteText.h"
 
 void SClassicLayout::Construct(const FArguments& InArgs, const FALoadingScreenSettings& Settings, const FClassicLayoutSettings& LayoutSettings)
 {
@@ -143,12 +144,18 @@ void SClassicLayout::Construct(const FArguments& InArgs, const FALoadingScreenSe
 	// Construct loading complete text if enable
 	if (Settings.bShowLoadingCompleteText)
 	{
-		ConstructLoadingCompleteText(Root, Settings.LoadingCompleteTextSettings);
+		Root->AddSlot()
+			.VAlign(Settings.LoadingCompleteTextSettings.Alignment.VerticalAlignment)
+			.HAlign(Settings.LoadingCompleteTextSettings.Alignment.HorizontalAlignment)
+			.Padding(Settings.LoadingCompleteTextSettings.Padding)
+			[
+				SNew(SLoadingCompleteText, Settings.LoadingCompleteTextSettings)
+			];
 	}
 
 	// Add root to this widget
 	ChildSlot
-		[
-			Root
-		];
+	[
+		Root
+	];
 }
