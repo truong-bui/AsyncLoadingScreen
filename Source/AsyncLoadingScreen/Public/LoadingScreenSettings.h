@@ -326,7 +326,7 @@ struct ASYNCLOADINGSCREEN_API FLoadingCompleteTextSettings
 {
 	GENERATED_BODY()
 
-	FLoadingCompleteTextSettings();
+//	FLoadingCompleteTextSettings();
 
 	// The text that shows up when level loading is done.
 	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "Loading Complete Text Settings")
@@ -346,7 +346,7 @@ struct ASYNCLOADINGSCREEN_API FLoadingCompleteTextSettings
 
 	// Animate the text?
 	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "Loading Complete Text Settings")
-	bool bFadeInFadeOutAnim = true;
+	bool bFadeInOutAnim = true;
 
 	/**
 	 * Animation speed

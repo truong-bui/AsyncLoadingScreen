@@ -30,7 +30,7 @@ void SLoadingCompleteText::Construct(const FArguments& InArgs, const FLoadingCom
 	];	
 
 	// Register animated image sequence active timer event
-	if (CompleteTextSettings.bFadeInFadeOutAnim && !bIsActiveTimerRegistered)
+	if (CompleteTextSettings.bFadeInOutAnim && !bIsActiveTimerRegistered)
 	{
 		bIsActiveTimerRegistered = true;
 		RegisterActiveTimer(0.f, FWidgetActiveTimerDelegate::CreateSP(this, &SLoadingCompleteText::AnimateText));
