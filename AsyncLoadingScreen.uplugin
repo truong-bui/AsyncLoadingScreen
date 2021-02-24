@@ -17,7 +17,19 @@
 		{
 			"Name": "AsyncLoadingScreen",
 			"Type": "Runtime",
-			"LoadingPhase": "PreLoadingScreen"			
+			"LoadingPhase": "PreLoadingScreen",
+			"WhitelistPlatforms": [
+				"Win64",
+				"Win32",
+				"Linux",
+				"LinuxAArch64",
+				"Mac",
+				"Android",
+				"IOS",
+				"XboxOne",
+				"Switch",
+				"PS4"
+			]
 		}
 	]
 }
