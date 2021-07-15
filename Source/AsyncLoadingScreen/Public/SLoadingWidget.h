@@ -13,6 +13,7 @@
 
 class FDeferredCleanupSlateBrush;
 struct FLoadingWidgetSettings;
+struct FThrobberSettings;
 
 /**
  * Loading Widget base class
@@ -29,6 +30,8 @@ public:
 	/** Construct loading icon*/
 	void ConstructLoadingIcon(const FLoadingWidgetSettings& Settings);
 
+	virtual int32 OnPaint(const FPaintArgs& Args, const FGeometry& AllottedGeometry, const FSlateRect& MyCullingRect, FSlateWindowElementList& OutDrawElements, int32 LayerId, const FWidgetStyle& InWidgetStyle, bool bParentEnabled) const override;
+
 protected:
 	// Placeholder widgets
 	TSharedRef<SWidget> LoadingIcon = SNullWidget::NullWidget;
@@ -40,5 +43,6 @@ protected:
 	bool bPlayReverse = false;
 
 	bool bIsActiveTimerRegistered = false;
+	float ImagePlayInterval = 0.0f;
 	
 };
