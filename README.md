@@ -383,6 +383,11 @@ Congratulation! We have finished the tutorial. You should try other layouts and 
 ![pumpkin-jack](https://user-images.githubusercontent.com/1840964/99428459-41475280-2939-11eb-86a5-b27f39b73037.png)
 
 ---
+- [Cions of Vega](https://tongucbodur.com/vega)
+
+![cions-of-vega](https://user-images.githubusercontent.com/1840964/120698381-2d300080-c4d9-11eb-96bd-9c0fe71f6813.jpg)
+
+---
 
 If you're using Async Loading Screen plugin in your game and would like to showcase here, shoot me an email about your game's info, including screenshots(gif/png/jpeg/video) of your in-game loading screen.
 
