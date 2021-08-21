@@ -10,6 +10,7 @@
 
 #include "Widgets/SCompoundWidget.h"
 #include "Widgets/Images/SThrobber.h"
+#include "LoadingScreenSettings.h"
 
 class FDeferredCleanupSlateBrush;
 struct FLoadingWidgetSettings;
