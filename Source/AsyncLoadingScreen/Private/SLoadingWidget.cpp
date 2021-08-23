@@ -11,6 +11,7 @@
 #include "Slate/DeferredCleanupSlateBrush.h"
 #include "Widgets/Layout/SSpacer.h"
 #include "Engine/Texture2D.h"
+#include "MoviePlayer.h"
 
 EActiveTimerReturnType SLoadingWidget::AnimatingImageSequence(double InCurrentTime, float InDeltaTime)
 {	
@@ -113,5 +114,15 @@ void SLoadingWidget::ConstructLoadingIcon(const FLoadingWidgetSettings& Settings
 	// Set Loading Icon render transform
 	LoadingIcon.Get().SetRenderTransform(FSlateRenderTransform(FScale2D(Settings.TransformScale), Settings.TransformTranslation));
 	LoadingIcon.Get().SetRenderTransformPivot(Settings.TransformPivot);
+
+	// Hide loading widget when level loading is done if bHideLoadingWidgetWhenCompletes is true 
+	if (Settings.bHideLoadingWidgetWhenCompletes)
+	{
+		Visibility = TAttribute<EVisibility>::Create(TAttribute<EVisibility>::FGetter::CreateRaw(this, &SLoadingWidget::GetLoadingWidgetVisibility));
+	}	
 }
-	
+
+EVisibility SLoadingWidget::GetLoadingWidgetVisibility() const
+{
+	return GetMoviePlayer()->IsLoadingFinished() ? EVisibility::Hidden : EVisibility::Visible;
+}

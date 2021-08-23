@@ -42,4 +42,6 @@ protected:
 
 	bool bIsActiveTimerRegistered = false;
 	
+	// Getter for text visibility
+	EVisibility GetLoadingWidgetVisibility() const;
 };

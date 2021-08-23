@@ -287,6 +287,10 @@ struct ASYNCLOADINGSCREEN_API FLoadingWidgetSettings
 	/** Empty space between the loading text and the loading icon */
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Loading Widget Setting")
 	float Space = 1.0f;
+
+	/** Hide the loading widget when the level loading is complete*/
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Loading Widget Setting")
+	bool bHideLoadingWidgetWhenCompletes = false;
 };
 
 
