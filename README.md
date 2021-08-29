@@ -66,6 +66,12 @@ MoviePlayer is registered to PreLoadMap and PostLoadMapWithWorld delegates so it
 - Integrates seamlessly with an existing project.
 
 # Changelog
+### Version 1.3.0 (29/08.2021)
+- Supports Unreal Engine 4.27 (Select other branches for other UE versions)
+- Added option for hiding Loading Widget when level loading completes
+![image](https://user-images.githubusercontent.com/1840964/131251300-dbf13ed7-26ae-4965-a119-7b51b29dfe52.png)
+- Moved animating loading widget into OnPaint function
+---
 ### Version 1.2 (11/01.2021)
 - Added new blueprint library function **Stop Loading Screen**. To use this function, you must enable the **Allow Engine Tick** option. Call this function in **BeginPlay** event to stop the Loading Screen (works with Delay node):
 
