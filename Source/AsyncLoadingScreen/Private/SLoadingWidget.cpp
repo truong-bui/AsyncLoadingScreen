@@ -11,38 +11,43 @@
 #include "Slate/DeferredCleanupSlateBrush.h"
 #include "Widgets/Layout/SSpacer.h"
 #include "Engine/Texture2D.h"
+#include "MoviePlayer.h"
+#include "Widgets/SCompoundWidget.h"
 
-EActiveTimerReturnType SLoadingWidget::AnimatingImageSequence(double InCurrentTime, float InDeltaTime)
-{	
-	if (CleanupBrushList.Num() > 1)
+int32 SLoadingWidget::OnPaint(const FPaintArgs& Args, const FGeometry& AllottedGeometry, const FSlateRect& MyCullingRect, FSlateWindowElementList& OutDrawElements, int32 LayerId, const FWidgetStyle& InWidgetStyle, bool bParentEnabled) const
+{		
+	TotalDeltaTime += Args.GetDeltaTime();
+
+	if (TotalDeltaTime >= Interval)
 	{
-		if (bPlayReverse)
+		if (CleanupBrushList.Num() > 1)
 		{
-			ImageIndex--;
-		}
-		else
-		{
-			ImageIndex++;
-		}
-		
-		if (ImageIndex >= CleanupBrushList.Num())
-		{
-			ImageIndex = 0;
-		}
-		else if (ImageIndex < 0)
-		{
-			ImageIndex = CleanupBrushList.Num() - 1;
+			if (bPlayReverse)
+			{
+				ImageIndex--;
+			}
+			else
+			{
+				ImageIndex++;
+			}
+
+			if (ImageIndex >= CleanupBrushList.Num())
+			{
+				ImageIndex = 0;
+			}
+			else if (ImageIndex < 0)
+			{
+				ImageIndex = CleanupBrushList.Num() - 1;
+			}
+
+			StaticCastSharedRef<SImage>(LoadingIcon)->SetImage(CleanupBrushList[ImageIndex].IsValid() ? CleanupBrushList[ImageIndex]->GetSlateBrush() : nullptr);			
 		}
 
-		StaticCastSharedRef<SImage>(LoadingIcon)->SetImage(CleanupBrushList[ImageIndex].IsValid() ? CleanupBrushList[ImageIndex]->GetSlateBrush() : nullptr);
-
-		return EActiveTimerReturnType::Continue;
-	}	
-	else
-	{
-		bIsActiveTimerRegistered = false;
-		return EActiveTimerReturnType::Stop;
+		TotalDeltaTime = 0.0f;
 	}
+	
+
+	return SCompoundWidget::OnPaint(Args, AllottedGeometry, MyCullingRect, OutDrawElements, LayerId, InWidgetStyle, bParentEnabled);
 }
 
 SThrobber::EAnimation SLoadingWidget::GetThrobberAnimation(FThrobberSettings ThrobberSettings) const
@@ -78,12 +83,8 @@ void SLoadingWidget::ConstructLoadingIcon(const FLoadingWidgetSettings& Settings
 			LoadingIcon = SNew(SImage)
 				.Image(CleanupBrushList[ImageIndex]->GetSlateBrush());
 
-			// Register animated image sequence active timer event
-			if (!bIsActiveTimerRegistered)
-			{
-				bIsActiveTimerRegistered = true;
-				RegisterActiveTimer(Settings.ImageSequenceSettings.Interval, FWidgetActiveTimerDelegate::CreateSP(this, &SLoadingWidget::AnimatingImageSequence));
-			}
+			// Update play animation interval
+			Interval = Settings.ImageSequenceSettings.Interval;
 		}
 		else
 		{
@@ -113,5 +114,15 @@ void SLoadingWidget::ConstructLoadingIcon(const FLoadingWidgetSettings& Settings
 	// Set Loading Icon render transform
 	LoadingIcon.Get().SetRenderTransform(FSlateRenderTransform(FScale2D(Settings.TransformScale), Settings.TransformTranslation));
 	LoadingIcon.Get().SetRenderTransformPivot(Settings.TransformPivot);
+
+	// Hide loading widget when level loading is done if bHideLoadingWidgetWhenCompletes is true 
+	if (Settings.bHideLoadingWidgetWhenCompletes)
+	{
+		Visibility = TAttribute<EVisibility>::Create(TAttribute<EVisibility>::FGetter::CreateRaw(this, &SLoadingWidget::GetLoadingWidgetVisibility));
+	}	
 }
-	
+
+EVisibility SLoadingWidget::GetLoadingWidgetVisibility() const
+{
+	return GetMoviePlayer()->IsLoadingFinished() ? EVisibility::Hidden : EVisibility::Visible;
+}

@@ -15,7 +15,6 @@
 
 void SHorizontalLoadingWidget::Construct(const FArguments& InArgs, const FLoadingWidgetSettings& Settings)
 {
-	bIsActiveTimerRegistered = false;
 	bPlayReverse = Settings.ImageSequenceSettings.bPlayReverse;	
 
 	// Root is a Horizontal Box of course
