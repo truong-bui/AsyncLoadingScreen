@@ -1,10 +1,10 @@
 {
 	"FileVersion": 3,
-  "Version": 5,
-	"VersionName": "1.2.1",
+	"Version": 6,
+	"VersionName": "1.3.0",
 	"EngineVersion": "4.25.0",
 	"FriendlyName": "Async Loading Screen",
-	"Description": "Allows you to easily configure a Loading Screen system in the project settings, and automatically add a Loading Screen in your game whenever you open a new level, without Level Streaming.",
+	"Description": "Allows you to configure a Loading Screen system in the project settings easily and automatically add a Loading Screen in your game whenever you open a new level.",
 	"Category": "Loading Screen",
 	"CreatedBy": "Truong Bui",
 	"CreatedByURL": "https://github.com/truong-bui/AsyncLoadingScreen",
