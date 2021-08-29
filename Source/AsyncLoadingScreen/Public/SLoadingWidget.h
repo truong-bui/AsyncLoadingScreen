@@ -21,8 +21,9 @@ struct FLoadingWidgetSettings;
 class SLoadingWidget : public SCompoundWidget
 {
 public:
-	/** Active timer event for animating the image sequence */
-	EActiveTimerReturnType AnimatingImageSequence(double InCurrentTime, float InDeltaTime);
+
+	// SWidgetOverrides
+	virtual int32 OnPaint(const FPaintArgs& Args, const FGeometry& AllottedGeometry, const FSlateRect& MyCullingRect, FSlateWindowElementList& OutDrawElements, int32 LayerId, const FWidgetStyle& InWidgetStyle, bool bParentEnabled) const override;
 
 	/** Gets the combined value of the animation properties as a single SThrobber::EAnimation value. */
 	SThrobber::EAnimation GetThrobberAnimation(FThrobberSettings ThrobberSettings) const;
@@ -35,12 +36,18 @@ protected:
 	TSharedRef<SWidget> LoadingIcon = SNullWidget::NullWidget;
 	// Image slate brush list
 	TArray<TSharedPtr<FDeferredCleanupSlateBrush>> CleanupBrushList;	
-	// Current image sequence index
-	int32 ImageIndex = 0;
+
 	// Play image sequence in reverse
 	bool bPlayReverse = false;
 
-	bool bIsActiveTimerRegistered = false;
+	// Current image sequence index
+	mutable int32 ImageIndex = 0;
+
+	// Current total delta time
+	mutable float TotalDeltaTime = 0.0f;
+
+	//Time in second to update the images, the smaller value the faster of the animation. A zero value will update the images every frame.
+	float Interval = 0.05f;	
 	
 	// Getter for text visibility
 	EVisibility GetLoadingWidgetVisibility() const;
