@@ -394,7 +394,11 @@ Congratulation! We have finished the tutorial. You should try other layouts and 
 ![cions-of-vega](https://user-images.githubusercontent.com/1840964/120698381-2d300080-c4d9-11eb-96bd-9c0fe71f6813.jpg)
 
 ---
+- [BrightSeeker](https://store.steampowered.com/app/1491950/BrightSeeker/)
 
+![BrightSeeker_Scr_(4)](https://user-images.githubusercontent.com/1840964/133012031-f5e91478-5e32-470d-9c8c-df6f13fcf630.png)
+
+---
 If you're using Async Loading Screen plugin in your game and would like to showcase here, shoot me an email about your game's info, including screenshots(gif/png/jpeg/video) of your in-game loading screen.
 
 # Donate
