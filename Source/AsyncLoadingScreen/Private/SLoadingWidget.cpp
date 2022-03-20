@@ -117,8 +117,8 @@ void SLoadingWidget::ConstructLoadingIcon(const FLoadingWidgetSettings& Settings
 
 	// Hide loading widget when level loading is done if bHideLoadingWidgetWhenCompletes is true 
 	if (Settings.bHideLoadingWidgetWhenCompletes)
-	{
-		Visibility = TAttribute<EVisibility>::Create(TAttribute<EVisibility>::FGetter::CreateRaw(this, &SLoadingWidget::GetLoadingWidgetVisibility));
+	{		
+		SetVisibility(TAttribute<EVisibility>::Create(TAttribute<EVisibility>::FGetter::CreateRaw(this, &SLoadingWidget::GetLoadingWidgetVisibility)));
 	}	
 }
 
