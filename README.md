@@ -98,7 +98,7 @@ Example:
 
 # Requirements
 
-Async Loading Screen plug-in requires Visual Studio and a C++ code project. If your project is blueprint based then you will need to convert it to C++ project otherwise you cannot package your game with code plug-in.
+~~Async Loading Screen plug-in requires Visual Studio and a C++ code project. If your project is blueprint based then you will need to convert it to C++ project otherwise you cannot package your game with code plug-in.~~ It doesn't require c++ project anymore.
 
 # Installation
 
