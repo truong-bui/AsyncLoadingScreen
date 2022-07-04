@@ -19,7 +19,7 @@ float SLoadingScreenLayout::PointSizeToSlateUnits(float PointSize)
 
 float SLoadingScreenLayout::GetDPIScale() const
 {
-	const FVector2D& DrawSize = GetTickSpaceGeometry().ToPaintGeometry().GetLocalSize();
+	const FVector2D DrawSize = GetTickSpaceGeometry().ToPaintGeometry().GetLocalSize();
 	const FIntPoint Size((int32)DrawSize.X, (int32)DrawSize.Y);
 	
 	return GetDefault<UUserInterfaceSettings>()->GetDPIScaleBasedOnSize(Size);
