@@ -378,6 +378,11 @@ Congratulation! We have finished the tutorial. You should try other layouts and 
 
 # Showcases
 
+- [Witchtastic](https://store.steampowered.com/app/1080010/Witchtastic/)
+
+![witchtastic](https://user-images.githubusercontent.com/1840964/198943299-529b153a-322d-4431-bec9-9046147ced43.jpg)
+
+---
 - [Cursed Spire](https://www.youtube.com/watch?v=ZZlxmdRDRMI)
 
 ![cursed-spire-async-loading-screen](https://user-images.githubusercontent.com/1840964/93096502-ac24a500-f6ce-11ea-9f6a-613c7a6bb926.gif)
