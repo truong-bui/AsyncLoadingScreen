@@ -30,12 +30,12 @@ void FAsyncLoadingScreenModule::StartupModule()
 				
 		if (IsMoviePlayerEnabled())
 		{
-			GetMoviePlayer()->OnPrepareLoadingScreen().AddRaw(this, &FAsyncLoadingScreenModule::PreSetupLoadingScreen);
+			GetMoviePlayer()->OnPrepareLoadingScreen().AddRaw(this, &FAsyncLoadingScreenModule::PreSetupLoadingScreen);				
 		}
-
+		
 		// Prepare the startup screen, the PreSetupLoadingScreen callback won't be called
 		// if we've already explicitly setup the loading screen
-		SetupLoadingScreen(Settings->StartupLoadingScreen);
+		SetupLoadingScreen(Settings->StartupLoadingScreen);		
 	}	
 }
 
@@ -43,7 +43,6 @@ void FAsyncLoadingScreenModule::ShutdownModule()
 {
 	// This function may be called during shutdown to clean up your module.  For modules that support dynamic reloading,
 	// we call this function before unloading the module.
-
 	if (!IsRunningDedicatedServer())
 	{
 		// TODO: Unregister later
@@ -57,9 +56,13 @@ bool FAsyncLoadingScreenModule::IsGameModule() const
 }
 
 void FAsyncLoadingScreenModule::PreSetupLoadingScreen()
-{
-	const ULoadingScreenSettings* Settings = GetDefault<ULoadingScreenSettings>();
-	SetupLoadingScreen(Settings->DefaultLoadingScreen);
+{	
+	const bool bIsEnableLoadingScreen = UAsyncLoadingScreenLibrary::GetIsEnableLoadingScreen();
+	if (bIsEnableLoadingScreen)
+	{
+		const ULoadingScreenSettings* Settings = GetDefault<ULoadingScreenSettings>();
+		SetupLoadingScreen(Settings->DefaultLoadingScreen);
+	}	
 }
 
 void FAsyncLoadingScreenModule::SetupLoadingScreen(const FALoadingScreenSettings& LoadingScreenSettings)

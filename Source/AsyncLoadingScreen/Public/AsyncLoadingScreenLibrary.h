@@ -22,7 +22,8 @@ class ASYNCLOADINGSCREEN_API UAsyncLoadingScreenLibrary : public UBlueprintFunct
 private:
 	static int32 DisplayBackgroundIndex;
 	static int32 DisplayTipTextIndex;
-	static int32 DisplayMovieIndex;
+	static int32 DisplayMovieIndex;	
+	static bool  bShowLoadingScreen;
 public:
 	
 	/**
@@ -49,6 +50,22 @@ public:
 	UFUNCTION(BlueprintCallable, Category = "Async Loading Screen")
 	static void SetDisplayMovieIndex(int32 MovieIndex);
 
+
+	/**
+	 * Set enable/disable the loading screen for next level
+	 *
+	 * @param bIsEnableLoadingScreen Should we enable the loading screen for next level?
+	 **/
+	UFUNCTION(BlueprintCallable, Category = "Async Loading Screen")
+	static void SetEnableLoadingScreen(bool bIsEnableLoadingScreen);
+
+
+	/**
+	 * Get enable/disable the loading screen for next level
+	 *
+	 **/
+	UFUNCTION(BlueprintCallable, Category = "Async Loading Screen")
+	static inline bool GetIsEnableLoadingScreen() { return bShowLoadingScreen; }
 
 	/**
 	 * Stop the loading screen. To use this function, you must enable the "bAllowEngineTick" option.
