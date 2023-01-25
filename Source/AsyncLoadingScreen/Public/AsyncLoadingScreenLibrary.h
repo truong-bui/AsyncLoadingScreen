@@ -52,7 +52,7 @@ public:
 
 
 	/**
-	 * Set enable/disable the loading screen for next level
+	 * Set enable/disable the loading screen for next levels
 	 *
 	 * @param bIsEnableLoadingScreen Should we enable the loading screen for next level?
 	 **/
@@ -61,10 +61,10 @@ public:
 
 
 	/**
-	 * Get enable/disable the loading screen for next level
+	 * Get enable/disable the loading screen for next levels
 	 *
 	 **/
-	UFUNCTION(BlueprintCallable, Category = "Async Loading Screen")
+	UFUNCTION(BlueprintPure, Category = "Async Loading Screen")
 	static inline bool GetIsEnableLoadingScreen() { return bShowLoadingScreen; }
 
 	/**
