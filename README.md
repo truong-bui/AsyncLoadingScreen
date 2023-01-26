@@ -70,6 +70,7 @@ MoviePlayer is registered to PreLoadMap and PostLoadMapWithWorld delegates so it
 ### Version 1.4.0 (25/1/2023)
 - Fixed unintialized errors
 - Add Blueprint function "SetEnableLoadingScreen" to show/hide Loading Screen. Call this function before call the "OpenLevel" node
+
 ![ALS-ShowHideLoadingScreen](https://user-images.githubusercontent.com/1840964/214602739-ebcdd994-08a4-4837-96b5-c5596efbdcb1.png)
 
 ### Version 1.3.0 (29/08.2021)
