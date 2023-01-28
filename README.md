@@ -385,6 +385,11 @@ Congratulation! We have finished the tutorial. You should try other layouts and 
 
 # Showcases
 
+- [Logic - Keypad](https://store.steampowered.com/app/2265160/Logic__Keypad/)
+
+![logic-keypad](https://user-images.githubusercontent.com/1840964/215274878-c6dd3aa1-6b9c-4f4a-af41-de083943c8ef.jpg)
+
+---
 - [Witchtastic](https://store.steampowered.com/app/1080010/Witchtastic/)
 
 ![witchtastic](https://user-images.githubusercontent.com/1840964/198943299-529b153a-322d-4431-bec9-9046147ced43.jpg)
