@@ -385,6 +385,11 @@ Congratulation! We have finished the tutorial. You should try other layouts and 
 
 # Showcases
 
+- [Elven Warmaiden](https://store.steampowered.com/app/1878000/Elven_Warmaiden/)
+
+![Elven Warmaiden](https://cdn.akamai.steamstatic.com/steam/apps/1878000/header.jpg?t=1644526061)
+
+---
 - [Logic - Keypad](https://store.steampowered.com/app/2265160/Logic__Keypad/)
 
 ![logic-keypad](https://user-images.githubusercontent.com/1840964/215274878-c6dd3aa1-6b9c-4f4a-af41-de083943c8ef.jpg)
