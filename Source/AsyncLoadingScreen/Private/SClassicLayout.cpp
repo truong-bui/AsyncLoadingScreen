@@ -11,6 +11,7 @@
 #include "Widgets/Layout/SSafeZone.h"
 #include "Widgets/Layout/SDPIScaler.h"
 #include "Widgets/Layout/SSpacer.h"
+#include "Widgets/SBoxPanel.h"
 #include "SHorizontalLoadingWidget.h"
 #include "SVerticalLoadingWidget.h"
 #include "SBackgroundWidget.h"

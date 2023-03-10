@@ -16,6 +16,7 @@
 #include "SBackgroundWidget.h"
 #include "STipWidget.h"
 #include "SLoadingCompleteText.h"
+#include "Widgets/SBoxPanel.h"
 
 void SSidebarLayout::Construct(const FArguments& InArgs, const FALoadingScreenSettings& Settings, const FSidebarLayoutSettings& LayoutSettings)
 {
