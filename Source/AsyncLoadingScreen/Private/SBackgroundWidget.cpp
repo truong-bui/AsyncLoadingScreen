@@ -13,6 +13,7 @@
 #include "Widgets/Layout/SBorder.h"
 #include "Engine/Texture2D.h"
 #include "AsyncLoadingScreenLibrary.h"
+#include "AsyncLoadingScreen.h"
 
 void SBackgroundWidget::Construct(const FArguments& InArgs, const FBackgroundSettings& Settings)
 {
@@ -27,11 +28,26 @@ void SBackgroundWidget::Construct(const FArguments& InArgs, const FBackgroundSet
 			{
 				ImageIndex = UAsyncLoadingScreenLibrary::GetDisplayBackgroundIndex();
 			}
-		}
-
+		}		
+		
+		// Load background from settings
+		UTexture2D* LoadingImage = nullptr;
 		const FSoftObjectPath& ImageAsset = Settings.Images[ImageIndex];
 		UObject* ImageObject = ImageAsset.TryLoad();
-		if (UTexture2D* LoadingImage = Cast<UTexture2D>(ImageObject))
+		LoadingImage = Cast<UTexture2D>(ImageObject);
+
+		// If IsPreloadBackgroundImagesEnabled is enabled, load from images array
+		FAsyncLoadingScreenModule& LoadingScreenModule = FAsyncLoadingScreenModule::Get();
+		if (LoadingScreenModule.IsPreloadBackgroundImagesEnabled())
+		{
+			TArray<UTexture2D*> BackgroundImages = LoadingScreenModule.GetBackgroundImages();
+			if (!BackgroundImages.IsEmpty() && BackgroundImages.IsValidIndex(ImageIndex))
+			{
+				LoadingImage = BackgroundImages[ImageIndex];
+			}
+		}		
+		
+		if (LoadingImage)
 		{
 			ImageBrush = FDeferredCleanupSlateBrush::CreateBrush(LoadingImage);
 			ChildSlot

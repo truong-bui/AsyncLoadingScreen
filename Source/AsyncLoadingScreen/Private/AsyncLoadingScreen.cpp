@@ -16,14 +16,13 @@
 #include "SDualSidebarLayout.h"
 #include "Framework/Application/SlateApplication.h"
 #include "AsyncLoadingScreenLibrary.h"
+#include "Engine/Texture2D.h"
 
 #define LOCTEXT_NAMESPACE "FAsyncLoadingScreenModule"
 
 void FAsyncLoadingScreenModule::StartupModule()
 {
 	// This code will execute after your module is loaded into memory; the exact timing is specified in the .uplugin file per-module
-
-
 	if (!IsRunningDedicatedServer() && FSlateApplication::IsInitialized())
 	{
 		const ULoadingScreenSettings* Settings = GetDefault<ULoadingScreenSettings>();
@@ -31,11 +30,18 @@ void FAsyncLoadingScreenModule::StartupModule()
 		if (IsMoviePlayerEnabled())
 		{
 			GetMoviePlayer()->OnPrepareLoadingScreen().AddRaw(this, &FAsyncLoadingScreenModule::PreSetupLoadingScreen);				
-		}
+		}		
 		
+		// If PreloadBackgroundImages option is check, load all background images into memory
+		if (Settings->bPreloadBackgroundImages)
+		{
+			LoadBackgroundImages();
+		}
+
 		// Prepare the startup screen, the PreSetupLoadingScreen callback won't be called
 		// if we've already explicitly setup the loading screen
-		SetupLoadingScreen(Settings->StartupLoadingScreen);		
+		bIsStartupLoadingScreen = true;
+		SetupLoadingScreen(Settings->StartupLoadingScreen);
 	}	
 }
 
@@ -55,12 +61,19 @@ bool FAsyncLoadingScreenModule::IsGameModule() const
 	return true;
 }
 
+TArray<UTexture2D*> FAsyncLoadingScreenModule::GetBackgroundImages()
+{
+	return bIsStartupLoadingScreen ? StartupBackgroundImages : DefaultBackgroundImages;
+}
+
 void FAsyncLoadingScreenModule::PreSetupLoadingScreen()
 {	
+	UE_LOG(LogTemp, Warning, TEXT("PreSetupLoadingScreen"));
 	const bool bIsEnableLoadingScreen = UAsyncLoadingScreenLibrary::GetIsEnableLoadingScreen();
 	if (bIsEnableLoadingScreen)
 	{
 		const ULoadingScreenSettings* Settings = GetDefault<ULoadingScreenSettings>();
+		bIsStartupLoadingScreen = false;
 		SetupLoadingScreen(Settings->DefaultLoadingScreen);
 	}	
 }
@@ -142,6 +155,45 @@ void FAsyncLoadingScreenModule::ShuffleMovies(TArray<FString>& MoviesList)
 			}
 		}
 	}
+}
+
+void FAsyncLoadingScreenModule::LoadBackgroundImages()
+{
+	// Empty all background images array
+	RemoveAllBackgroundImages();
+
+	const ULoadingScreenSettings* Settings = GetDefault<ULoadingScreenSettings>();
+	
+	// Preload startup background images
+	for (auto& Image : Settings->StartupLoadingScreen.Background.Images)
+	{
+		UTexture2D* LoadedImage = Cast<UTexture2D>(Image.TryLoad());
+		if (LoadedImage)
+		{
+			StartupBackgroundImages.Add(LoadedImage);
+		}
+	}
+
+	// Preload default background images
+	for (auto& Image : Settings->DefaultLoadingScreen.Background.Images)
+	{
+		UTexture2D* LoadedImage = Cast<UTexture2D> (Image.TryLoad());
+		if (LoadedImage)
+		{
+			DefaultBackgroundImages.Add(LoadedImage);
+		}		
+	}
+}
+
+void FAsyncLoadingScreenModule::RemoveAllBackgroundImages()
+{
+	StartupBackgroundImages.Empty();
+	DefaultBackgroundImages.Empty();
+}
+
+bool FAsyncLoadingScreenModule::IsPreloadBackgroundImagesEnabled()
+{	
+	return GetDefault<ULoadingScreenSettings>()->bPreloadBackgroundImages;
 }
 
 #undef LOCTEXT_NAMESPACE

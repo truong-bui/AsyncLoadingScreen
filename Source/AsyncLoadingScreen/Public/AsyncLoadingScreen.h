@@ -56,6 +56,28 @@ public:
 		return FModuleManager::Get().IsModuleLoaded("AsyncLoadingScreen");
 	}
 
+	TArray<UTexture2D*> GetBackgroundImages();
+
+	/**
+	 * Check if "bPreloadBackgroundImages" option is enabled
+	 */
+	bool IsPreloadBackgroundImagesEnabled();
+
+	/**
+	 * Is showing Startup Loading Screen?
+	 */
+	bool IsStartupLoadingScreen() { return bIsStartupLoadingScreen; }
+
+	/**
+	 * Load all background images from settings into array
+	 */
+	void LoadBackgroundImages();
+
+	/**
+	 * Remove all background images from array
+	 */
+	void RemoveAllBackgroundImages();
+
 private:
 	/**
 	 * Loading screen callback, it won't be called if we've already explicitly setup the loading screen
@@ -71,4 +93,14 @@ private:
 	 * Shuffle the movies list
 	 */
 	void ShuffleMovies(TArray<FString>& MoviesList);
+private:
+	// Startup background images array
+	UPROPERTY()
+	TArray<class UTexture2D*> StartupBackgroundImages;
+	
+	// Default background images array
+	UPROPERTY()
+	TArray<class UTexture2D*> DefaultBackgroundImages;
+
+	bool bIsStartupLoadingScreen = false;
 };
