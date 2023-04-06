@@ -67,6 +67,13 @@ MoviePlayer is registered to PreLoadMap and PostLoadMapWithWorld delegates so it
 
 # Changelog
 
+### Version 1.5.0 (6/4/2023)
+- Add "PreloadBackgroundImages" option
+- Add Blueprint functions "PreloadBackgroundImages" and "RemovePreloadedBackgroundImages" to load and remove all the background images.
+
+![image](https://user-images.githubusercontent.com/1840964/230429985-6d353486-0389-448c-8e37-d4f9dd3505ae.png)
+![image](https://user-images.githubusercontent.com/1840964/230430019-fb5ab524-7f59-4201-b263-00cbc17672f0.png)
+
 ### Version 1.4.0 (25/1/2023)
 - Fixed unintialized errors
 - Add Blueprint function "SetEnableLoadingScreen" to show/hide Loading Screen. Call this function before call the "OpenLevel" node
