@@ -46,7 +46,10 @@ void UAsyncLoadingScreenLibrary::PreloadBackgroundImages()
 	if (FAsyncLoadingScreenModule::IsAvailable())
 	{
 		FAsyncLoadingScreenModule& LoadingScreenModule = FAsyncLoadingScreenModule::Get();
-		LoadingScreenModule.LoadBackgroundImages();
+		if (LoadingScreenModule.IsPreloadBackgroundImagesEnabled())
+		{
+			LoadingScreenModule.LoadBackgroundImages();
+		}		
 	}
 }
 
