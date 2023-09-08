@@ -383,7 +383,8 @@ struct ASYNCLOADINGSCREEN_API FALoadingScreenSettings
 	 * If true, movie playback continue until Stop is called.
 	 * 
 	 * NOTE: If set "Minimum Loading Screen Display Time" = -1, it will allow players to press any key to stop the loading screen.
-	 * If "Minimum Loading Screen Display Time" >= 0, you will need to call "StopLoadingScreen" in BeginPlay event to stop the loading screen ("bAllowEngineTick" must be true)
+	 * If "Minimum Loading Screen Display Time" >= 0, you have to call "StopLoadingScreen" in the BeginPlay event 
+	 * of your GameInstance, GameMode, or PlayerController blueprint to stop the loading screen ("bAllowEngineTick" must be true)
 	 **/
 	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "Movies Settings")
 	bool bWaitForManualStop = false;
