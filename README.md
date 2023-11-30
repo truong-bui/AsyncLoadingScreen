@@ -263,11 +263,11 @@ In this tutorial, I will use a blank C++ project with UE version 4.25. But you c
 
 ![tutorial-09](https://user-images.githubusercontent.com/1840964/92518328-5cfbf180-f242-11ea-9b8b-e7452dff4454.png)
 
-- Note that to see the plugin is actually working, you need to play as Standalone Game or Launch button. Play in Editor will not work due to different level managing of Play in Editor and packaged game:
+### **Note that to see the plugin is actually working, you need to play as Standalone Game or Quick Launch. Play in Editor (PIE) will not work due to different level managing of Play in Editor and packaged game:**
 
-![tutorial-10](https://user-images.githubusercontent.com/1840964/92521633-c3cfd980-f247-11ea-984b-98f17d604387.png)
+![image](https://github.com/truong-bui/AsyncLoadingScreen/assets/1840964/ab1f4cd1-a1f5-4476-8a29-0a30da32943e)
 
-If you play Standalone Game or Launch the game you will see a black screen with a white panel shows up very quickly. We'll need a little setting up to make the loading screen looks better.
+If you play Standalone Game or Launch the game, you will see a black screen with a white panel showing up very quickly. We'll need a little setting up to make the loading screen look better.
 
 ---
 
