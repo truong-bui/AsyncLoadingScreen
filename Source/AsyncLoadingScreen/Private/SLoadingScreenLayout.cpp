@@ -20,16 +20,10 @@ float SLoadingScreenLayout::PointSizeToSlateUnits(float PointSize)
 float SLoadingScreenLayout::GetDPIScale() const
 {
 	FVector2D ViewportSize;
-	GEngine->GameViewport->GetViewportSize(ViewportSize);
-
-	if (ViewportSize.Equals(FVector2D::ZeroVector))
-	{
-		return 1.0f;
-	}
-
+	GEngine->GameViewport->GetViewportSize(ViewportSize);	
 	int32 X = FGenericPlatformMath::FloorToInt(ViewportSize.X);
 	int32 Y = FGenericPlatformMath::FloorToInt(ViewportSize.Y);
 	const FIntPoint Size(X, Y);
-	return GetDefault<UUserInterfaceSettings>()->GetDPIScaleBasedOnSize(Size);
+	return FMath::Clamp(GetDefault<UUserInterfaceSettings>()->GetDPIScaleBasedOnSize(Size), 0.1f, 1.0f);
 }
 
