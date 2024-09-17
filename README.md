@@ -392,6 +392,12 @@ Congratulation! We have finished the tutorial. You should try other layouts and 
 
 # Showcases
 
+- [Nova Assault](https://etereagames.com/novaassault/)
+
+![Nova Assault](https://github.com/user-attachments/assets/443bd26c-f015-45b8-8ea1-6bf4f25fdc32)
+
+---
+
 - [Colors:Zero](http://www.colors-zero.com/)
 
 ![Colors:Zero](https://user-images.githubusercontent.com/1840964/233838182-2c8cd8fa-dc49-41ed-b536-27a8650fe98a.jpg)
