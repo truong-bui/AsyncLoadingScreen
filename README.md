@@ -276,7 +276,7 @@ You can use your own assets instead but for this tutorial, I'll use Unreal Engin
 - [UE5 Wallpapers - Desktop](https://epicgames.ent.box.com/s/zuorr34ojf3010k71tiv2c79s266v12b/folder/112871747507)
 - [UE4 Startup Video Files](https://epicgames.ent.box.com/s/t94yqy3lxb3mlytmqf5znrr2pobus3fm)
 
-- Create a "Movies" folder in the "Content" folder and copy your movie files into the "Content/Movies" folder (don't import movies into the project just copy the original movie files):
+- Create a "Movies" folder in the "Content" folder and copy your movie files into the "Content/Movies" folder (must use this exact folder location, and don't import movies into the project just copy the original movie files):
 
 ![tutorial-11](https://user-images.githubusercontent.com/1840964/92527405-24afdf80-f251-11ea-97f0-ebe893e27986.png)
 
@@ -291,7 +291,7 @@ You can use your own assets instead but for this tutorial, I'll use Unreal Engin
 Now go to "Game/Async Loading Screen" setting in the Project Settings and open "Startup Loading Screen" section. This Startup Loading Screen only shows once when the player first opens the game so usually, you don't want to show a loading screen here. Instead, you'll want to show a UE4 logo intro movie, your studio logo movie, your sponsor 1 logo movie, your sponsor 2 logo movie, or some weird shit movies, depending on you.
 
 - Uncheck "Auto Complete when Loading Completes" option so we can see the movies play till end
-- Add your movie path without extension in "Movie Paths" array
+- Add your movie name without extension in "Movie Paths" array, just the name, no other path info
 
 Here is the Startup Loading Screen setting:
 
