@@ -67,8 +67,7 @@ TArray<UTexture2D*> FAsyncLoadingScreenModule::GetBackgroundImages()
 }
 
 void FAsyncLoadingScreenModule::PreSetupLoadingScreen()
-{	
-	UE_LOG(LogTemp, Warning, TEXT("PreSetupLoadingScreen"));
+{
 	const bool bIsEnableLoadingScreen = UAsyncLoadingScreenLibrary::GetIsEnableLoadingScreen();
 	if (bIsEnableLoadingScreen)
 	{
