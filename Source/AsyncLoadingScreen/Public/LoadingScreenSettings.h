@@ -169,7 +169,7 @@ struct FImageSequenceSettings
 
 	/** An array of images for animating the loading icon.*/
 	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "Loading Widget Setting", meta = (AllowedClasses = "/Script/Engine.Texture2D"))
-	TArray<UTexture2D*> Images;
+	TArray<TObjectPtr<UTexture2D>> Images;
 
 	/** Scale of the images.*/
 	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "Loading Widget Setting")
