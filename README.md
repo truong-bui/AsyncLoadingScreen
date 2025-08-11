@@ -11,6 +11,7 @@
 - [Features](#features)
 - [Changelog](#changelog)
 - [Requirements](#requirements)
+- [Note](#NOTE)
 - [Installation](#installation)
     - [Clone from Github](#clone-from-github)
     - [Download from Marketplace](#download-from-marketplace)
@@ -75,7 +76,7 @@ MoviePlayer is registered to PreLoadMap and PostLoadMapWithWorld delegates so it
 ![image](https://user-images.githubusercontent.com/1840964/230430019-fb5ab524-7f59-4201-b263-00cbc17672f0.png)
 
 ### Version 1.4.0 (25/1/2023)
-- Fixed unintialized errors
+- Fixed uninitialized errors
 - Add Blueprint function "SetEnableLoadingScreen" to show/hide Loading Screen. Call this function before call the "OpenLevel" node
 
 ![ALS-ShowHideLoadingScreen](https://user-images.githubusercontent.com/1840964/214602739-ebcdd994-08a4-4837-96b5-c5596efbdcb1.png)
@@ -113,6 +114,11 @@ Example:
 # Requirements
 
 ~~Async Loading Screen plug-in requires Visual Studio and a C++ code project. If your project is blueprint based then you will need to convert it to C++ project otherwise you cannot package your game with code plug-in.~~ It doesn't require c++ project anymore.
+
+# NOTE
+- Texture Group should be set to UI and Compression Settings to UserInterface2D
+  <img width="616" height="377" alt="image" src="https://github.com/user-attachments/assets/3f3e90e5-6f35-4390-99b2-685446d9545c" />
+- Don't package the Movies folder into the .Pak file because MoviePlayer needs to look for the startup movies folder at "Contents/Movies" path
 
 # Installation
 
