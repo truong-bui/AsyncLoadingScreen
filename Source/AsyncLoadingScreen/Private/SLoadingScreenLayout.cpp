@@ -9,7 +9,8 @@
 #include "SLoadingScreenLayout.h"
 #include "Engine/UserInterfaceSettings.h"
 #include "Engine/Engine.h"
-#include "Engine/GameViewportClient.h"
+
+//DEFINE_LOG_CATEGORY(LogLoadingScreen);
 
 float SLoadingScreenLayout::PointSizeToSlateUnits(float PointSize)
 {
@@ -21,27 +22,31 @@ float SLoadingScreenLayout::PointSizeToSlateUnits(float PointSize)
 
 float SLoadingScreenLayout::GetDPIScale() const
 {
-	FIntPoint Size;
 	if (GEngine && GEngine->GameViewport)
 	{
 		FVector2D ViewportSize;
 		GEngine->GameViewport->GetViewportSize(ViewportSize);
 		int32 X = FGenericPlatformMath::FloorToInt(ViewportSize.X);
 		int32 Y = FGenericPlatformMath::FloorToInt(ViewportSize.Y);
-		Size = FIntPoint(X, Y);	
+
+		if (X != 0 && Y != 0)
+		{
+			_cachedViewportSize = FIntPoint(X, Y);
+		}		
 	}
 	else 
 	{
 		const FVector2D DrawSize = GetTickSpaceGeometry().ToPaintGeometry().GetLocalSize();
-		if (DrawSize.Equals(FVector2D::ZeroVector))
+		if (!DrawSize.Equals(FVector2D::ZeroVector))
 		{
-			return 1.0f;
-		}		
-		int32 X = FGenericPlatformMath::FloorToInt(DrawSize.X);
-		int32 Y = FGenericPlatformMath::FloorToInt(DrawSize.Y);
-		Size = FIntPoint(X, Y);		
+			int32 X = FGenericPlatformMath::FloorToInt(DrawSize.X);
+			int32 Y = FGenericPlatformMath::FloorToInt(DrawSize.Y);
+			_cachedViewportSize = FIntPoint(X, Y);
+		}						
 	}
-
-	return FMath::Clamp(GetDefault<UUserInterfaceSettings>()->GetDPIScaleBasedOnSize(Size), 0.1f, 1.0f);
+	/*auto DPIOnSize = GetDefault<UUserInterfaceSettings>()->GetDPIScaleBasedOnSize(_cachedViewportSize);
+	auto DPIScale = FMath::Clamp(DPIOnSize, 0.1f, 1.0f);
+	UE_LOG(LogLoadingScreen, Log, TEXT("DPIOnSize: %f, Size: %s, DPIScale: %f"), DPIOnSize, *_cachedViewportSize.ToString(), DPIScale);*/
+	return FMath::Clamp(GetDefault<UUserInterfaceSettings>()->GetDPIScaleBasedOnSize(_cachedViewportSize), 0.1f, 1.0f);
 }
 
