@@ -62,6 +62,9 @@ void SLoadingScreenLayout::CalculateViewportSize() const
 	}
 	// If cannot get size from geometry, try getting from display metrics (desktop resolution)
 	// Note that it may be working only on fullscreen mode
+	// Commented out for now as it may cause issues because of this error:
+	// Ensure condition failed: GetShadowIndex() == 0  [Sync\Engine\Source\Runtime\Core\Public\HAL\IConsoleManager.h] [Line: 1699]
+	/*
 	else
 	{		
 		FDisplayMetrics OutDisplayMetrics;
@@ -71,5 +74,6 @@ void SLoadingScreenLayout::CalculateViewportSize() const
 			_cachedViewportSize = FIntPoint(OutDisplayMetrics.PrimaryDisplayWidth, OutDisplayMetrics.PrimaryDisplayHeight);
 		}
 	}	
+	*/
 }
 
