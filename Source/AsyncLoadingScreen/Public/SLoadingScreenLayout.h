@@ -27,7 +27,8 @@ class SLoadingScreenLayout : public SCompoundWidget
 public:	
 	static float PointSizeToSlateUnits(float PointSize);
 protected:
-	float GetDPIScale() const;	
+	float GetDPIScale() const;
+	void CalculateViewportSize() const;
 private:
 	mutable FIntPoint _cachedViewportSize;
 };
