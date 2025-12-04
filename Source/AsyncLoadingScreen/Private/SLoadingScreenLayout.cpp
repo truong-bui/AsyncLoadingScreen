@@ -63,11 +63,13 @@ void SLoadingScreenLayout::CalculateViewportSize() const
 	// If cannot get size from geometry, try getting from display metrics (desktop resolution)
 	// Note that it may be working only on fullscreen mode
 	else
-	{
-		
+	{		
 		FDisplayMetrics OutDisplayMetrics;
 		FDisplayMetrics::RebuildDisplayMetrics(OutDisplayMetrics);
-		_cachedViewportSize = FIntPoint(OutDisplayMetrics.PrimaryDisplayWidth, OutDisplayMetrics.PrimaryDisplayHeight);
+		if(OutDisplayMetrics.PrimaryDisplayWidth != 0 && OutDisplayMetrics.PrimaryDisplayHeight != 0)
+		{
+			_cachedViewportSize = FIntPoint(OutDisplayMetrics.PrimaryDisplayWidth, OutDisplayMetrics.PrimaryDisplayHeight);
+		}
 	}	
 }
 
