@@ -306,6 +306,10 @@ struct ASYNCLOADINGSCREEN_API FTipSettings
 	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "Tip Settings", meta = (MultiLine = true))
 	TArray<FText> TipText;
 
+	// Interval time (in seconds) to randomly update the tip text, a value less than or equal to 0 will not update the tip text.
+	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "Tip Settings")	
+	float UpdateInterval = 0.0f;
+
 	// Tip text appearance settings
 	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "Tip Settings")
 	FTextAppearance Appearance;
