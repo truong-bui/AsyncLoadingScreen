@@ -676,32 +676,6 @@ class ASYNCLOADINGSCREEN_API ULoadingScreenSettings : public UDeveloperSettings
 public:
 
 	ULoadingScreenSettings(const FObjectInitializer& ObjectInitializer = FObjectInitializer::Get());
-	
-	/**
-	 * If true, load all background images at the start of the game.
-	 * 
-	 * This is a workaround for the issue when the background image 
-	 * is loaded too late with the wrong image scaling. 
-	 * 
-	 * This issue only happens in the Standalone or Launch mode.
-	 * The packaged game should work fine.
-	 * 
-	 * If you don't encounter this issue when developing, don't enable 
-	 * this option, since it will keep the background images in the 
-	 * memory all the time, therefore consumes memory resources.
-	 * 
-	 * However, you can manually remove all the preloaded background
-	 * images by calling the Blueprint function 
-	 * "RemovePreloadedBackgroundImages"
-	 * 
-	 * You will need to re-load all background images by calling 
-	 * the Blueprint function "PreloadBackgroundImages"
-	 * 
-	 * Note: Call "PreloadBackgroundImages" before the "OpenLevel"
-	 * 
-	 */
-	UPROPERTY(Config, EditAnywhere, Category = "General")
-	bool bPreloadBackgroundImages = false;
 
 	/**
 	 * The startup loading screen when you first open the game. Setup any studio logo movies here.
