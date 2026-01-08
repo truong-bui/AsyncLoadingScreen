@@ -34,18 +34,7 @@ void SBackgroundWidget::Construct(const FArguments& InArgs, const FBackgroundSet
 		UTexture2D* LoadingImage = nullptr;
 		const FSoftObjectPath& ImageAsset = Settings.Images[ImageIndex];
 		UObject* ImageObject = ImageAsset.TryLoad();
-		LoadingImage = Cast<UTexture2D>(ImageObject);
-
-		// If IsPreloadBackgroundImagesEnabled is enabled, load from images array
-		FAsyncLoadingScreenModule& LoadingScreenModule = FAsyncLoadingScreenModule::Get();
-		if (LoadingScreenModule.IsPreloadBackgroundImagesEnabled())
-		{
-			TArray<UTexture2D*> BackgroundImages = LoadingScreenModule.GetBackgroundImages();
-			if (!BackgroundImages.IsEmpty() && BackgroundImages.IsValidIndex(ImageIndex))
-			{
-				LoadingImage = BackgroundImages[ImageIndex];
-			}
-		}		
+		LoadingImage = Cast<UTexture2D>(ImageObject);	
 		
 		if (LoadingImage)
 		{
