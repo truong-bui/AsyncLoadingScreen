@@ -198,6 +198,10 @@ struct ASYNCLOADINGSCREEN_API FBackgroundSettings
 	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "Background", meta = (AllowedClasses = "/Script/Engine.Texture2D"))
 	TArray<FSoftObjectPath> Images;
 
+	// Interval time (in seconds) to randomly update the background image, a value less than or equal to 0 will not update the background image.
+	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "Background")
+	float UpdateInterval = 0.0f;
+
 	// The scaling type to apply to images.
 	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "Background")
 	TEnumAsByte<EStretch::Type> ImageStretch = EStretch::ScaleToFit;
