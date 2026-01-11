@@ -198,6 +198,10 @@ struct ASYNCLOADINGSCREEN_API FBackgroundSettings
 	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "Background", meta = (AllowedClasses = "/Script/Engine.Texture2D"))
 	TArray<FSoftObjectPath> Images;
 
+	// Interval time (in seconds) to randomly update the background image, a value less than or equal to 0 will not update the background image.
+	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "Background")
+	float UpdateInterval = 0.0f;
+
 	// The scaling type to apply to images.
 	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "Background")
 	TEnumAsByte<EStretch::Type> ImageStretch = EStretch::ScaleToFit;
@@ -305,6 +309,10 @@ struct ASYNCLOADINGSCREEN_API FTipSettings
 	// The tip text randomly display in the loading screen.
 	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "Tip Settings", meta = (MultiLine = true))
 	TArray<FText> TipText;
+
+	// Interval time (in seconds) to randomly update the tip text, a value less than or equal to 0 will not update the tip text.
+	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "Tip Settings")	
+	float UpdateInterval = 0.0f;
 
 	// Tip text appearance settings
 	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "Tip Settings")
@@ -672,32 +680,6 @@ class ASYNCLOADINGSCREEN_API ULoadingScreenSettings : public UDeveloperSettings
 public:
 
 	ULoadingScreenSettings(const FObjectInitializer& ObjectInitializer = FObjectInitializer::Get());
-	
-	/**
-	 * If true, load all background images at the start of the game.
-	 * 
-	 * This is a workaround for the issue when the background image 
-	 * is loaded too late with the wrong image scaling. 
-	 * 
-	 * This issue only happens in the Standalone or Launch mode.
-	 * The packaged game should work fine.
-	 * 
-	 * If you don't encounter this issue when developing, don't enable 
-	 * this option, since it will keep the background images in the 
-	 * memory all the time, therefore consumes memory resources.
-	 * 
-	 * However, you can manually remove all the preloaded background
-	 * images by calling the Blueprint function 
-	 * "RemovePreloadedBackgroundImages"
-	 * 
-	 * You will need to re-load all background images by calling 
-	 * the Blueprint function "PreloadBackgroundImages"
-	 * 
-	 * Note: Call "PreloadBackgroundImages" before the "OpenLevel"
-	 * 
-	 */
-	UPROPERTY(Config, EditAnywhere, Category = "General")
-	bool bPreloadBackgroundImages = false;
 
 	/**
 	 * The startup loading screen when you first open the game. Setup any studio logo movies here.
