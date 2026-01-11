@@ -30,13 +30,7 @@ void FAsyncLoadingScreenModule::StartupModule()
 		if (IsMoviePlayerEnabled())
 		{
 			GetMoviePlayer()->OnPrepareLoadingScreen().AddRaw(this, &FAsyncLoadingScreenModule::PreSetupLoadingScreen);				
-		}		
-		
-		// If PreloadBackgroundImages option is check, load all background images into memory
-		if (Settings->bPreloadBackgroundImages)
-		{
-			LoadBackgroundImages();
-		}
+		}				
 
 		// Prepare the startup screen, the PreSetupLoadingScreen callback won't be called
 		// if we've already explicitly setup the loading screen
@@ -59,11 +53,6 @@ void FAsyncLoadingScreenModule::ShutdownModule()
 bool FAsyncLoadingScreenModule::IsGameModule() const
 {
 	return true;
-}
-
-TArray<UTexture2D*> FAsyncLoadingScreenModule::GetBackgroundImages()
-{
-	return bIsStartupLoadingScreen ? StartupBackgroundImages : DefaultBackgroundImages;
 }
 
 void FAsyncLoadingScreenModule::PreSetupLoadingScreen()
@@ -156,44 +145,6 @@ void FAsyncLoadingScreenModule::ShuffleMovies(TArray<FString>& MoviesList)
 	}
 }
 
-void FAsyncLoadingScreenModule::LoadBackgroundImages()
-{
-	// Empty all background images array
-	RemoveAllBackgroundImages();
-
-	const ULoadingScreenSettings* Settings = GetDefault<ULoadingScreenSettings>();
-	
-	// Preload startup background images
-	for (auto& Image : Settings->StartupLoadingScreen.Background.Images)
-	{
-		UTexture2D* LoadedImage = Cast<UTexture2D>(Image.TryLoad());
-		if (LoadedImage)
-		{
-			StartupBackgroundImages.Add(LoadedImage);
-		}
-	}
-
-	// Preload default background images
-	for (auto& Image : Settings->DefaultLoadingScreen.Background.Images)
-	{
-		UTexture2D* LoadedImage = Cast<UTexture2D> (Image.TryLoad());
-		if (LoadedImage)
-		{
-			DefaultBackgroundImages.Add(LoadedImage);
-		}		
-	}
-}
-
-void FAsyncLoadingScreenModule::RemoveAllBackgroundImages()
-{
-	StartupBackgroundImages.Empty();
-	DefaultBackgroundImages.Empty();
-}
-
-bool FAsyncLoadingScreenModule::IsPreloadBackgroundImagesEnabled()
-{	
-	return GetDefault<ULoadingScreenSettings>()->bPreloadBackgroundImages;
-}
 
 #undef LOCTEXT_NAMESPACE
 	
