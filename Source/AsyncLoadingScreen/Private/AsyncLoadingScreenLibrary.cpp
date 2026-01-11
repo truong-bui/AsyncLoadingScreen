@@ -41,24 +41,3 @@ void UAsyncLoadingScreenLibrary::StopLoadingScreen()
 	GetMoviePlayer()->StopMovie();
 }
 
-void UAsyncLoadingScreenLibrary::PreloadBackgroundImages()
-{
-	if (FAsyncLoadingScreenModule::IsAvailable())
-	{
-		FAsyncLoadingScreenModule& LoadingScreenModule = FAsyncLoadingScreenModule::Get();
-		if (LoadingScreenModule.IsPreloadBackgroundImagesEnabled())
-		{
-			LoadingScreenModule.LoadBackgroundImages();
-		}		
-	}
-}
-
-void UAsyncLoadingScreenLibrary::RemovePreloadedBackgroundImages()
-{
-	if (FAsyncLoadingScreenModule::IsAvailable())
-	{
-		FAsyncLoadingScreenModule& LoadingScreenModule = FAsyncLoadingScreenModule::Get();
-		LoadingScreenModule.RemoveAllBackgroundImages();
-	}
-}
-
