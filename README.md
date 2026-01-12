@@ -74,6 +74,13 @@ MoviePlayer is registered to PreLoadMap and PostLoadMapWithWorld delegates so it
 
 # Changelog
 
+### Version 1.6.0 (12/01/2026)
+- Fix the loading icon's wrong size at the first frame of the startup loading screen
+- Add settings for changing the Background and TipText during the loading screen
+- Set **UpdateInterval** value larger than 0.0 in the Background and TipText settings to update them during the loading screen
+- You need to have more than one BG and Tiptext element. And they will be updated randomly.
+- Remove the PreloadBackgroundImages setting
+
 ### Version 1.5.0 (6/4/2023)
 - Add "PreloadBackgroundImages" option
 - Add Blueprint functions "PreloadBackgroundImages" and "RemovePreloadedBackgroundImages" to load and remove all the background images.
