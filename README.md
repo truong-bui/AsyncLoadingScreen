@@ -75,6 +75,8 @@ MoviePlayer is registered to PreLoadMap and PostLoadMapWithWorld delegates so it
 # Changelog
 
 ### Version 1.6.0 (12/01/2026)
+![image](https://github.com/user-attachments/assets/1f58c5f0-71e3-49d1-baae-9f4a4f9cf808)
+
 - Fix the loading icon's wrong size at the first frame of the startup loading screen
 - Add settings for changing the Background and TipText during the loading screen
 - Set **UpdateInterval** value larger than 0.0 in the Background and TipText settings to update them during the loading screen
