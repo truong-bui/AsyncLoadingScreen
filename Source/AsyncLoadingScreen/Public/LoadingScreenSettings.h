@@ -196,7 +196,7 @@ struct ASYNCLOADINGSCREEN_API FBackgroundSettings
 
 	// The images randomly display while in the loading screen on top of the movie 
 	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "Background", meta = (AllowedClasses = "/Script/Engine.Texture2D"))
-	TArray<FSoftObjectPath> Images;
+	TArray<TObjectPtr<UTexture2D>> Images;
 
 	// Interval time (in seconds) to randomly update the background image, a value less than or equal to 0 will not update the background image.
 	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "Background")
