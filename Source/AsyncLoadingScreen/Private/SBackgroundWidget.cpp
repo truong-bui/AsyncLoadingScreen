@@ -33,33 +33,26 @@ void SBackgroundWidget::Construct(const FArguments& InArgs, const FBackgroundSet
 			}
 		}		
 		
+		ImageBrush = FDeferredCleanupSlateBrush::CreateBrush(Images[ImageIndex]);
+
 		// Load background from settings
-		UTexture2D* LoadingImage = nullptr;
-		const FSoftObjectPath& ImageAsset = Images[ImageIndex];
-		UObject* ImageObject = ImageAsset.TryLoad();
-		LoadingImage = Cast<UTexture2D>(ImageObject);	
-		
-		if (LoadingImage)
-		{
-			ImageBrush = FDeferredCleanupSlateBrush::CreateBrush(LoadingImage);
-			ChildSlot
+		ChildSlot
 			[
 				SNew(SBorder)
-				.HAlign(HAlign_Fill)
-				.VAlign(VAlign_Fill)
-				.Padding(Settings.Padding)
-				.BorderBackgroundColor(Settings.BackgroundColor)
-				.BorderImage(FCoreStyle::Get().GetBrush("WhiteBrush"))
-				[
-					SNew(SScaleBox)
-					.Stretch(Settings.ImageStretch)
+					.HAlign(HAlign_Fill)
+					.VAlign(VAlign_Fill)
+					.Padding(Settings.Padding)
+					.BorderBackgroundColor(Settings.BackgroundColor)
+					.BorderImage(FCoreStyle::Get().GetBrush("WhiteBrush"))
 					[
-						BackgroundWidget = SNew(SImage)
-						.Image(ImageBrush.IsValid() ? ImageBrush->GetSlateBrush() : nullptr)						
+						SNew(SScaleBox)
+							.Stretch(Settings.ImageStretch)
+							[
+								BackgroundWidget = SNew(SImage)
+									.Image(ImageBrush.IsValid() ? ImageBrush->GetSlateBrush() : nullptr)
+							]
 					]
-				]
-			];			
-		}
+			];
 	}
 }
 
@@ -75,16 +68,8 @@ int32 SBackgroundWidget::OnPaint(const FPaintArgs& Args, const FGeometry& Allott
 			int32 ImageIndex = FMath::RandRange(0, Images.Num() - 1);
 
 			// Load background from settings
-			UTexture2D* LoadingImage = nullptr;
-			const FSoftObjectPath& ImageAsset = Images[ImageIndex];
-			UObject* ImageObject = ImageAsset.TryLoad();
-			LoadingImage = Cast<UTexture2D>(ImageObject);
-			
-			if (LoadingImage)
-			{
-				ImageBrush = FDeferredCleanupSlateBrush::CreateBrush(LoadingImage);
-				StaticCastSharedRef<SImage>(BackgroundWidget)->SetImage(ImageBrush.IsValid() ? ImageBrush->GetSlateBrush() : nullptr);				
-			}
+			ImageBrush = FDeferredCleanupSlateBrush::CreateBrush(Images[ImageIndex]);
+			StaticCastSharedRef<SImage>(BackgroundWidget)->SetImage(ImageBrush.IsValid() ? ImageBrush->GetSlateBrush() : nullptr);
 
 			TotalDeltaTime = 0.0f;
 		}
