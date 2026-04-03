@@ -5,6 +5,7 @@
 </p>
 
 # Contents
+- [IMPORTANT NOTE](#IMPORTANT-NOTE)
 - [Trailer](#trailer)
 - [About](#about)
 - [How it works](#how-it-works)
@@ -33,6 +34,12 @@
 - [License](#license)
 - [Acknowledgment](#acknowledgment)
 
+# IMPORTANT NOTE
+- Texture Group should be set to UI and Compression Settings to UserInterface2D
+  <img width="616" height="377" alt="image" src="https://github.com/user-attachments/assets/3f3e90e5-6f35-4390-99b2-685446d9545c" />
+- Don't package the Movies folder into the .Pak file because MoviePlayer needs to look for the startup movies folder at "Contents/Movies" path
+- Make sure you don’t have any plugins enabled that conflict with ASL. For example, **Pre-Load Screen Movie Player**
+- **Background images will not appear in packaged games or Quick Launch** unless their asset folder is added to `AdditionalAssetDirectoriesToCook`. This is because the plugin loads at the `PreLoadingScreen` phase — before the asset streaming system is ready — so textures must be explicitly cooked. In `Project Settings → Packaging → Additional Asset Directories to Cook`, add the folder(s) containing your loading screen background images (e.g., `/Game/LoadingScreen/Backgrounds`). This applies to Image Sequence images as well.
 
 # Trailer
 
