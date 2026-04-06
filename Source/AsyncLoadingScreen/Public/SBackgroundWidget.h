@@ -30,14 +30,13 @@ protected:
 	// Current total delta time
 	mutable float TotalDeltaTime = 0.0f;
 
-	// Interval time (in seconds) to update the tip text, a value less than or equal to 0 will not update the tip text.
+	// Interval time (in seconds) to update the background, a value less than or equal to 0 will not update the background.
 	float Interval = 0.0f;
+
+	// Image slate brush list
+	TArray<TSharedPtr<FDeferredCleanupSlateBrush>> ImageBrushList;
 
 private:
 	// Placehold widget
 	TSharedRef<SWidget> BackgroundWidget = SNullWidget::NullWidget;
-
-	TArray<FSoftObjectPath> Images;
-
-	mutable TSharedPtr<FDeferredCleanupSlateBrush> ImageBrush;
 };
