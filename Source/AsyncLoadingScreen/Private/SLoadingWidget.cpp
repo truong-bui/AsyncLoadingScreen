@@ -71,7 +71,7 @@ void SLoadingWidget::ConstructLoadingIcon(const FLoadingWidgetSettings& Settings
 
 			FVector2D Scale = Settings.ImageSequenceSettings.Scale;
 
-			for (auto Image: Settings.ImageSequenceSettings.Images)
+			for (auto& Image : Settings.ImageSequenceSettings.Images)
 			{
 				if (Image)
 				{

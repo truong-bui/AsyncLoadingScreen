@@ -33,8 +33,9 @@ protected:
 	// Interval time (in seconds) to update the background, a value less than or equal to 0 will not update the background.
 	float Interval = 0.0f;
 
-	mutable TSharedPtr<FDeferredCleanupSlateBrush> ImageBrush = nullptr;
-	TArray<TObjectPtr<UTexture2D>> Images;
+	// Image slate brush list
+	TArray<TSharedPtr<FDeferredCleanupSlateBrush>> ImageBrushList;
+
 private:
 	// Placehold widget
 	TSharedRef<SWidget> BackgroundWidget = SNullWidget::NullWidget;
