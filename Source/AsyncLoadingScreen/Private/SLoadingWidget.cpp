@@ -63,21 +63,23 @@ void SLoadingWidget::ConstructLoadingIcon(const FLoadingWidgetSettings& Settings
 {
 	if (Settings.LoadingIconType == ELoadingIconType::LIT_ImageSequence)
 	{
-		// Loading Widget is image sequence
-		if (Settings.ImageSequenceSettings.Images.Num() > 0)
+		CleanupBrushList.Empty();
+		ImageIndex = 0;
+
+		FVector2D Scale = Settings.ImageSequenceSettings.Scale;
+
+		for (auto& Image : Settings.ImageSequenceSettings.Images)
 		{
-			CleanupBrushList.Empty();
-			ImageIndex = 0;
-
-			FVector2D Scale = Settings.ImageSequenceSettings.Scale;
-
-			for (auto& Image : Settings.ImageSequenceSettings.Images)
+			if (Image != nullptr)
 			{
-				if (Image)
-				{
-					CleanupBrushList.Add(FDeferredCleanupSlateBrush::CreateBrush(Image, FVector2D(Image->GetSurfaceWidth() * Scale.X, Image->GetSurfaceHeight() * Scale.Y)));					
-				}				
+				CleanupBrushList.Add(FDeferredCleanupSlateBrush::CreateBrush(Image, FVector2D(Image->GetSurfaceWidth() * Scale.X, Image->GetSurfaceHeight() * Scale.Y)));
 			}
+		}
+
+		// Loading Widget is image sequence
+		if (CleanupBrushList.Num() > 0)
+		{
+			
 		
 			// Create Image slate widget
 			LoadingIcon = SNew(SImage)
