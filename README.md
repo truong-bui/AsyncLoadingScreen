@@ -12,7 +12,6 @@
 - [Features](#features)
 - [Changelog](#changelog)
 - [Requirements](#requirements)
-- [Note](#NOTE)
 - [Installation](#installation)
     - [Clone from Github](#clone-from-github)
     - [Download from Marketplace](#download-from-marketplace)
@@ -134,10 +133,6 @@ Example:
 
 ~~Async Loading Screen plug-in requires Visual Studio and a C++ code project. If your project is blueprint based then you will need to convert it to C++ project otherwise you cannot package your game with code plug-in.~~ It doesn't require c++ project anymore.
 
-# NOTE
-- Texture Group should be set to UI and Compression Settings to UserInterface2D
-  <img width="616" height="377" alt="image" src="https://github.com/user-attachments/assets/3f3e90e5-6f35-4390-99b2-685446d9545c" />
-- Don't package the Movies folder into the .Pak file because MoviePlayer needs to look for the startup movies folder at "Contents/Movies" path
 
 # Installation
 

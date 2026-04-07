@@ -19,26 +19,27 @@ void SBackgroundWidget::Construct(const FArguments& InArgs, const FBackgroundSet
 {
 	Interval = Settings.UpdateInterval;
 
-	// If there's an image defined
-	if (Settings.Images.Num() > 0)
+	ImageBrushList.Empty();
+	for (auto& Image : Settings.Images)
 	{
-		int32 ImageIndex = FMath::RandRange(0, Settings.Images.Num() - 1);
+		if (Image != nullptr)
+		{
+			ImageBrushList.Add(FDeferredCleanupSlateBrush::CreateBrush(Image));
+		}
+	}
+
+	// If there's an image defined
+	if (ImageBrushList.Num() > 0)
+	{
+		int32 ImageIndex = FMath::RandRange(0, ImageBrushList.Num() - 1);
 
 		if (Settings.bSetDisplayBackgroundManually == true)
 		{
-			if (Settings.Images.IsValidIndex(UAsyncLoadingScreenLibrary::GetDisplayBackgroundIndex()))
+			if (ImageBrushList.IsValidIndex(UAsyncLoadingScreenLibrary::GetDisplayBackgroundIndex()))
 			{
 				ImageIndex = UAsyncLoadingScreenLibrary::GetDisplayBackgroundIndex();
 			}
-		}		
-		ImageBrushList.Empty();
-		for (auto& Image : Settings.Images)
-		{
-			if (Image)
-			{
-				ImageBrushList.Add(FDeferredCleanupSlateBrush::CreateBrush(Image.Get()));
-			}
-		}
+		}				
 
 		// Load background from settings
 		ChildSlot
