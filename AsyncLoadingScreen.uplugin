@@ -9,6 +9,7 @@
 	"CreatedBy": "Truong Bui",
 	"CreatedByURL": "https://github.com/truong-bui/AsyncLoadingScreen",
 	"DocsURL": "https://github.com/truong-bui/AsyncLoadingScreen",
+	"FabURL": "com.epicgames.launcher://ue/Fab/product/f8aabb9a-7c96-4f79-97ff-04bcc146e595",
 	"MarketplaceURL": "com.epicgames.launcher://ue/marketplace/product/01f39767dc6b4290877f38365787cbf8",
 	"SupportURL": "https://github.com/truong-bui/AsyncLoadingScreen/issues",
 	"CanContainContent": true,
@@ -18,6 +19,7 @@
 			"Name": "AsyncLoadingScreen",
 			"Type": "Runtime",
 			"LoadingPhase": "PreLoadingScreen",
+			"PlatformDenyList": [],
 			"TargetDenyList": [
 				"Server"
 			]
