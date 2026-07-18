@@ -34,7 +34,7 @@ protected:
 	float Interval = 0.0f;
 
 private:
-	// Placehold widget
+	// Placeholder widget
 	TSharedRef<SWidget> TipWidget = SNullWidget::NullWidget;
 
 

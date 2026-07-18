@@ -31,6 +31,9 @@ public:
 	/** Construct loading icon*/
 	void ConstructLoadingIcon(const FLoadingWidgetSettings& Settings);
 
+	/** Creates the loading text block shared by the horizontal and vertical loading widgets */
+	static TSharedRef<SWidget> MakeLoadingTextWidget(const FLoadingWidgetSettings& Settings);
+
 protected:
 	// Placeholder widgets
 	TSharedRef<SWidget> LoadingIcon = SNullWidget::NullWidget;

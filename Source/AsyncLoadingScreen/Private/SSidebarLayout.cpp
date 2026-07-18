@@ -8,15 +8,14 @@
 
 #include "SSidebarLayout.h"
 #include "LoadingScreenSettings.h"
+#include "Widgets/SOverlay.h"
+#include "Widgets/Layout/SBorder.h"
 #include "Widgets/Layout/SSafeZone.h"
 #include "Widgets/Layout/SDPIScaler.h"
 #include "Widgets/Layout/SSpacer.h"
-#include "SHorizontalLoadingWidget.h"
-#include "SVerticalLoadingWidget.h"
+#include "Widgets/SBoxPanel.h"
 #include "SBackgroundWidget.h"
 #include "STipWidget.h"
-#include "SLoadingCompleteText.h"
-#include "Widgets/SBoxPanel.h"
 
 void SSidebarLayout::Construct(const FArguments& InArgs, const FALoadingScreenSettings& Settings, const FSidebarLayoutSettings& LayoutSettings)
 {
@@ -29,17 +28,8 @@ void SSidebarLayout::Construct(const FArguments& InArgs, const FALoadingScreenSe
 			SNew(SBackgroundWidget, Settings.Background)
 		];
 
-	// Placeholder for loading widget
-	TSharedRef<SWidget> LoadingWidget = SNullWidget::NullWidget;
-	if (Settings.LoadingWidget.LoadingWidgetType == ELoadingWidgetType::LWT_Horizontal)
-	{
-		LoadingWidget = SNew(SHorizontalLoadingWidget, Settings.LoadingWidget);
-	}
-	else
-	{
-		LoadingWidget = SNew(SVerticalLoadingWidget, Settings.LoadingWidget);
-	}
-	
+	TSharedRef<SWidget> LoadingWidget = MakeLoadingWidget(Settings.LoadingWidget);
+	TSharedRef<SWidget> TipWidget = SNew(STipWidget, Settings.TipWidget);
 
 	TSharedRef<SVerticalBox> VerticalBox = SNew(SVerticalBox);
 	if (LayoutSettings.bIsLoadingWidgetAtTop)
@@ -52,7 +42,7 @@ void SSidebarLayout::Construct(const FArguments& InArgs, const FALoadingScreenSe
 			[
 				LoadingWidget
 			];
-		
+
 		// Add SSpacer at middle
 		VerticalBox.Get().AddSlot()
 			.HAlign(HAlign_Fill)
@@ -69,7 +59,7 @@ void SSidebarLayout::Construct(const FArguments& InArgs, const FALoadingScreenSe
 			.HAlign(LayoutSettings.TipAlignment.HorizontalAlignment)
 			.VAlign(LayoutSettings.TipAlignment.VerticalAlignment)
 			[
-				SNew(STipWidget, Settings.TipWidget)
+				TipWidget
 			];
 	}
 	else
@@ -80,7 +70,7 @@ void SSidebarLayout::Construct(const FArguments& InArgs, const FALoadingScreenSe
 			.HAlign(LayoutSettings.TipAlignment.HorizontalAlignment)
 			.VAlign(LayoutSettings.TipAlignment.VerticalAlignment)
 			[
-				SNew(STipWidget, Settings.TipWidget)
+				TipWidget
 			];
 
 		// Add SSpacer at middle
@@ -103,78 +93,40 @@ void SSidebarLayout::Construct(const FArguments& InArgs, const FALoadingScreenSe
 			];
 	}
 
+	// The sidebar border is anchored to the right or left edge of the screen
+	const EHorizontalAlignment SidebarHorizontalAlignment = LayoutSettings.bIsWidgetAtRight ? HAlign_Right : HAlign_Left;
+	const FMargin SidebarOffset = LayoutSettings.bIsWidgetAtRight
+		? FMargin(0, 0, LayoutSettings.BorderHorizontalOffset, 0)
+		: FMargin(LayoutSettings.BorderHorizontalOffset, 0, 0, 0);
 
- 
-	if (LayoutSettings.bIsWidgetAtRight)
-	{
-		// Add widget at right
-		Root.Get().AddSlot()
-		.HAlign(HAlign_Right)
-		.VAlign(LayoutSettings.BorderVerticalAlignment)
-		.Padding(0, 0, LayoutSettings.BorderHorizontalOffset, 0)
+	Root.Get().AddSlot()
+	.HAlign(SidebarHorizontalAlignment)
+	.VAlign(LayoutSettings.BorderVerticalAlignment)
+	.Padding(SidebarOffset)
+	[
+		SNew(SBorder)
+		.HAlign(HAlign_Fill)
+		.VAlign(VAlign_Fill)
+		.BorderImage(&LayoutSettings.BorderBackground)
+		.BorderBackgroundColor(FLinearColor::White)
 		[
-			SNew(SBorder)
+			SNew(SSafeZone)
 			.HAlign(HAlign_Fill)
-			.VAlign(VAlign_Fill)
-			.BorderImage(&LayoutSettings.BorderBackground)
-			.BorderBackgroundColor(FLinearColor::White)
+			.VAlign(LayoutSettings.VerticalAlignment)
+			.IsTitleSafe(true)
+			.Padding(LayoutSettings.BorderPadding)
 			[
-				SNew(SSafeZone)
-				.HAlign(HAlign_Fill)
-				.VAlign(LayoutSettings.VerticalAlignment)
-				.IsTitleSafe(true)
-				.Padding(LayoutSettings.BorderPadding)
+				SNew(SDPIScaler)
+				.DPIScale(this, &SSidebarLayout::GetDPIScale)
 				[
-					SNew(SDPIScaler)
-					.DPIScale(this, &SSidebarLayout::GetDPIScale)
-					[
-						VerticalBox
-					]
+					VerticalBox
 				]
 			]
-		];
-	}
-	else
-	{
-		// Add widget at left
-		Root.Get().AddSlot()
-		.HAlign(HAlign_Left)
-		.VAlign(LayoutSettings.BorderVerticalAlignment)
-		.Padding(LayoutSettings.BorderHorizontalOffset, 0, 0, 0)
-		[
-			SNew(SBorder)
-			.HAlign(HAlign_Fill)
-			.VAlign(VAlign_Fill)
-			.BorderImage(&LayoutSettings.BorderBackground)
-			.BorderBackgroundColor(FLinearColor::White)
-			[
-				SNew(SSafeZone)
-				.HAlign(HAlign_Fill)
-				.VAlign(LayoutSettings.VerticalAlignment)
-				.IsTitleSafe(true)
-				.Padding(LayoutSettings.BorderPadding)
-				[
-					SNew(SDPIScaler)
-					.DPIScale(this, &SSidebarLayout::GetDPIScale)
-					[
-						VerticalBox
-					]
-				]
-			]
-		];
-	}
+		]
+	];
 
 	// Construct loading complete text if enable
-	if (Settings.bShowLoadingCompleteText)
-	{
-		Root->AddSlot()
-			.VAlign(Settings.LoadingCompleteTextSettings.Alignment.VerticalAlignment)
-			.HAlign(Settings.LoadingCompleteTextSettings.Alignment.HorizontalAlignment)
-			.Padding(Settings.LoadingCompleteTextSettings.Padding)
-			[
-				SNew(SLoadingCompleteText, Settings.LoadingCompleteTextSettings)
-			];
-	}
+	AddLoadingCompleteTextSlot(Root, Settings);
 
 	// Add root to this widget
 	ChildSlot

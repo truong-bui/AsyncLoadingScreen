@@ -8,9 +8,12 @@
 
 #pragma once
 
+#include "CoreMinimal.h"
 #include "Modules/ModuleManager.h"
 
 struct FALoadingScreenSettings;
+
+DECLARE_LOG_CATEGORY_EXTERN(LogAsyncLoadingScreen, Log, All);
 
 class FAsyncLoadingScreenModule : public IModuleInterface
 {

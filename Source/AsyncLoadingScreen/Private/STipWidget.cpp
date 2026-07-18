@@ -41,10 +41,12 @@ void STipWidget::Construct(const FArguments& InArgs, const FTipSettings& Setting
 		int32 TipIndex = FMath::RandRange(0, TipText.Num() - 1);
 		
 		if (Settings.bSetDisplayTipTextManually == true)
-		{			
+		{
 			if (TipText.IsValidIndex(UAsyncLoadingScreenLibrary::GetDisplayTipTextIndex()))
 			{
 				TipIndex = UAsyncLoadingScreenLibrary::GetDisplayTipTextIndex();
+				// A manually chosen tip stays on screen; disable the random interval refresh
+				Interval = 0.0f;
 			}
 		}
 

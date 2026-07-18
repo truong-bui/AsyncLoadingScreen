@@ -8,13 +8,12 @@
 
 #include "SLetterboxLayout.h"
 #include "LoadingScreenSettings.h"
+#include "Widgets/SOverlay.h"
+#include "Widgets/Layout/SBorder.h"
 #include "Widgets/Layout/SSafeZone.h"
 #include "Widgets/Layout/SDPIScaler.h"
-#include "SHorizontalLoadingWidget.h"
-#include "SVerticalLoadingWidget.h"
 #include "SBackgroundWidget.h"
 #include "STipWidget.h"
-#include "SLoadingCompleteText.h"
 
 void SLetterboxLayout::Construct(const FArguments& InArgs, const FALoadingScreenSettings& Settings, const FLetterboxLayoutSettings& LayoutSettings)
 {
@@ -27,138 +26,70 @@ void SLetterboxLayout::Construct(const FArguments& InArgs, const FALoadingScreen
 			SNew(SBackgroundWidget, Settings.Background)
 		];
 
-	// Placeholder for loading widget
-	TSharedRef<SWidget> LoadingWidget = SNullWidget::NullWidget;
-	if (Settings.LoadingWidget.LoadingWidgetType == ELoadingWidgetType::LWT_Horizontal)
-	{
-		LoadingWidget = SNew(SHorizontalLoadingWidget, Settings.LoadingWidget);
-	}
-	else
-	{
-		LoadingWidget = SNew(SVerticalLoadingWidget, Settings.LoadingWidget);
-	}
-	
+	TSharedRef<SWidget> LoadingWidget = MakeLoadingWidget(Settings.LoadingWidget);
+	TSharedRef<SWidget> TipWidget = SNew(STipWidget, Settings.TipWidget);
 
-	if (LayoutSettings.bIsLoadingWidgetAtTop)
-	{
-		// Add a border widget at top, then add Loading widget
-		Root->AddSlot()
-			.HAlign(LayoutSettings.TopBorderHorizontalAlignment)
-			.VAlign(VAlign_Top)	
-			[
-				SNew(SBorder)
-				.HAlign(HAlign_Fill)
-				.VAlign(VAlign_Fill)		
-				.BorderImage(&LayoutSettings.TopBorderBackground)
-				.BorderBackgroundColor(FLinearColor::White)
-				[
-					SNew(SSafeZone)
-					.HAlign(LayoutSettings.LoadingWidgetAlignment.HorizontalAlignment)
-					.VAlign(LayoutSettings.LoadingWidgetAlignment.VerticalAlignment)
-					.IsTitleSafe(true)
-					.Padding(LayoutSettings.TopBorderPadding)
-					[
-						SNew(SDPIScaler)
-						.DPIScale(this, &SLetterboxLayout::GetDPIScale)
-						[
-							LoadingWidget
-						]
-					]
-				]
-			];
+	// The loading widget goes in the top or bottom border depending on settings; the tip widget takes the other one
+	const bool bIsLoadingWidgetAtTop = LayoutSettings.bIsLoadingWidgetAtTop;
+	TSharedRef<SWidget> TopContent = bIsLoadingWidgetAtTop ? LoadingWidget : TipWidget;
+	TSharedRef<SWidget> BottomContent = bIsLoadingWidgetAtTop ? TipWidget : LoadingWidget;
+	const FWidgetAlignment& TopContentAlignment = bIsLoadingWidgetAtTop ? LayoutSettings.LoadingWidgetAlignment : LayoutSettings.TipAlignment;
+	const FWidgetAlignment& BottomContentAlignment = bIsLoadingWidgetAtTop ? LayoutSettings.TipAlignment : LayoutSettings.LoadingWidgetAlignment;
 
-		// Add a border widget at bottom, then add Tip widget
-		Root->AddSlot()
-			.HAlign(LayoutSettings.BottomBorderHorizontalAlignment)
-			.VAlign(VAlign_Bottom)	
+	// Add a border widget at top
+	Root->AddSlot()
+		.HAlign(LayoutSettings.TopBorderHorizontalAlignment)
+		.VAlign(VAlign_Top)
+		[
+			SNew(SBorder)
+			.HAlign(HAlign_Fill)
+			.VAlign(VAlign_Fill)
+			.BorderImage(&LayoutSettings.TopBorderBackground)
+			.BorderBackgroundColor(FLinearColor::White)
 			[
-				SNew(SBorder)
-				.HAlign(HAlign_Fill)
-				.VAlign(VAlign_Fill)
-				.BorderImage(&LayoutSettings.BottomBorderBackground)
-				.BorderBackgroundColor(FLinearColor::White)
+				SNew(SSafeZone)
+				.HAlign(TopContentAlignment.HorizontalAlignment)
+				.VAlign(TopContentAlignment.VerticalAlignment)
+				.IsTitleSafe(true)
+				.Padding(LayoutSettings.TopBorderPadding)
 				[
-					SNew(SSafeZone)
-					.HAlign(LayoutSettings.TipAlignment.HorizontalAlignment)
-					.VAlign(LayoutSettings.TipAlignment.VerticalAlignment)
-					.IsTitleSafe(true)
-					.Padding(LayoutSettings.BottomBorderPadding)
+					SNew(SDPIScaler)
+					.DPIScale(this, &SLetterboxLayout::GetDPIScale)
 					[
-						SNew(SDPIScaler)
-						.DPIScale(this, &SLetterboxLayout::GetDPIScale)
-						[
-							SNew(STipWidget, Settings.TipWidget)
-						]						
+						TopContent
 					]
 				]
-			];
-	}
-	else
-	{
-		// Add a border widget at top, then add Tip widget
-		Root->AddSlot()
-			.HAlign(LayoutSettings.TopBorderHorizontalAlignment)
-			.VAlign(VAlign_Top)	
-			[
-				SNew(SBorder)
-				.HAlign(HAlign_Fill)
-				.VAlign(VAlign_Fill)
-				.BorderImage(&LayoutSettings.TopBorderBackground)
-				.BorderBackgroundColor(FLinearColor::White)
-				[
-					SNew(SSafeZone)
-					.HAlign(LayoutSettings.TipAlignment.HorizontalAlignment)
-					.VAlign(LayoutSettings.TipAlignment.VerticalAlignment)
-					.IsTitleSafe(true)
-					.Padding(LayoutSettings.TopBorderPadding)
-					[
-						SNew(SDPIScaler)
-						.DPIScale(this, &SLetterboxLayout::GetDPIScale)
-						[					
-							SNew(STipWidget, Settings.TipWidget)
-						]						
-					]
-				]
-			];
+			]
+		];
 
-		// Add a border widget at bottom, then add Loading widget
-		Root->AddSlot()
-			.HAlign(LayoutSettings.BottomBorderHorizontalAlignment)
-			.VAlign(VAlign_Bottom)	
+	// Add a border widget at bottom
+	Root->AddSlot()
+		.HAlign(LayoutSettings.BottomBorderHorizontalAlignment)
+		.VAlign(VAlign_Bottom)
+		[
+			SNew(SBorder)
+			.HAlign(HAlign_Fill)
+			.VAlign(VAlign_Fill)
+			.BorderImage(&LayoutSettings.BottomBorderBackground)
+			.BorderBackgroundColor(FLinearColor::White)
 			[
-				SNew(SBorder)
-				.HAlign(HAlign_Fill)
-				.VAlign(VAlign_Fill)
-				.BorderImage(&LayoutSettings.BottomBorderBackground)
-				.BorderBackgroundColor(FLinearColor::White)
+				SNew(SSafeZone)
+				.HAlign(BottomContentAlignment.HorizontalAlignment)
+				.VAlign(BottomContentAlignment.VerticalAlignment)
+				.IsTitleSafe(true)
+				.Padding(LayoutSettings.BottomBorderPadding)
 				[
-					SNew(SSafeZone)
-					.HAlign(LayoutSettings.LoadingWidgetAlignment.HorizontalAlignment)
-					.VAlign(LayoutSettings.LoadingWidgetAlignment.VerticalAlignment)
-					.IsTitleSafe(true)
-					.Padding(LayoutSettings.BottomBorderPadding)
+					SNew(SDPIScaler)
+					.DPIScale(this, &SLetterboxLayout::GetDPIScale)
 					[
-						SNew(SDPIScaler)
-						.DPIScale(this, &SLetterboxLayout::GetDPIScale)
-						[
-							LoadingWidget
-						]						
+						BottomContent
 					]
 				]
-			];
-	}
+			]
+		];
 
 	// Construct loading complete text if enable
-	if (Settings.bShowLoadingCompleteText)
-	{
-		Root->AddSlot()
-			.VAlign(Settings.LoadingCompleteTextSettings.Alignment.VerticalAlignment)
-			.HAlign(Settings.LoadingCompleteTextSettings.Alignment.HorizontalAlignment)
-			.Padding(Settings.LoadingCompleteTextSettings.Padding)
-			[
-				SNew(SLoadingCompleteText, Settings.LoadingCompleteTextSettings)
-			];
-	}
+	AddLoadingCompleteTextSlot(Root, Settings);
 
 	// Add Root to this widget
 	ChildSlot

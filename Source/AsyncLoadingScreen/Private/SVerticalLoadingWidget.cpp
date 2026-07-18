@@ -9,9 +9,7 @@
 #include "SVerticalLoadingWidget.h"
 #include "LoadingScreenSettings.h"
 #include "Widgets/Layout/SSpacer.h"
-#include "Widgets/Images/SImage.h"
-#include "Slate/DeferredCleanupSlateBrush.h"
-#include "Widgets/Text/STextBlock.h"
+#include "Widgets/SBoxPanel.h"
 
 void SVerticalLoadingWidget::Construct(const FArguments& InArgs, const FLoadingWidgetSettings& Settings)
 {
@@ -23,16 +21,9 @@ void SVerticalLoadingWidget::Construct(const FArguments& InArgs, const FLoadingW
 	// Construct Loading Icon Widget
 	ConstructLoadingIcon(Settings);
 
-	EVisibility LoadingTextVisibility;
-
-	if (Settings.LoadingText.IsEmpty())
-	{
-		LoadingTextVisibility = EVisibility::Collapsed;
-	}
-	else
-	{
-		LoadingTextVisibility = EVisibility::SelfHitTestInvisible;
-	}
+	TSharedRef<SWidget> LoadingText = MakeLoadingTextWidget(Settings);
+	TSharedRef<SWidget> Spacer = SNew(SSpacer)
+		.Size(FVector2D(0.0f, Settings.Space));
 
 	// If loading text is on the top
 	if (Settings.bLoadingTextTopPosition)
@@ -43,14 +34,7 @@ void SVerticalLoadingWidget::Construct(const FArguments& InArgs, const FLoadingW
 			.VAlign(Settings.TextAlignment.VerticalAlignment)
 			.AutoHeight()
 			[
-				SNew(STextBlock)
-				.Visibility(LoadingTextVisibility)
-				.ColorAndOpacity(Settings.Appearance.ColorAndOpacity)
-				.Font(Settings.Appearance.Font)
-				.ShadowOffset(Settings.Appearance.ShadowOffset)
-				.ShadowColorAndOpacity(Settings.Appearance.ShadowColorAndOpacity)
-				.Justification(Settings.Appearance.Justification)
-				.Text(Settings.LoadingText)				
+				LoadingText
 			];
 
 		// Add a Spacer in middle
@@ -59,8 +43,7 @@ void SVerticalLoadingWidget::Construct(const FArguments& InArgs, const FLoadingW
 			.VAlign(VAlign_Fill)
 			.AutoHeight()
 			[
-				SNew(SSpacer)
-				.Size(FVector2D(0.0f, Settings.Space))
+				Spacer
 			];
 
 		// Add Loading Icon at the bottom finally
@@ -91,8 +74,7 @@ void SVerticalLoadingWidget::Construct(const FArguments& InArgs, const FLoadingW
 			.VAlign(VAlign_Fill)
 			.AutoHeight()
 			[
-				SNew(SSpacer)
-				.Size(FVector2D(0.0f, Settings.Space))
+				Spacer
 			];
 
 		// Add Loading Text at the bottom
@@ -101,14 +83,7 @@ void SVerticalLoadingWidget::Construct(const FArguments& InArgs, const FLoadingW
 			.VAlign(Settings.TextAlignment.VerticalAlignment)
 			.AutoHeight()
 			[
-				SNew(STextBlock)
-				.Visibility(LoadingTextVisibility)
-				.ColorAndOpacity(Settings.Appearance.ColorAndOpacity)
-				.Font(Settings.Appearance.Font)
-				.ShadowOffset(Settings.Appearance.ShadowOffset)
-				.ShadowColorAndOpacity(Settings.Appearance.ShadowColorAndOpacity)
-				.Justification(Settings.Appearance.Justification)
-				.Text(Settings.LoadingText)				
+				LoadingText
 			];
 	}
 

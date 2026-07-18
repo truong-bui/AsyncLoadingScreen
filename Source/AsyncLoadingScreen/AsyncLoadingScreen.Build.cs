@@ -1,4 +1,10 @@
-// Copyright Epic Games, Inc. All Rights Reserved.
+/************************************************************************************
+ *																					*
+ * Copyright (C) 2020 Truong Bui.													*
+ * Website:	https://github.com/truong-bui/AsyncLoadingScreen						*
+ * Licensed under the MIT License. See 'LICENSE' file for full license information. *
+ *																					*
+ ************************************************************************************/
 
 using UnrealBuildTool;
 
@@ -7,49 +13,18 @@ public class AsyncLoadingScreen : ModuleRules
 	public AsyncLoadingScreen(ReadOnlyTargetRules Target) : base(Target)
 	{
 		PCHUsage = ModuleRules.PCHUsageMode.UseExplicitOrSharedPCHs;
-		
-		PublicIncludePaths.AddRange(
-			new string[] {
-				// ... add public include paths required here ...
-			}
-			);
-				
-		
-		PrivateIncludePaths.AddRange(
-			new string[] {
-				// ... add other private include paths required here ...
-			}
-			);
-			
-		
+
+		// These modules' types appear in this module's public headers, so consumers need them as public dependencies
 		PublicDependencyModuleNames.AddRange(
 			new string[]
 			{
-				"Core"
-				// ... add other public dependencies that you statically link with here ...
-			}
-			);
-			
-		
-		PrivateDependencyModuleNames.AddRange(
-			new string[]
-			{
+				"Core",
 				"CoreUObject",
 				"Engine",
 				"Slate",
 				"SlateCore",
 				"MoviePlayer",
-				"DeveloperSettings",
-				"ApplicationCore"
-				// ... add private dependencies that you statically link with here ...	
-			}
-			);
-		
-		
-		DynamicallyLoadedModuleNames.AddRange(
-			new string[]
-			{
-				// ... add any modules that your module loads dynamically here ...
+				"DeveloperSettings"
 			}
 			);
 	}

@@ -7,19 +7,14 @@
  ************************************************************************************/
 
 #include "SLoadingScreenLayout.h"
+#include "LoadingScreenSettings.h"
+#include "SHorizontalLoadingWidget.h"
+#include "SVerticalLoadingWidget.h"
+#include "SLoadingCompleteText.h"
 #include "Engine/UserInterfaceSettings.h"
 #include "Engine/Engine.h"
-#include "GenericPlatform/GenericApplication.h"
-
-//DEFINE_LOG_CATEGORY(LogLoadingScreen);
-
-float SLoadingScreenLayout::PointSizeToSlateUnits(float PointSize)
-{
-	const float SlateFreeTypeHorizontalResolutionDPI = 96.0f;
-	const float FreeTypeNativeDPI = 72.0;
-	const float PixelSize = PointSize * (SlateFreeTypeHorizontalResolutionDPI / FreeTypeNativeDPI);
-	return PixelSize;
-}
+#include "Engine/GameViewportClient.h"
+#include "Widgets/SOverlay.h"
 
 float SLoadingScreenLayout::GetDPIScale() const
 {
@@ -28,52 +23,56 @@ float SLoadingScreenLayout::GetDPIScale() const
 		FVector2D ViewportSize;
 		GEngine->GameViewport->GetViewportSize(ViewportSize);
 		int32 X = FGenericPlatformMath::FloorToInt(ViewportSize.X);
-		int32 Y = FGenericPlatformMath::FloorToInt(ViewportSize.Y);		
+		int32 Y = FGenericPlatformMath::FloorToInt(ViewportSize.Y);
 
 		if (X != 0 && Y != 0)
 		{
-			_cachedViewportSize = FIntPoint(X, Y);
+			CachedViewportSize = FIntPoint(X, Y);
 		}
 		else
 		{
 			CalculateViewportSize();
 		}
 	}
-	else 
+	else
 	{
 		CalculateViewportSize();
 	}
-	/*auto DPIOnSize = GetDefault<UUserInterfaceSettings>()->GetDPIScaleBasedOnSize(_cachedViewportSize);
-	auto DPIScale = FMath::Clamp(DPIOnSize, 0.1f, 1.0f);
-	UE_LOG(LogLoadingScreen, Log, TEXT("DPIOnSize: %f, Size: %s, DPIScale: %f"), DPIOnSize, *_cachedViewportSize.ToString(), DPIScale);*/
-	return FMath::Clamp(GetDefault<UUserInterfaceSettings>()->GetDPIScaleBasedOnSize(_cachedViewportSize), 0.1f, 1.0f);
+
+	// No upper clamp so the loading screen scales up on high-resolution displays like the rest of the game UI
+	return FMath::Max(GetDefault<UUserInterfaceSettings>()->GetDPIScaleBasedOnSize(CachedViewportSize), 0.1f);
 }
 
 void SLoadingScreenLayout::CalculateViewportSize() const
 {
+	// Fall back to this widget's own geometry when the game viewport is not available yet
 	const FVector2D DrawSize = GetTickSpaceGeometry().ToPaintGeometry().GetLocalSize();
-	int32 X = 0;
-	int32 Y = 0;
 	if (!DrawSize.Equals(FVector2D::ZeroVector))
 	{
-		X = FGenericPlatformMath::FloorToInt(DrawSize.X);
-		Y = FGenericPlatformMath::FloorToInt(DrawSize.Y);
-		_cachedViewportSize = FIntPoint(X, Y);
+		CachedViewportSize = FIntPoint(FGenericPlatformMath::FloorToInt(DrawSize.X), FGenericPlatformMath::FloorToInt(DrawSize.Y));
 	}
-	// If cannot get size from geometry, try getting from display metrics (desktop resolution)
-	// Note that it may be working only on fullscreen mode
-	// Commented out for now as it may cause issues because of this error:
-	// Ensure condition failed: GetShadowIndex() == 0  [Sync\Engine\Source\Runtime\Core\Public\HAL\IConsoleManager.h] [Line: 1699]
-	/*
-	else
-	{		
-		FDisplayMetrics OutDisplayMetrics;
-		FDisplayMetrics::RebuildDisplayMetrics(OutDisplayMetrics);
-		if(OutDisplayMetrics.PrimaryDisplayWidth != 0 && OutDisplayMetrics.PrimaryDisplayHeight != 0)
-		{
-			_cachedViewportSize = FIntPoint(OutDisplayMetrics.PrimaryDisplayWidth, OutDisplayMetrics.PrimaryDisplayHeight);
-		}
-	}	
-	*/
 }
 
+TSharedRef<SWidget> SLoadingScreenLayout::MakeLoadingWidget(const FLoadingWidgetSettings& Settings)
+{
+	if (Settings.LoadingWidgetType == ELoadingWidgetType::LWT_Horizontal)
+	{
+		return SNew(SHorizontalLoadingWidget, Settings);
+	}
+
+	return SNew(SVerticalLoadingWidget, Settings);
+}
+
+void SLoadingScreenLayout::AddLoadingCompleteTextSlot(const TSharedRef<SOverlay>& Root, const FALoadingScreenSettings& Settings)
+{
+	if (Settings.bShowLoadingCompleteText)
+	{
+		Root->AddSlot()
+			.VAlign(Settings.LoadingCompleteTextSettings.Alignment.VerticalAlignment)
+			.HAlign(Settings.LoadingCompleteTextSettings.Alignment.HorizontalAlignment)
+			.Padding(Settings.LoadingCompleteTextSettings.Padding)
+			[
+				SNew(SLoadingCompleteText, Settings.LoadingCompleteTextSettings)
+			];
+	}
+}

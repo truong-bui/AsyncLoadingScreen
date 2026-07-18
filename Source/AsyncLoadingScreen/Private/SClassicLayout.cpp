@@ -8,15 +8,14 @@
 
 #include "SClassicLayout.h"
 #include "LoadingScreenSettings.h"
+#include "Widgets/SOverlay.h"
+#include "Widgets/Layout/SBorder.h"
 #include "Widgets/Layout/SSafeZone.h"
 #include "Widgets/Layout/SDPIScaler.h"
 #include "Widgets/Layout/SSpacer.h"
 #include "Widgets/SBoxPanel.h"
-#include "SHorizontalLoadingWidget.h"
-#include "SVerticalLoadingWidget.h"
 #include "SBackgroundWidget.h"
 #include "STipWidget.h"
-#include "SLoadingCompleteText.h"
 
 void SClassicLayout::Construct(const FArguments& InArgs, const FALoadingScreenSettings& Settings, const FClassicLayoutSettings& LayoutSettings)
 {
@@ -29,16 +28,8 @@ void SClassicLayout::Construct(const FArguments& InArgs, const FALoadingScreenSe
 			SNew(SBackgroundWidget, Settings.Background)
 		];
 
-	// Placeholder for loading widget
-	TSharedRef<SWidget> LoadingWidget = SNullWidget::NullWidget;
-	if (Settings.LoadingWidget.LoadingWidgetType == ELoadingWidgetType::LWT_Horizontal)
-	{
-		LoadingWidget = SNew(SHorizontalLoadingWidget, Settings.LoadingWidget);
-	}
-	else
-	{
-		LoadingWidget = SNew(SVerticalLoadingWidget, Settings.LoadingWidget);
-	}
+	TSharedRef<SWidget> LoadingWidget = MakeLoadingWidget(Settings.LoadingWidget);
+	TSharedRef<SWidget> TipWidget = SNew(STipWidget, Settings.TipWidget);
 
 	TSharedRef<SHorizontalBox> HorizontalBox = SNew(SHorizontalBox);
 
@@ -53,7 +44,7 @@ void SClassicLayout::Construct(const FArguments& InArgs, const FALoadingScreenSe
 				LoadingWidget
 			];
 
-		// Add spacer at midder
+		// Add spacer in middle
 		HorizontalBox.Get().AddSlot()
 			.HAlign(HAlign_Fill)
 			.VAlign(VAlign_Fill)
@@ -63,13 +54,13 @@ void SClassicLayout::Construct(const FArguments& InArgs, const FALoadingScreenSe
 				.Size(FVector2D(LayoutSettings.Space, 0.0f))
 			];
 
-			// Tip Text on the right
+		// Tip Text on the right
 		HorizontalBox.Get().AddSlot()
 			.FillWidth(1.0f)
 			.HAlign(LayoutSettings.TipAlignment.HorizontalAlignment)
 			.VAlign(LayoutSettings.TipAlignment.VerticalAlignment)
 			[
-				SNew(STipWidget, Settings.TipWidget)
+				TipWidget
 			];
 	}
 	else
@@ -80,11 +71,10 @@ void SClassicLayout::Construct(const FArguments& InArgs, const FALoadingScreenSe
 			.HAlign(LayoutSettings.TipAlignment.HorizontalAlignment)
 			.VAlign(LayoutSettings.TipAlignment.VerticalAlignment)
 			[
-				// Add tip text
-				SNew(STipWidget, Settings.TipWidget)
+				TipWidget
 			];
 
-		// Add spacer at midder
+		// Add spacer in middle
 		HorizontalBox.Get().AddSlot()
 			.HAlign(HAlign_Fill)
 			.VAlign(VAlign_Fill)
@@ -104,22 +94,13 @@ void SClassicLayout::Construct(const FArguments& InArgs, const FALoadingScreenSe
 			];
 	}
 
-
-	EVerticalAlignment VerticalAlignment;
-	// Set vertical alignment for widget
-	if (LayoutSettings.bIsWidgetAtBottom)
-	{
-		VerticalAlignment = EVerticalAlignment::VAlign_Bottom;
-	}
-	else
-	{
-		VerticalAlignment = EVerticalAlignment::VAlign_Top;
-	}
+	// The border that contains the widgets is anchored to the bottom or top edge of the screen
+	const EVerticalAlignment BorderVerticalAlignment = LayoutSettings.bIsWidgetAtBottom ? VAlign_Bottom : VAlign_Top;
 
 	// Creating loading theme
 	Root->AddSlot()
 	.HAlign(LayoutSettings.BorderHorizontalAlignment)
-	.VAlign(VerticalAlignment)		
+	.VAlign(BorderVerticalAlignment)
 	[
 		SNew(SBorder)
 		.HAlign(HAlign_Fill)
@@ -135,7 +116,7 @@ void SClassicLayout::Construct(const FArguments& InArgs, const FALoadingScreenSe
 			[
 				SNew(SDPIScaler)
 				.DPIScale(this, &SClassicLayout::GetDPIScale)
-				[					
+				[
 					HorizontalBox
 				]
 			]
@@ -143,16 +124,7 @@ void SClassicLayout::Construct(const FArguments& InArgs, const FALoadingScreenSe
 	];
 
 	// Construct loading complete text if enable
-	if (Settings.bShowLoadingCompleteText)
-	{
-		Root->AddSlot()
-			.VAlign(Settings.LoadingCompleteTextSettings.Alignment.VerticalAlignment)
-			.HAlign(Settings.LoadingCompleteTextSettings.Alignment.HorizontalAlignment)
-			.Padding(Settings.LoadingCompleteTextSettings.Padding)
-			[
-				SNew(SLoadingCompleteText, Settings.LoadingCompleteTextSettings)
-			];
-	}
+	AddLoadingCompleteTextSlot(Root, Settings);
 
 	// Add root to this widget
 	ChildSlot

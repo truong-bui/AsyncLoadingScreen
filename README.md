@@ -77,6 +77,23 @@ MoviePlayer is registered to PreLoadMap and PostLoadMapWithWorld delegates so it
 
 # Changelog
 
+### Version 1.6.2 (18/07/2026)
+- The **BackgroundColor** now renders even when the Background's **Images** array is empty; previously the background widget rendered nothing at all without images (set the color's alpha to 0 for the old transparent behavior)
+- The loading screen now scales up on high-resolution displays (1440p/4K) following the project's DPI curve; previously the scale was capped at 1.0
+- Fix a wrong widget scale on the first frames of the startup loading screen caused by an uninitialized viewport size
+- Fix the Image Sequence animation running slower than the configured **Interval**
+- A valid index set via **SetDisplayBackgroundIndex**/**SetDisplayTipTextIndex** now stays on screen: it disables the random **UpdateInterval** refresh for that background/tip
+- The widget overlay is now skipped with a warning when **bAllowInEarlyStartup** is enabled, since early startup loading screens cannot contain UObjects
+- The **Loading Complete Text** fade now starts from its configured color when it appears and no longer overshoots its alpha bounds
+- Fix properties showing under wrong categories in Project Settings (Loading Widget's Appearance, Set Display Tip Text Manually, Loading Complete Text's Alignment)
+- C++: the plugin's dependencies (Engine, Slate, SlateCore, MoviePlayer, DeveloperSettings) are now public, so game modules can include the plugin's public headers without extra Build.cs entries
+- Internal refactor: layouts now share common construction helpers; added the LogAsyncLoadingScreen log category; removed the unused PointSizeToSlateUnits function
+
+### Version 1.6.1 (06/04/2026)
+- Fix crashes with Zen Loader (use TObjectPtr for images, simplify brush loading)
+- Fix crashing if there is any empty slot in Background's Images
+- Update to Unreal Engine 5.8
+
 ### Version 1.6.0 (12/01/2026)
 ![image](https://github.com/user-attachments/assets/1f58c5f0-71e3-49d1-baae-9f4a4f9cf808)
 

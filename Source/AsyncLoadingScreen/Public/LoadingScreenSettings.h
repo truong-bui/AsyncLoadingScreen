@@ -18,7 +18,7 @@
 
 
 /** 
- * Asynce Loading Screen Layouts
+ * Async Loading Screen Layouts
  */
 UENUM(BlueprintType)
 enum class EAsyncLoadingScreenLayout : uint8
@@ -168,7 +168,7 @@ struct FImageSequenceSettings
 	GENERATED_BODY()
 
 	/** An array of images for animating the loading icon.*/
-	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "Loading Widget Setting", meta = (AllowedClasses = "/Script/Engine.Texture2D"))
+	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "Loading Widget Setting")
 	TArray<TObjectPtr<UTexture2D>> Images;
 
 	/** Scale of the images.*/
@@ -194,8 +194,8 @@ struct ASYNCLOADINGSCREEN_API FBackgroundSettings
 {
 	GENERATED_BODY()
 
-	// The images randomly display while in the loading screen on top of the movie 
-	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "Background", meta = (AllowedClasses = "/Script/Engine.Texture2D"))
+	// The images randomly display while in the loading screen on top of the movie
+	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "Background")
 	TArray<TObjectPtr<UTexture2D>> Images;
 
 	// Interval time (in seconds) to randomly update the background image, a value less than or equal to 0 will not update the background image.
@@ -210,13 +210,14 @@ struct ASYNCLOADINGSCREEN_API FBackgroundSettings
 	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "Background")
 	FMargin Padding;
 
-	// The border's background color if there is any image defined. If padding = 0 you will not see the border color.
+	// The background color. It fills the whole screen when no image is defined, otherwise it is visible in the padding area around the image (padding = 0 hides it).
 	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "Background")
 	FLinearColor BackgroundColor = FLinearColor::Black;
 
 	/**
 	 * If true, you will have to manually set which background index you want to display on the loading screen by calling "SetDisplayBackgroundIndex" function
 	 * in your Blueprint before opening a new level. If the index you set is not valid, then it will display random background in the "Images" array.
+	 * A valid index also disables the random "Update Interval" refresh, so the chosen background stays on screen.
 	 */
 	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "Background")
 	bool bSetDisplayBackgroundManually = false;
@@ -265,7 +266,7 @@ struct ASYNCLOADINGSCREEN_API FLoadingWidgetSettings
 	bool bLoadingTextTopPosition = true;
 
 	// Loading text appearance settings
-	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "Tip Settings")
+	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "Loading Widget Setting")
 	FTextAppearance Appearance;
 
 	/** Throbber settings. Ignore this if you don't choose the 'Throbber' icon type*/
@@ -325,8 +326,9 @@ struct ASYNCLOADINGSCREEN_API FTipSettings
 	/**
 	 * If true, you will have to manually set which TipText index you want to display on the loading screen by calling "SetDisplayTipTextIndex" function
 	 * in your Blueprint before opening a new level. If the index you set is not valid, then it will display random Tip in the "TipText" array.
+	 * A valid index also disables the random "Update Interval" refresh, so the chosen tip stays on screen.
 	 */
-	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "Background")
+	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "Tip Settings")
 	bool bSetDisplayTipTextManually = false;
 };
 
@@ -338,8 +340,6 @@ struct ASYNCLOADINGSCREEN_API FLoadingCompleteTextSettings
 {
 	GENERATED_BODY()
 
-//	FLoadingCompleteTextSettings();
-
 	// The text that shows up when level loading is done.
 	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "Loading Complete Text Settings")
 	FText LoadingCompleteText;
@@ -349,7 +349,7 @@ struct ASYNCLOADINGSCREEN_API FLoadingCompleteTextSettings
 	FTextAppearance Appearance;
 	
 	/** The alignment of the text.*/
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Loading Widget Setting")
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Loading Complete Text Settings")
 	FWidgetAlignment Alignment;
 
 	/** Text padding. */

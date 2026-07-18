@@ -37,6 +37,6 @@ protected:
 	TArray<TSharedPtr<FDeferredCleanupSlateBrush>> ImageBrushList;
 
 private:
-	// Placehold widget
+	// Placeholder widget
 	TSharedRef<SWidget> BackgroundWidget = SNullWidget::NullWidget;
 };

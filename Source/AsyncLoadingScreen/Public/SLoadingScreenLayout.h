@@ -9,26 +9,34 @@
 #pragma once
 
 #include "Widgets/SCompoundWidget.h"
-#include "Engine/GameViewportClient.h"
 
-//DECLARE_LOG_CATEGORY_EXTERN(LogLoadingScreen, Log, All);
+class SOverlay;
+struct FALoadingScreenSettings;
+struct FLoadingWidgetSettings;
+
 /**
  * SLoadingScreenLayout
- * 
+ *
  * This is the base class for all loading screen layouts.
- * It provides common functionality such as DPI scaling and point size conversion.
- * 
+ * It provides common functionality such as DPI scaling and shared widget construction.
+ *
  * Note: This class is not intended to be instantiated directly.
  * Instead, use derived classes that implement specific loading screen layouts.
  *
  */
 class SLoadingScreenLayout : public SCompoundWidget
 {
-public:	
-	static float PointSizeToSlateUnits(float PointSize);
 protected:
 	float GetDPIScale() const;
 	void CalculateViewportSize() const;
+
+	/** Creates the horizontal or vertical loading widget selected in the settings */
+	static TSharedRef<SWidget> MakeLoadingWidget(const FLoadingWidgetSettings& Settings);
+
+	/** Adds the loading complete text overlay slot if it is enabled in the settings */
+	static void AddLoadingCompleteTextSlot(const TSharedRef<SOverlay>& Root, const FALoadingScreenSettings& Settings);
+
 private:
-	mutable FIntPoint _cachedViewportSize;
+	// Default to 1080p until a real viewport size is available (FIntPoint doesn't zero-initialize)
+	mutable FIntPoint CachedViewportSize = FIntPoint(1920, 1080);
 };
