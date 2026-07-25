@@ -65,7 +65,7 @@ void FAsyncLoadingScreenModule::ShutdownModule()
 
 	if (bPSOBoostActive)
 	{
-		PipelineStateCache::PrecachePSOsBoostToHighestPriority(false);
+		// PipelineStateCache::PrecachePSOsBoostToHighestPriority(false);
 		bPSOBoostActive = false;
 	}
 }
@@ -201,7 +201,7 @@ void FAsyncLoadingScreenModule::HandleMoviePlaybackStarted()
 
 	if (bBoostPSOPriority && PipelineStateCache::IsPSOPrecachingEnabled())
 	{
-		PipelineStateCache::PrecachePSOsBoostToHighestPriority(true);
+		// PipelineStateCache::PrecachePSOsBoostToHighestPriority(true);
 		bPSOBoostActive = true;
 	}
 
@@ -262,7 +262,7 @@ void FAsyncLoadingScreenModule::HandleMoviePlaybackFinished()
 
 	if (bPSOBoostActive)
 	{
-		PipelineStateCache::PrecachePSOsBoostToHighestPriority(false);
+		//PipelineStateCache::PrecachePSOsBoostToHighestPriority(false);
 		bPSOBoostActive = false;
 	}
 
