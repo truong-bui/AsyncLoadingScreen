@@ -13,12 +13,13 @@
 #include "MoviePlayer.h"
 #include "Widgets/Layout/SScaleBox.h"
 #include "Styling/SlateBrush.h"
+#include "Styling/SlateTypes.h"
 #include "Framework/Text/TextLayout.h"
 #include "LoadingScreenSettings.generated.h"
 
 
 /** 
- * Asynce Loading Screen Layouts
+ * Async Loading Screen Layouts
  */
 UENUM(BlueprintType)
 enum class EAsyncLoadingScreenLayout : uint8
@@ -168,7 +169,7 @@ struct FImageSequenceSettings
 	GENERATED_BODY()
 
 	/** An array of images for animating the loading icon.*/
-	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "Loading Widget Setting", meta = (AllowedClasses = "/Script/Engine.Texture2D"))
+	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "Loading Widget Setting")
 	TArray<TObjectPtr<UTexture2D>> Images;
 
 	/** Scale of the images.*/
@@ -194,8 +195,8 @@ struct ASYNCLOADINGSCREEN_API FBackgroundSettings
 {
 	GENERATED_BODY()
 
-	// The images randomly display while in the loading screen on top of the movie 
-	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "Background", meta = (AllowedClasses = "/Script/Engine.Texture2D"))
+	// The images randomly display while in the loading screen on top of the movie
+	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "Background")
 	TArray<TObjectPtr<UTexture2D>> Images;
 
 	// Interval time (in seconds) to randomly update the background image, a value less than or equal to 0 will not update the background image.
@@ -210,13 +211,14 @@ struct ASYNCLOADINGSCREEN_API FBackgroundSettings
 	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "Background")
 	FMargin Padding;
 
-	// The border's background color if there is any image defined. If padding = 0 you will not see the border color.
+	// The background color. It fills the whole screen when no image is defined, otherwise it is visible in the padding area around the image (padding = 0 hides it).
 	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "Background")
 	FLinearColor BackgroundColor = FLinearColor::Black;
 
 	/**
 	 * If true, you will have to manually set which background index you want to display on the loading screen by calling "SetDisplayBackgroundIndex" function
 	 * in your Blueprint before opening a new level. If the index you set is not valid, then it will display random background in the "Images" array.
+	 * A valid index also disables the random "Update Interval" refresh, so the chosen background stays on screen.
 	 */
 	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "Background")
 	bool bSetDisplayBackgroundManually = false;
@@ -265,7 +267,7 @@ struct ASYNCLOADINGSCREEN_API FLoadingWidgetSettings
 	bool bLoadingTextTopPosition = true;
 
 	// Loading text appearance settings
-	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "Tip Settings")
+	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "Loading Widget Setting")
 	FTextAppearance Appearance;
 
 	/** Throbber settings. Ignore this if you don't choose the 'Throbber' icon type*/
@@ -325,8 +327,9 @@ struct ASYNCLOADINGSCREEN_API FTipSettings
 	/**
 	 * If true, you will have to manually set which TipText index you want to display on the loading screen by calling "SetDisplayTipTextIndex" function
 	 * in your Blueprint before opening a new level. If the index you set is not valid, then it will display random Tip in the "TipText" array.
+	 * A valid index also disables the random "Update Interval" refresh, so the chosen tip stays on screen.
 	 */
-	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "Background")
+	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "Tip Settings")
 	bool bSetDisplayTipTextManually = false;
 };
 
@@ -338,8 +341,6 @@ struct ASYNCLOADINGSCREEN_API FLoadingCompleteTextSettings
 {
 	GENERATED_BODY()
 
-//	FLoadingCompleteTextSettings();
-
 	// The text that shows up when level loading is done.
 	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "Loading Complete Text Settings")
 	FText LoadingCompleteText;
@@ -349,7 +350,7 @@ struct ASYNCLOADINGSCREEN_API FLoadingCompleteTextSettings
 	FTextAppearance Appearance;
 	
 	/** The alignment of the text.*/
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Loading Widget Setting")
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Loading Complete Text Settings")
 	FWidgetAlignment Alignment;
 
 	/** Text padding. */
@@ -365,6 +366,56 @@ struct ASYNCLOADINGSCREEN_API FLoadingCompleteTextSettings
 	 */
 	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "Loading Complete Text Settings", meta = (UIMax = 10.00, UIMin = 0.00, ClampMin = "0", ClampMax = "10"))
 	float AnimationSpeed = 1.0f;
+};
+
+/**
+ * The progress bar and text that display PSO precache compilation progress. Ignore this if you don't set "bShowProgressWidget" = true
+ */
+USTRUCT(BlueprintType)
+struct ASYNCLOADINGSCREEN_API FPSOPrecacheProgressSettings
+{
+	GENERATED_BODY()
+
+	FPSOPrecacheProgressSettings();
+
+	/**
+	 * If true, displays a progress bar with an optional text showing the PSO precache compilation progress.
+	 * The widget only appears while there are outstanding PSO precache compilations, and hides itself when they are done.
+	 * Usually used together with "Wait For PSO Precaching To Complete". Ignore this if you choose "Show Widget Overlay" = false.
+	 */
+	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "PSO Precache Progress Settings")
+	bool bShowProgressWidget = false;
+
+	/**
+	 * The text displayed below the progress bar. Supports the {Percent} and {Remaining} format arguments,
+	 * e.g. "Compiling Shaders... {Percent}%" or "Compiling Shaders ({Remaining} remaining)". Leave empty to display the progress bar only.
+	 */
+	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "PSO Precache Progress Settings")
+	FText ProgressText;
+
+	// Progress text appearance settings
+	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "PSO Precache Progress Settings")
+	FTextAppearance Appearance;
+
+	/** Style of the progress bar (background/fill brushes, fill color, etc.) */
+	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "PSO Precache Progress Settings")
+	FProgressBarStyle Style;
+
+	/** The size of the progress bar */
+	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "PSO Precache Progress Settings")
+	FVector2D BarSize = FVector2D(500.0f, 20.0f);
+
+	/** The alignment of the progress widget on the screen */
+	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "PSO Precache Progress Settings")
+	FWidgetAlignment Alignment;
+
+	/** Progress widget padding */
+	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "PSO Precache Progress Settings")
+	FMargin Padding = FMargin(0.0f, 0.0f, 0.0f, 60.0f);
+
+	// Interval time (in seconds) to update the progress bar and text. A zero value will update them every frame.
+	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "PSO Precache Progress Settings", meta = (UIMax = 1.00, UIMin = 0.00, ClampMin = "0", ClampMax = "1"))
+	float UpdateInterval = 0.1f;
 };
 
 /**
@@ -404,6 +455,34 @@ struct ASYNCLOADINGSCREEN_API FALoadingScreenSettings
 	/** If true, this will call the engine tick while the game thread is stalled waiting for a loading movie to finish. This only works for post-startup load screens and is potentially unsafe */
 	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "Movies Settings")
 	bool bAllowEngineTick = false;
+
+	/**
+	 * If true, the loading screen also stays up until all outstanding PSO precache compilations (bundled PSO cache + runtime PSO precaching)
+	 * are finished, in addition to level loading. Epic recommends this so players don't see visual popping or hitches right after the loading screen closes.
+	 *
+	 * NOTE: This takes over the "Wait For Manual Stop" setting: the plugin forces it to true and stops the loading screen automatically once
+	 * PSO precaching completes (or "PSO Precache Max Wait Time" is exceeded) and "Minimum Loading Screen Display Time" (if >= 0) has elapsed,
+	 * so you don't need to call "StopLoadingScreen" yourself. If "Minimum Loading Screen Display Time" = -1, players can still press any key
+	 * to stop the loading screen once level loading is done, even if PSO precaching is still running. Ignored if "Allow In Early Startup" = true.
+	 * Has no effect when PSO precaching is disabled (r.PSOPrecaching=0, e.g. in the editor or on DirectX 11).
+	 */
+	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "Movies Settings")
+	bool bWaitForPSOPrecachingToComplete = false;
+
+	/**
+	 * Safety timeout (in seconds) for "Wait For PSO Precaching To Complete", counted from the moment level loading has finished.
+	 * If PSO precaching is still not done after this time, the loading screen closes anyway. A zero value will wait with no time limit.
+	 * A value > 0 is recommended, especially when the project also ships a bundled PSO cache, which can keep the pending count above zero for a long time.
+	 */
+	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "Movies Settings", meta = (EditCondition = "bWaitForPSOPrecachingToComplete", UIMax = 60.00, UIMin = 0.00, ClampMin = "0"))
+	float PSOPrecacheMaxWaitTime = 0.0f;
+
+	/**
+	 * If true, boost all outstanding PSO precache compilations to highest priority while this loading screen is displayed, so they finish sooner.
+	 * The priority is restored when the loading screen closes. Has no effect when PSO precaching is disabled (r.PSOPrecaching=0).
+	 */
+	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "Movies Settings", meta = (EditCondition = "bWaitForPSOPrecachingToComplete"))
+	bool bBoostPSOPrecachePriority = true;
 
 	/** Should we just play back, loop, etc.  NOTE: if the playback type is MT_LoopLast, then bAutoCompleteWhenLoadingCompletes will be togged on when the last movie is hit*/
 	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "Movies Settings")
@@ -462,6 +541,10 @@ struct ASYNCLOADINGSCREEN_API FALoadingScreenSettings
 	/** Loading widget for the loading screen. Ignore this if you choose "Show Widget Overlay = false" */
 	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "Loading Screen Settings")
 	FLoadingWidgetSettings LoadingWidget;
+
+	/** PSO precache progress widget for the loading screen. Ignore this if you choose "Show Widget Overlay = false" */
+	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "Loading Screen Settings")
+	FPSOPrecacheProgressSettings PSOPrecacheProgressWidget;
 
 	/**
 	 * Select async loading screen Layout. Ignore this if you choose "Show Widget Overlay = false"

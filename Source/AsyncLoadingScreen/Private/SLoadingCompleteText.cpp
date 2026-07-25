@@ -49,6 +49,12 @@ FSlateColor SLoadingCompleteText::GetLoadingCompleteTextColor() const
 
 EActiveTimerReturnType SLoadingCompleteText::AnimateText(double InCurrentTime, float InDeltaTime)
 {
+	// Don't animate while the text is hidden, so the fade starts from its configured color when revealed
+	if (!GetMoviePlayer()->IsLoadingFinished())
+	{
+		return EActiveTimerReturnType::Continue;
+	}
+
 	const float MinAlpha = 0.1f;
 	const float MaxAlpha = 1.0f;
 
@@ -72,7 +78,7 @@ EActiveTimerReturnType SLoadingCompleteText::AnimateText(double InCurrentTime, f
 		TextAlpha -= InDeltaTime * CompleteTextAnimationSpeed;
 	}
 
-	CompleteTextColor.A = TextAlpha;
+	CompleteTextColor.A = FMath::Clamp(TextAlpha, MinAlpha, MaxAlpha);
 
 	return EActiveTimerReturnType::Continue;
 }

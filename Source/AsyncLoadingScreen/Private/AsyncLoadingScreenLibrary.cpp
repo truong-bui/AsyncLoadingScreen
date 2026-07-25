@@ -9,7 +9,6 @@
 
 #include "AsyncLoadingScreenLibrary.h"
 #include "MoviePlayer.h"
-#include "AsyncLoadingScreen.h"
 
 int32 UAsyncLoadingScreenLibrary::DisplayBackgroundIndex = -1;
 int32 UAsyncLoadingScreenLibrary::DisplayTipTextIndex = -1;
