@@ -17,6 +17,11 @@
 #include "Framework/Application/SlateApplication.h"
 #include "AsyncLoadingScreenLibrary.h"
 #include "Engine/Texture2D.h"
+#include "ShaderPipelineCache.h"
+#include "PipelineStateCache.h"
+#include "Misc/CoreDelegates.h"
+
+DEFINE_LOG_CATEGORY(LogAsyncLoadingScreen);
 
 #define LOCTEXT_NAMESPACE "FAsyncLoadingScreenModule"
 
@@ -29,8 +34,10 @@ void FAsyncLoadingScreenModule::StartupModule()
 				
 		if (IsMoviePlayerEnabled())
 		{
-			GetMoviePlayer()->OnPrepareLoadingScreen().AddRaw(this, &FAsyncLoadingScreenModule::PreSetupLoadingScreen);				
-		}				
+			GetMoviePlayer()->OnPrepareLoadingScreen().AddRaw(this, &FAsyncLoadingScreenModule::PreSetupLoadingScreen);
+			GetMoviePlayer()->OnMoviePlaybackStarted().AddRaw(this, &FAsyncLoadingScreenModule::HandleMoviePlaybackStarted);
+			GetMoviePlayer()->OnMoviePlaybackFinished().AddRaw(this, &FAsyncLoadingScreenModule::HandleMoviePlaybackFinished);
+		}
 
 		// Prepare the startup screen, the PreSetupLoadingScreen callback won't be called
 		// if we've already explicitly setup the loading screen
@@ -43,10 +50,23 @@ void FAsyncLoadingScreenModule::ShutdownModule()
 {
 	// This function may be called during shutdown to clean up your module.  For modules that support dynamic reloading,
 	// we call this function before unloading the module.
-	if (!IsRunningDedicatedServer())
+	if (!IsRunningDedicatedServer() && IsMoviePlayerEnabled())
 	{
-		// TODO: Unregister later
 		GetMoviePlayer()->OnPrepareLoadingScreen().RemoveAll(this);
+		GetMoviePlayer()->OnMoviePlaybackStarted().RemoveAll(this);
+		GetMoviePlayer()->OnMoviePlaybackFinished().RemoveAll(this);
+	}
+
+	if (SamplingInputHandle.IsValid())
+	{
+		FCoreDelegates::OnSamplingInput.Remove(SamplingInputHandle);
+		SamplingInputHandle.Reset();
+	}
+
+	if (bPSOBoostActive)
+	{
+		PipelineStateCache::PrecachePSOsBoostToHighestPriority(false);
+		bPSOBoostActive = false;
 	}
 }
 
@@ -101,29 +121,58 @@ void FAsyncLoadingScreenModule::SetupLoadingScreen(const FALoadingScreenSettings
 	LoadingScreen.MoviePaths = MoviesList;
 	LoadingScreen.PlaybackType = LoadingScreenSettings.PlaybackType;
 
+	// Reset the PSO precache wait state for this loading screen
+	bWaitForPSOPrecache = false;
+	bBoostPSOPriority = false;
+	PSOMaxWaitTime = LoadingScreenSettings.PSOPrecacheMaxWaitTime;
+	CachedMinimumDisplayTime = LoadingScreenSettings.MinimumLoadingScreenDisplayTime;
+
+	if (LoadingScreenSettings.bWaitForPSOPrecachingToComplete)
+	{
+		if (LoadingScreenSettings.bAllowInEarlyStartup)
+		{
+			UE_LOG(LogAsyncLoadingScreen, Warning, TEXT("bWaitForPSOPrecachingToComplete is ignored because bAllowInEarlyStartup is enabled; the PSO caches are not initialized during early startup."));
+		}
+		else
+		{
+			bBoostPSOPriority = LoadingScreenSettings.bBoostPSOPrecachePriority;
+			bWaitForPSOPrecache = true;
+			// Keep the movie player's wait loop alive past level-load completion; PollPSOPrecaching calls StopMovie() once
+			// PSO precaching is done, so any user-configured bWaitForManualStop is taken over by the plugin
+			LoadingScreen.bWaitForManualStop = true;
+		}
+	}
+
 	if (LoadingScreenSettings.bShowWidgetOverlay)
 	{
-		const ULoadingScreenSettings* Settings = GetDefault<ULoadingScreenSettings>();
-
-		switch (LoadingScreenSettings.Layout)
+		if (LoadingScreenSettings.bAllowInEarlyStartup)
 		{
-		case EAsyncLoadingScreenLayout::ALSL_Classic:
-			LoadingScreen.WidgetLoadingScreen = SNew(SClassicLayout, LoadingScreenSettings, Settings->Classic);
-			break;
-		case EAsyncLoadingScreenLayout::ALSL_Center:
-			LoadingScreen.WidgetLoadingScreen = SNew(SCenterLayout, LoadingScreenSettings, Settings->Center);
-			break;
-		case EAsyncLoadingScreenLayout::ALSL_Letterbox:
-			LoadingScreen.WidgetLoadingScreen = SNew(SLetterboxLayout, LoadingScreenSettings, Settings->Letterbox);
-			break;
-		case EAsyncLoadingScreenLayout::ALSL_Sidebar:
-			LoadingScreen.WidgetLoadingScreen = SNew(SSidebarLayout, LoadingScreenSettings, Settings->Sidebar);
-			break;
-		case EAsyncLoadingScreenLayout::ALSL_DualSidebar:
-			LoadingScreen.WidgetLoadingScreen = SNew(SDualSidebarLayout, LoadingScreenSettings, Settings->DualSidebar);
-			break;
+			// Early startup loading screens must not reference UObjects (settings textures/fonts), so the overlay cannot be used with them
+			UE_LOG(LogAsyncLoadingScreen, Warning, TEXT("bShowWidgetOverlay is ignored because bAllowInEarlyStartup is enabled; early startup loading screens cannot contain UObjects. Only movies will be displayed."));
 		}
-		
+		else
+		{
+			const ULoadingScreenSettings* Settings = GetDefault<ULoadingScreenSettings>();
+
+			switch (LoadingScreenSettings.Layout)
+			{
+			case EAsyncLoadingScreenLayout::ALSL_Classic:
+				LoadingScreen.WidgetLoadingScreen = SNew(SClassicLayout, LoadingScreenSettings, Settings->Classic);
+				break;
+			case EAsyncLoadingScreenLayout::ALSL_Center:
+				LoadingScreen.WidgetLoadingScreen = SNew(SCenterLayout, LoadingScreenSettings, Settings->Center);
+				break;
+			case EAsyncLoadingScreenLayout::ALSL_Letterbox:
+				LoadingScreen.WidgetLoadingScreen = SNew(SLetterboxLayout, LoadingScreenSettings, Settings->Letterbox);
+				break;
+			case EAsyncLoadingScreenLayout::ALSL_Sidebar:
+				LoadingScreen.WidgetLoadingScreen = SNew(SSidebarLayout, LoadingScreenSettings, Settings->Sidebar);
+				break;
+			case EAsyncLoadingScreenLayout::ALSL_DualSidebar:
+				LoadingScreen.WidgetLoadingScreen = SNew(SDualSidebarLayout, LoadingScreenSettings, Settings->DualSidebar);
+				break;
+			}
+		}
 	}
 
 	GetMoviePlayer()->SetupLoadingScreen(LoadingScreen);
@@ -143,6 +192,83 @@ void FAsyncLoadingScreenModule::ShuffleMovies(TArray<FString>& MoviesList)
 			}
 		}
 	}
+}
+
+void FAsyncLoadingScreenModule::HandleMoviePlaybackStarted()
+{
+	MoviePlaybackStartTime = FPlatformTime::Seconds();
+	PSOWaitPhaseStartTime = 0.0;
+
+	if (bBoostPSOPriority && PipelineStateCache::IsPSOPrecachingEnabled())
+	{
+		PipelineStateCache::PrecachePSOsBoostToHighestPriority(true);
+		bPSOBoostActive = true;
+	}
+
+	if (bWaitForPSOPrecache && !SamplingInputHandle.IsValid())
+	{
+		// OnMoviePlaybackTick is not broadcast from the movie player's post-load wait loop, but OnSamplingInput is, every iteration on the game thread
+		SamplingInputHandle = FCoreDelegates::OnSamplingInput.AddRaw(this, &FAsyncLoadingScreenModule::PollPSOPrecaching);
+	}
+}
+
+void FAsyncLoadingScreenModule::PollPSOPrecaching()
+{
+	// Note: don't check IsMovieCurrentlyPlaying() here; it returns false once the movie player enters its wait loop
+	// (the sync mechanism is destroyed on entry), which is exactly when this poll runs. The OnSamplingInput binding
+	// is already scoped to the loading screen's lifetime by HandleMoviePlaybackStarted/Finished.
+	if (!bWaitForPSOPrecache)
+	{
+		return;
+	}
+
+	const double CurrentTime = FPlatformTime::Seconds();
+
+	// While a loading screen is up, OnSamplingInput only fires from the wait loop entered after level loading completes,
+	// so the first callback marks the start of the PSO wait phase for the timeout
+	if (PSOWaitPhaseStartTime == 0.0)
+	{
+		PSOWaitPhaseStartTime = CurrentTime;
+	}
+
+	// StopMovie() bypasses the movie player's own MinimumLoadingScreenDisplayTime handling, so enforce it here
+	const bool bMinTimeSatisfied = CachedMinimumDisplayTime < 0.0f || (CurrentTime - MoviePlaybackStartTime) >= CachedMinimumDisplayTime;
+	const uint32 NumPrecompilesRemaining = FShaderPipelineCache::NumPrecompilesRemaining();
+	const bool bTimedOut = PSOMaxWaitTime > 0.0f && (CurrentTime - PSOWaitPhaseStartTime) >= PSOMaxWaitTime;
+
+	if (bMinTimeSatisfied && (NumPrecompilesRemaining == 0 || bTimedOut))
+	{
+		if (NumPrecompilesRemaining > 0)
+		{
+			UE_LOG(LogAsyncLoadingScreen, Warning, TEXT("Loading screen timed out after %.1f seconds with %u PSO precompiles remaining."), PSOMaxWaitTime, NumPrecompilesRemaining);
+		}
+
+		bWaitForPSOPrecache = false;
+		FCoreDelegates::OnSamplingInput.Remove(SamplingInputHandle);
+		SamplingInputHandle.Reset();
+
+		GetMoviePlayer()->StopMovie();
+	}
+}
+
+void FAsyncLoadingScreenModule::HandleMoviePlaybackFinished()
+{
+	// The loading screen can also be closed by a key press or a manual StopLoadingScreen call, so always clean up here
+	if (SamplingInputHandle.IsValid())
+	{
+		FCoreDelegates::OnSamplingInput.Remove(SamplingInputHandle);
+		SamplingInputHandle.Reset();
+	}
+
+	if (bPSOBoostActive)
+	{
+		PipelineStateCache::PrecachePSOsBoostToHighestPriority(false);
+		bPSOBoostActive = false;
+	}
+
+	bWaitForPSOPrecache = false;
+	bBoostPSOPriority = false;
+	PSOWaitPhaseStartTime = 0.0;
 }
 
 

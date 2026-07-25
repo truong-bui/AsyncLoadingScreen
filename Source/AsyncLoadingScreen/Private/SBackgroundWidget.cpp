@@ -13,7 +13,6 @@
 #include "Widgets/Layout/SBorder.h"
 #include "Engine/Texture2D.h"
 #include "AsyncLoadingScreenLibrary.h"
-#include "AsyncLoadingScreen.h"
 
 void SBackgroundWidget::Construct(const FArguments& InArgs, const FBackgroundSettings& Settings)
 {
@@ -28,38 +27,41 @@ void SBackgroundWidget::Construct(const FArguments& InArgs, const FBackgroundSet
 		}
 	}
 
-	// If there's an image defined
+	// Pick the image to display, if any is defined
+	int32 ImageIndex = INDEX_NONE;
 	if (ImageBrushList.Num() > 0)
 	{
-		int32 ImageIndex = FMath::RandRange(0, ImageBrushList.Num() - 1);
+		ImageIndex = FMath::RandRange(0, ImageBrushList.Num() - 1);
 
 		if (Settings.bSetDisplayBackgroundManually == true)
 		{
 			if (ImageBrushList.IsValidIndex(UAsyncLoadingScreenLibrary::GetDisplayBackgroundIndex()))
 			{
 				ImageIndex = UAsyncLoadingScreenLibrary::GetDisplayBackgroundIndex();
+				// A manually chosen background stays on screen; disable the random interval refresh
+				Interval = 0.0f;
 			}
-		}				
-
-		// Load background from settings
-		ChildSlot
-			[
-				SNew(SBorder)
-					.HAlign(HAlign_Fill)
-					.VAlign(VAlign_Fill)
-					.Padding(Settings.Padding)
-					.BorderBackgroundColor(Settings.BackgroundColor)
-					.BorderImage(FCoreStyle::Get().GetBrush("WhiteBrush"))
-					[
-						SNew(SScaleBox)
-							.Stretch(Settings.ImageStretch)
-							[
-								BackgroundWidget = SNew(SImage)
-									.Image(ImageBrushList[ImageIndex].IsValid() ? ImageBrushList[ImageIndex]->GetSlateBrush() : nullptr)
-							]
-					]
-			];
+		}
 	}
+
+	// Always build the border so the background color renders even when no image is defined
+	ChildSlot
+		[
+			SNew(SBorder)
+				.HAlign(HAlign_Fill)
+				.VAlign(VAlign_Fill)
+				.Padding(Settings.Padding)
+				.BorderBackgroundColor(Settings.BackgroundColor)
+				.BorderImage(FCoreStyle::Get().GetBrush("WhiteBrush"))
+				[
+					SNew(SScaleBox)
+						.Stretch(Settings.ImageStretch)
+						[
+							BackgroundWidget = SNew(SImage)
+								.Image(ImageIndex != INDEX_NONE ? ImageBrushList[ImageIndex]->GetSlateBrush() : nullptr)
+						]
+				]
+		];
 }
 
 int32 SBackgroundWidget::OnPaint(const FPaintArgs& Args, const FGeometry& AllottedGeometry, const FSlateRect& MyCullingRect, FSlateWindowElementList& OutDrawElements, int32 LayerId, const FWidgetStyle& InWidgetStyle, bool bParentEnabled) const
@@ -74,7 +76,7 @@ int32 SBackgroundWidget::OnPaint(const FPaintArgs& Args, const FGeometry& Allott
 			int32 ImageIndex = FMath::RandRange(0, ImageBrushList.Num() - 1);
 
 			// Load background from settings
-			StaticCastSharedRef<SImage>(BackgroundWidget)->SetImage(ImageBrushList[ImageIndex].IsValid() ? ImageBrushList[ImageIndex]->GetSlateBrush() : nullptr);
+			StaticCastSharedRef<SImage>(BackgroundWidget)->SetImage(ImageBrushList[ImageIndex]->GetSlateBrush());
 
 			TotalDeltaTime = 0.0f;
 		}
