@@ -12,6 +12,7 @@
 #include "Widgets/Layout/SBox.h"
 #include "Widgets/Notifications/SProgressBar.h"
 #include "Widgets/Text/STextBlock.h"
+#include "Widgets/SBoxPanel.h"
 
 void SPSOPrecacheProgressWidget::Construct(const FArguments& InArgs, const FPSOPrecacheProgressSettings& Settings)
 {
