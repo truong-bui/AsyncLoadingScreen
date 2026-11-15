@@ -25,6 +25,13 @@ FPSOPrecacheProgressSettings::FPSOPrecacheProgressSettings()
 	Alignment.VerticalAlignment = EVerticalAlignment::VAlign_Bottom;
 }
 
+FNetworkStatusSettings::FNetworkStatusSettings()
+{
+	StatusText = LOCTEXT("WaitingForServer", "Waiting for server...");
+	Appearance.Justification = ETextJustify::Center;
+	Alignment.VerticalAlignment = EVerticalAlignment::VAlign_Bottom;
+}
+
 
 ULoadingScreenSettings::ULoadingScreenSettings(const FObjectInitializer& Initializer) : Super(Initializer)
 {
@@ -43,6 +50,8 @@ ULoadingScreenSettings::ULoadingScreenSettings(const FObjectInitializer& Initial
 		DefaultLoadingScreen.LoadingCompleteTextSettings.Appearance.Font = FSlateFontInfo(RobotoFontObj.Object, 24, FName("Normal"));
 		StartupLoadingScreen.PSOPrecacheProgressWidget.Appearance.Font = FSlateFontInfo(RobotoFontObj.Object, 18, FName("Normal"));
 		DefaultLoadingScreen.PSOPrecacheProgressWidget.Appearance.Font = FSlateFontInfo(RobotoFontObj.Object, 18, FName("Normal"));
+		StartupLoadingScreen.NetworkStatusWidget.Appearance.Font = FSlateFontInfo(RobotoFontObj.Object, 20, FName("Normal"));
+		DefaultLoadingScreen.NetworkStatusWidget.Appearance.Font = FSlateFontInfo(RobotoFontObj.Object, 20, FName("Normal"));
 	}
 }
 

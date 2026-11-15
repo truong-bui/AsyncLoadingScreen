@@ -9,7 +9,7 @@
 
 #include "SLoadingCompleteText.h"
 #include "LoadingScreenSettings.h"
-#include "MoviePlayer.h"
+#include "AsyncLoadingScreen.h"
 #include "Widgets/Text/STextBlock.h"
 
 void SLoadingCompleteText::Construct(const FArguments& InArgs, const FLoadingCompleteTextSettings& CompleteTextSettings)
@@ -39,7 +39,7 @@ void SLoadingCompleteText::Construct(const FArguments& InArgs, const FLoadingCom
 
 EVisibility SLoadingCompleteText::GetLoadingCompleteTextVisibility() const
 {
-	return GetMoviePlayer()->IsLoadingFinished() ? EVisibility::Visible : EVisibility::Hidden;
+	return AsyncLoadingScreen::IsLoadingFinished() ? EVisibility::Visible : EVisibility::Hidden;
 }
 
 FSlateColor SLoadingCompleteText::GetLoadingCompleteTextColor() const
@@ -50,7 +50,7 @@ FSlateColor SLoadingCompleteText::GetLoadingCompleteTextColor() const
 EActiveTimerReturnType SLoadingCompleteText::AnimateText(double InCurrentTime, float InDeltaTime)
 {
 	// Don't animate while the text is hidden, so the fade starts from its configured color when revealed
-	if (!GetMoviePlayer()->IsLoadingFinished())
+	if (!AsyncLoadingScreen::IsLoadingFinished())
 	{
 		return EActiveTimerReturnType::Continue;
 	}

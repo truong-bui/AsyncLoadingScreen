@@ -39,6 +39,9 @@ protected:
 	/** Adds the PSO precache progress overlay slot if it is enabled in the settings */
 	static void AddPSOPrecacheProgressSlot(const TSharedRef<SOverlay>& Root, const FALoadingScreenSettings& Settings);
 
+	/** Adds the network status text overlay slot if it is enabled in the settings */
+	static void AddNetworkStatusSlot(const TSharedRef<SOverlay>& Root, const FALoadingScreenSettings& Settings);
+
 private:
 	// Default to 1080p until a real viewport size is available (FIntPoint doesn't zero-initialize)
 	mutable FIntPoint CachedViewportSize = FIntPoint(1920, 1080);

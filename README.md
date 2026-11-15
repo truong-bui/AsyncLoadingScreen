@@ -61,6 +61,27 @@ Async Loading Screen uses MoviePlayer to play a movie at level transition, on a 
 
 MoviePlayer is registered to PreLoadMap and PostLoadMapWithWorld delegates so it will be called and shut down automatically by the engine whenever you open a new level.
 
+# Multiplayer
+
+The engine only starts a loading screen when it loads a new map, which is not enough in a networked game:
+
+- **Seamless travel** doesn't load a new map at all, so no loading screen is displayed.
+- **On a client joining a server**, the loading screen closes as soon as the map is loaded, while the player is still waiting for the server to send the PlayerController. The engine displays its own black "CONNECTING" screen for that wait.
+
+The **Multiplayer** section in Project Settings covers both cases:
+
+- **Show Loading Screen On Seamless Travel**: displays the Default Loading Screen during seamless travel, on the listen server and on the clients.
+- **Hold Until Network Ready**: keeps the loading screen up after level loading until the local player has finished joining the server. You can also wait for the Game State (recommended, and the meaningful wait after a seamless travel) and for the player's Pawn. **Network Max Wait Time** closes the loading screen anyway if the join stalls, and a travel or connection failure closes it immediately.
+- **Network Status Settings** (per loading screen): displays a text such as *"Waiting for server..."* while the loading screen is waiting for the network, so players know why it is still up.
+- Blueprint: **Set Loading Screen Hold** lets your game hold the loading screen for its own reasons (streaming content in after joining, for instance) on top of the built-in conditions. **Show Loading Screen** displays the Default Loading Screen outside of a level transition.
+
+Notes:
+
+- The held screen is a **widget in the game viewport**, not a MoviePlayer screen. MoviePlayer blocks the game thread while it is up, which is exactly what the network and seamless travel need in order to progress, so it can't be used for a wait that depends on them. Three consequences: **movies do not play while the screen is held**, the game world renders *behind* the widget (so give the Background a fully opaque color or image, or the game shows through), and the screen can't be dismissed by a key press.
+- The plugin takes the screen down itself once the player has joined or a timeout expires, so no `StopLoadingScreen` call is needed. Blocking work during the transition (a garbage collection spike, for example) freezes Slate for its duration, so the screen stops animating but stays on screen.
+- Single player and listen servers are already ready when level loading finishes, so their loading screens behave exactly as before.
+- Loading screens never appear in PIE (this is an engine limitation, not a plugin one). Test multiplayer with two **Standalone Game** instances or a packaged build.
+
 # Features
 
 - Easy to set up, easy to use.
@@ -76,6 +97,17 @@ MoviePlayer is registered to PreLoadMap and PostLoadMapWithWorld delegates so it
 - Integrates seamlessly with an existing project.
 
 # Changelog
+
+### Version 1.8.0 (31/07/2026)
+- New **Multiplayer** section in Project Settings (see the [Multiplayer](#multiplayer) section above)
+- New **Show Loading Screen On Seamless Travel** option: displays the Default Loading Screen during seamless travel on the listen server and the clients, which the engine otherwise leaves without any loading screen, with a **Seamless Travel Max Wait Time** safety timeout
+- New **Hold Until Network Ready** option: the loading screen stays up after level loading until the local player has actually joined the server, instead of closing early and leaving the engine's black "CONNECTING" screen to cover the wait; optionally also waits for the **Game State** and the player's **Pawn**, with a **Network Max Wait Time** safety timeout
+- Held loading screens can't be dismissed by a key press, so players can't skip past a wait that isn't over
+- New **Network Status Settings** (per loading screen) displaying a configurable text, e.g. *"Waiting for server..."*, while the loading screen waits for the network
+- New Blueprint functions **Set Loading Screen Hold** / **Is Loading Screen Hold** to hold the loading screen from your own game logic, and **Show Loading Screen** to display the Default Loading Screen outside of a level transition
+- A travel failure or a lost connection now closes the loading screen immediately instead of leaving it up until it times out
+- **Show Loading Screen** now displays a viewport widget that stays up until **Stop Loading Screen** is called, instead of relying on **Allow Engine Tick**
+- Notes: held loading screens are widgets in the game viewport rather than MoviePlayer screens, because MoviePlayer blocks the game thread that the network and seamless travel need in order to progress — so **movies do not play while a screen is held**, the world renders behind the widget (give the Background an opaque color or image), and the screen can't be dismissed by a key press. The plugin takes it down itself, so no `StopLoadingScreen` call is needed. Single player and listen servers are unaffected; loading screens never appear in PIE, so test in Standalone or a packaged build
 
 ### Version 1.7.0 (25/07/2026)
 - New **Wait For PSO Precaching To Complete** option (per loading screen): the loading screen stays up until all outstanding PSO precache compilations (bundled PSO cache + runtime PSO precaching) are finished, as recommended by Epic's PSO Precaching documentation, so players don't see visual popping or hitches right after the loading screen closes

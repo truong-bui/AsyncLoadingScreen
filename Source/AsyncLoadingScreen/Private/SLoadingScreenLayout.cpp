@@ -12,6 +12,7 @@
 #include "SVerticalLoadingWidget.h"
 #include "SLoadingCompleteText.h"
 #include "SPSOPrecacheProgressWidget.h"
+#include "SNetworkStatusWidget.h"
 #include "Engine/UserInterfaceSettings.h"
 #include "Engine/Engine.h"
 #include "Engine/GameViewportClient.h"
@@ -88,6 +89,20 @@ void SLoadingScreenLayout::AddPSOPrecacheProgressSlot(const TSharedRef<SOverlay>
 			.Padding(Settings.PSOPrecacheProgressWidget.Padding)
 			[
 				SNew(SPSOPrecacheProgressWidget, Settings.PSOPrecacheProgressWidget)
+			];
+	}
+}
+
+void SLoadingScreenLayout::AddNetworkStatusSlot(const TSharedRef<SOverlay>& Root, const FALoadingScreenSettings& Settings)
+{
+	if (Settings.NetworkStatusWidget.bShowStatusText)
+	{
+		Root->AddSlot()
+			.VAlign(Settings.NetworkStatusWidget.Alignment.VerticalAlignment)
+			.HAlign(Settings.NetworkStatusWidget.Alignment.HorizontalAlignment)
+			.Padding(Settings.NetworkStatusWidget.Padding)
+			[
+				SNew(SNetworkStatusWidget, Settings.NetworkStatusWidget)
 			];
 	}
 }

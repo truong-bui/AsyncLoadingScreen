@@ -419,6 +419,42 @@ struct ASYNCLOADINGSCREEN_API FPSOPrecacheProgressSettings
 };
 
 /**
+ * The text that displays while the loading screen is waiting for the local player to finish joining the server.
+ * Ignore this if you don't set "bShowStatusText" = true
+ */
+USTRUCT(BlueprintType)
+struct ASYNCLOADINGSCREEN_API FNetworkStatusSettings
+{
+	GENERATED_BODY()
+
+	FNetworkStatusSettings();
+
+	/**
+	 * If true, display a text while the loading screen is held waiting for the local player to finish joining the server,
+	 * so players understand why the loading screen is still up. Requires "Hold Until Network Ready" in the Multiplayer settings.
+	 * The text only appears during that wait. Ignore this if you choose "Show Widget Overlay" = false.
+	 */
+	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "Network Status Settings")
+	bool bShowStatusText = false;
+
+	/** The text displayed while waiting for the server. */
+	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "Network Status Settings")
+	FText StatusText;
+
+	// Text appearance settings
+	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "Network Status Settings")
+	FTextAppearance Appearance;
+
+	/** The alignment of the text. */
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Network Status Settings")
+	FWidgetAlignment Alignment;
+
+	/** Text padding. */
+	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "Network Status Settings")
+	FMargin Padding = FMargin(0.0f, 0.0f, 0.0f, 100.0f);
+};
+
+/**
  * Loading Screen Settings
  */
 USTRUCT(BlueprintType)
@@ -545,6 +581,10 @@ struct ASYNCLOADINGSCREEN_API FALoadingScreenSettings
 	/** PSO precache progress widget for the loading screen. Ignore this if you choose "Show Widget Overlay = false" */
 	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "Loading Screen Settings")
 	FPSOPrecacheProgressSettings PSOPrecacheProgressWidget;
+
+	/** Network status text for the loading screen, displayed while waiting to join a server. Ignore this if you choose "Show Widget Overlay = false" */
+	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "Loading Screen Settings")
+	FNetworkStatusSettings NetworkStatusWidget;
 
 	/**
 	 * Select async loading screen Layout. Ignore this if you choose "Show Widget Overlay = false"
@@ -752,8 +792,72 @@ struct FDualSidebarLayoutSettings
 	FSlateBrush RightBorderBackground;
 };
 
+/** Multiplayer settings */
+USTRUCT(BlueprintType)
+struct ASYNCLOADINGSCREEN_API FMultiplayerSettings
+{
+	GENERATED_BODY()
+
+	/**
+	 * If true, also display the Default Loading Screen during seamless travel (ServerTravel/ClientTravel with
+	 * "Use Seamless Travel" enabled), on both the listen server and the clients. The engine doesn't load a new map for
+	 * seamless travel, so without this option no loading screen is displayed at all.
+	 *
+	 * NOTE: The plugin owns this loading screen: "Wait For Manual Stop" and "Allow Engine Tick" are forced to true and the
+	 * screen is stopped automatically when the travel is finished, so you don't need to call "StopLoadingScreen" yourself.
+	 * The engine must keep ticking while the screen is up, otherwise the seamless travel would never progress.
+	 */
+	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "Multiplayer")
+	bool bShowLoadingScreenOnSeamlessTravel = false;
+
+	/**
+	 * Safety timeout (in seconds) for the seamless travel loading screen, counted from the moment the screen appears.
+	 * A cancelled or failed seamless travel never reports completion, so the screen closes anyway after this time.
+	 * A zero value will wait with no time limit (not recommended).
+	 */
+	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "Multiplayer", meta = (EditCondition = "bShowLoadingScreenOnSeamlessTravel", UIMax = 120.00, UIMin = 0.00, ClampMin = "0"))
+	float SeamlessTravelMaxWaitTime = 60.0f;
+
+	/**
+	 * If true, the loading screen stays up after level loading is done until the local player has finished joining the server.
+	 * Without this option, a client's loading screen closes as soon as the map is loaded, while the player is still waiting
+	 * for the server to send the PlayerController, and the engine displays its own black "CONNECTING" screen instead.
+	 *
+	 * NOTE: This takes over the "Wait For Manual Stop" and "Allow Engine Tick" settings: both are forced to true and the plugin
+	 * stops the loading screen automatically once the player has joined (or "Network Max Wait Time" is exceeded), so you don't
+	 * need to call "StopLoadingScreen" yourself. Ignored if "Allow In Early Startup" = true. Single player and listen servers
+	 * are already ready when the level finishes loading, so their loading screens are not affected.
+	 */
+	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "Multiplayer")
+	bool bHoldUntilNetworkReady = false;
+
+	/**
+	 * If true, also wait for the Game State to be replicated from the server. This is the meaningful wait after a seamless
+	 * travel, where the PlayerController is carried over to the new level but the Game State is replicated again.
+	 */
+	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "Multiplayer", meta = (EditCondition = "bHoldUntilNetworkReady"))
+	bool bWaitForGameState = true;
+
+	/**
+	 * If true, also wait until the local PlayerController possesses a Pawn. Leave this off for games where players don't
+	 * immediately possess a pawn (lobbies, spectators, character selection), otherwise the loading screen waits until
+	 * "Network Max Wait Time" expires.
+	 */
+	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "Multiplayer", meta = (EditCondition = "bHoldUntilNetworkReady"))
+	bool bWaitForPossessedPawn = false;
+
+	/**
+	 * Safety timeout (in seconds) for "Hold Until Network Ready", counted from the moment level loading has finished.
+	 * If the player still hasn't joined after this time, the loading screen closes anyway.
+	 * A zero value will wait with no time limit (not recommended: a stalled or rejected join would keep the screen up forever).
+	 */
+	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "Multiplayer", meta = (EditCondition = "bHoldUntilNetworkReady", UIMax = 120.00, UIMin = 0.00, ClampMin = "0"))
+	float NetworkMaxWaitTime = 30.0f;
+
+};
+
 /**
- * Async Loading Screen Settings 
+ * Async Loading Screen Settings
  */
 UCLASS(Config = "Game", defaultconfig, meta = (DisplayName = "Async Loading Screen"))
 class ASYNCLOADINGSCREEN_API ULoadingScreenSettings : public UDeveloperSettings
@@ -775,7 +879,16 @@ public:
 	 */
 	UPROPERTY(Config, EditAnywhere, Category = "General")
 	FALoadingScreenSettings DefaultLoadingScreen;
-	
+
+	/**
+	 * Multiplayer settings. The engine's loading screen hook only covers loading a new map, which leaves seamless travel
+	 * without a loading screen and closes a joining client's loading screen before the player is actually in the game.
+	 * These options cover both cases, using the Default Loading Screen visuals.
+	 */
+	UPROPERTY(Config, EditAnywhere, Category = "General")
+	FMultiplayerSettings Multiplayer;
+
+
 	/**
 	 * Classic Layout settings.
 	 * The Classic is a simple, generic layout and fits well with many designs.

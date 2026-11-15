@@ -8,12 +8,14 @@
 
 
 #include "AsyncLoadingScreenLibrary.h"
+#include "AsyncLoadingScreen.h"
 #include "MoviePlayer.h"
 
 int32 UAsyncLoadingScreenLibrary::DisplayBackgroundIndex = -1;
 int32 UAsyncLoadingScreenLibrary::DisplayTipTextIndex = -1;
 int32 UAsyncLoadingScreenLibrary::DisplayMovieIndex = -1;
 bool  UAsyncLoadingScreenLibrary::bShowLoadingScreen = true;
+bool  UAsyncLoadingScreenLibrary::bHoldLoadingScreen = false;
 
 void UAsyncLoadingScreenLibrary::SetDisplayBackgroundIndex(int32 BackgroundIndex)
 {
@@ -37,6 +39,27 @@ void UAsyncLoadingScreenLibrary::SetEnableLoadingScreen(bool bIsEnableLoadingScr
 
 void UAsyncLoadingScreenLibrary::StopLoadingScreen()
 {
+	// Stopping the loading screen also gives up any hold the game asked for, otherwise the plugin would put it back up
+	bHoldLoadingScreen = false;
 	GetMoviePlayer()->StopMovie();
+
+	// A screen shown by ShowLoadingScreen lives in the game viewport rather than in the movie player
+	if (FAsyncLoadingScreenModule::IsAvailable())
+	{
+		FAsyncLoadingScreenModule::Get().StopDefaultLoadingScreen();
+	}
+}
+
+void UAsyncLoadingScreenLibrary::SetLoadingScreenHold(bool bHold)
+{
+	bHoldLoadingScreen = bHold;
+}
+
+void UAsyncLoadingScreenLibrary::ShowLoadingScreen()
+{
+	if (FAsyncLoadingScreenModule::IsAvailable())
+	{
+		FAsyncLoadingScreenModule::Get().ShowDefaultLoadingScreen();
+	}
 }
 

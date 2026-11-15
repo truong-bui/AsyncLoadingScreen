@@ -129,6 +129,9 @@ void SClassicLayout::Construct(const FArguments& InArgs, const FALoadingScreenSe
 	// Construct PSO precache progress widget if enable
 	AddPSOPrecacheProgressSlot(Root, Settings);
 
+	// Construct network status text if enable
+	AddNetworkStatusSlot(Root, Settings);
+
 	// Add root to this widget
 	ChildSlot
 	[

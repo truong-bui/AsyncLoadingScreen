@@ -22,8 +22,9 @@ class ASYNCLOADINGSCREEN_API UAsyncLoadingScreenLibrary : public UBlueprintFunct
 private:
 	static int32 DisplayBackgroundIndex;
 	static int32 DisplayTipTextIndex;
-	static int32 DisplayMovieIndex;	
+	static int32 DisplayMovieIndex;
 	static bool  bShowLoadingScreen;
+	static bool  bHoldLoadingScreen;
 public:
 	
 	/**
@@ -74,6 +75,37 @@ public:
 	 **/
 	UFUNCTION(BlueprintCallable, Category = "Async Loading Screen")
 	static void StopLoadingScreen();
+
+	/**
+	 * Keep the loading screen up for as long as you need, on top of the plugin's own conditions. Use this when your game
+	 * knows better than the plugin when it is ready, for example when it still has to download or stream in content after
+	 * joining a server. To use this function, you must enable the "Hold Until Network Ready" option in the Multiplayer settings.
+	 *
+	 * Call it with "true" before opening the level, then with "false" (or call "StopLoadingScreen") once your game is ready.
+	 * The "Network Max Wait Time" safety timeout still applies, and the hold is automatically cleared when the loading
+	 * screen closes, so it never leaks into the next level.
+	 *
+	 * @param bHold Should the loading screen be held?
+	 **/
+	UFUNCTION(BlueprintCallable, Category = "Async Loading Screen")
+	static void SetLoadingScreenHold(bool bHold);
+
+	/**
+	 * Is the loading screen currently being held by "SetLoadingScreenHold"?
+	 **/
+	UFUNCTION(BlueprintPure, Category = "Async Loading Screen")
+	static inline bool GetIsLoadingScreenHold() { return bHoldLoadingScreen; }
+
+	/**
+	 * Display the Default Loading Screen right now, outside of a level transition, for example while your game loads assets
+	 * or a save game. The screen stays up until you call "StopLoadingScreen", and the game keeps running underneath it.
+	 *
+	 * NOTE: Do not call this right before "Open Level" or "Client Travel". The engine starts its own loading screen when the
+	 * level load begins, which would run a second loading screen on top of this one. Use the Multiplayer settings to cover
+	 * level transitions instead.
+	 **/
+	UFUNCTION(BlueprintCallable, Category = "Async Loading Screen")
+	static void ShowLoadingScreen();
 
 	static inline int32 GetDisplayBackgroundIndex() { return DisplayBackgroundIndex; }
 	static inline int32 GetDisplayTipTextIndex() { return DisplayTipTextIndex; }

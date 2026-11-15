@@ -72,6 +72,9 @@ void SCenterLayout::Construct(const FArguments& InArgs, const FALoadingScreenSet
 	// Construct PSO precache progress widget if enable
 	AddPSOPrecacheProgressSlot(Root, Settings);
 
+	// Construct network status text if enable
+	AddNetworkStatusSlot(Root, Settings);
+
 	// Add root to this widget
 	ChildSlot
 	[

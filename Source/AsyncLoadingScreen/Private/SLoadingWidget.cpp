@@ -11,7 +11,7 @@
 #include "Slate/DeferredCleanupSlateBrush.h"
 #include "Widgets/Layout/SSpacer.h"
 #include "Engine/Texture2D.h"
-#include "MoviePlayer.h"
+#include "AsyncLoadingScreen.h"
 #include "Widgets/SCompoundWidget.h"
 #include "Widgets/Text/STextBlock.h"
 
@@ -128,7 +128,7 @@ void SLoadingWidget::ConstructLoadingIcon(const FLoadingWidgetSettings& Settings
 
 EVisibility SLoadingWidget::GetLoadingWidgetVisibility() const
 {
-	return GetMoviePlayer()->IsLoadingFinished() ? EVisibility::Hidden : EVisibility::Visible;
+	return AsyncLoadingScreen::IsLoadingFinished() ? EVisibility::Hidden : EVisibility::Visible;
 }
 
 TSharedRef<SWidget> SLoadingWidget::MakeLoadingTextWidget(const FLoadingWidgetSettings& Settings)

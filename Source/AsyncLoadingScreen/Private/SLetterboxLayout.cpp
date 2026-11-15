@@ -94,6 +94,9 @@ void SLetterboxLayout::Construct(const FArguments& InArgs, const FALoadingScreen
 	// Construct PSO precache progress widget if enable
 	AddPSOPrecacheProgressSlot(Root, Settings);
 
+	// Construct network status text if enable
+	AddNetworkStatusSlot(Root, Settings);
+
 	// Add Root to this widget
 	ChildSlot
 		[
