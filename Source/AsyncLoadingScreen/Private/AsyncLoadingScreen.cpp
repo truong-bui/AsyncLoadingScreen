@@ -725,10 +725,20 @@ void FAsyncLoadingScreenModule::PollLoadingScreenHold()
 
 	const double CurrentTime = FPlatformTime::Seconds();
 
+	if (!bLevelLoadFinished && !bSeamlessTravelScreenActive)
+	{
+		// Without a seamless travel this poll runs in the movie player's wait loop, which the movie player enters from its
+		// own PostLoadMapWithWorld handler at the end of the level load. That handler runs before this module's: delegates
+		// are called in reverse order of binding, and the movie player binds its own in OnPreLoadMap, after this module
+		// bound its at startup. So the level has loaded, and HandlePostLoadMap won't run until the movie stops: do here
+		// what it does, or a hold that waits for it never ends.
+		HandlePostLoadMap(nullptr);
+	}
+
 	if (!bLevelLoadFinished)
 	{
-		// Still loading the level, or still travelling. A cancelled seamless travel never reports completion, so a screen
-		// displayed for one needs its own way out.
+		// Still travelling. A cancelled seamless travel never reports completion, so a screen displayed for one needs its
+		// own way out.
 		if (bSeamlessTravelScreenActive && SeamlessTravelMaxWaitTime > 0.0f && (CurrentTime - MoviePlaybackStartTime) >= SeamlessTravelMaxWaitTime)
 		{
 			UE_LOG(LogAsyncLoadingScreen, Warning, TEXT("Seamless travel did not complete within %.1f seconds; stopping the loading screen."), SeamlessTravelMaxWaitTime);
